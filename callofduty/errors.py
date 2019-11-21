@@ -8,3 +8,6 @@ class AuthenticationError(CallofDutyException):
 
     pass
 
+class InvalidMatchIdError(CallofDutyException):
+    pass
+

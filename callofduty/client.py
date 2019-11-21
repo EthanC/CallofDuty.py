@@ -30,6 +30,6 @@ class Client:
         users = []
 
         for user in data['data']:
-            users.append(callofduty.User(self.http, user))
+            users.append(callofduty.User(self.http, platform=user['platform'], username=user['username']))
 
         return users

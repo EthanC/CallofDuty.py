@@ -9,6 +9,7 @@ from .client import Client
 from .enums import *
 from .errors import *
 from .user import User
+from .match import Match
 
 try:
     from logging import NullHandler

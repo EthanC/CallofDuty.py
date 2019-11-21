@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 
 class Request:
-    baseUrl = "https://callofduty.com/"
+    baseUrl = "https://www.callofduty.com/"
     accessToken = None
     deviceId = None
 
@@ -53,11 +53,11 @@ class HTTP:
 
         await self.session.close()
 
-    async def SearchPlayer(self, platform: str, username: str):
+    async def SearchPlayer(self, platform: str, searchTerm: str):
         return await self.Request(
             Request(
                 "GET",
-                f"api/papi-client/crm/cod/v2/platform/{platform}/username/{username}/search",
+                f"api/papi-client/crm/cod/v2/platform/{platform}/username/{urllib.parse.quote(searchTerm)}/search",
             )
         )
 
@@ -66,5 +66,21 @@ class HTTP:
             Request(
                 "GET",
                 f"api/papi-client/stats/cod/v1/title/mw/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/mp?locale=en",
+            )
+        )
+
+    async def GetRecentMatches(self, platform: str, username: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/crm/cod/v2/title/mw/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/mp/start/0/end/0/details",
+            )
+        )
+
+    async def GetMatch(self, platform: str, matchId: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/ce/v1/title/mw/platform/{platform}/match/{matchId}/matchMapEvents",
             )
         )
