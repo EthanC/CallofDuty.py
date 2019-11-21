@@ -9,7 +9,6 @@ from .errors import AuthenticationError, CallofDutyException
 
 log = logging.getLogger(__name__)
 
-
 class Auth:
     """ToDo"""
 
