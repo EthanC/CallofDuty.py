@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from uuid import uuid4
+import random
 
 import aiohttp
 
@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 class Auth:
     """ToDo"""
 
-    loginUrl = "https://profile.callofduty.com/cod/login"
+    loginUrl = "https://profile.callofduty.com/cod/mapp/login"
     registerDeviceUrl = "https://profile.callofduty.com/cod/mapp/registerDevice"
 
     _accessToken = None
@@ -60,9 +60,7 @@ class Auth:
         #     print(yeah)
 
     def GenerateDeviceId(self):
-        """ToDo"""
-
-        return uuid4().hex[:16].lower()
+        return hex(random.getrandbits(128)).lstrip('0x')
 
     async def RegisterDevice(self, deviceId: str):
         """ToDo"""
@@ -95,7 +93,7 @@ class Auth:
         headers = {
             "Authorization": f"bearer {self._accessToken}",
             "x_cod_device_id": self._deviceId,
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
         }
         data = {"email": email, "password": password}
 
