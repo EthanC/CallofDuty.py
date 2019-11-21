@@ -30,6 +30,6 @@ class Client:
         if platform not in Platform:
             raise CallofDutyException("Invalid platform specified")
 
-        data = await self.http.SearchPlayer(platform, username)
+        data = await self.http.SearchPlayer(platform.value, username)
 
         return data
