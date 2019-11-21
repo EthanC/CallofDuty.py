@@ -3,15 +3,14 @@ import logging
 
 from .enums import Platform
 from .errors import CallofDutyException
-from .http import HTTP
+
+import callofduty.user
 
 log = logging.getLogger(__name__)
 
-
 class Client:
-    def __init__(self, auth):
-        self.auth = auth
-        self.http = HTTP(auth)
+    def __init__(self, http):
+        self.http = http
 
     def __aenter__(self):
         return self
@@ -20,16 +19,17 @@ class Client:
         await self.CloseSession()
 
     async def CloseSession(self):
-        """ToDo"""
-
         await self.http.CloseSession()
 
     async def SearchPlayer(self, platform: Platform, username: str):
-        """ToDo"""
-
         if platform not in Platform:
             raise CallofDutyException("Invalid platform specified")
 
         data = await self.http.SearchPlayer(platform.value, username)
 
-        return data
+        users = []
+
+        for user in data['data']:
+            users.append(callofduty.User(self.http, user))
+
+        return users

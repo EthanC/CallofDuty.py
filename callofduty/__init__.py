@@ -8,6 +8,7 @@ from .auth import Auth, Login
 from .client import Client
 from .enums import *
 from .errors import *
+from .user import User
 
 try:
     from logging import NullHandler

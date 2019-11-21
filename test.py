@@ -1,15 +1,15 @@
 import asyncio
 import os
+
 import callofduty
 
-
 async def main():
-    auth = await callofduty.Login(os.environ['ATVI_EMAIL'], os.environ['ATVI_PASSWORD'])
-    client = callofduty.Client(auth)
+    client = await callofduty.Login(os.environ['ATVI_EMAIL'], os.environ['ATVI_PASSWORD'])
 
-    data = await client.SearchPlayer(callofduty.Platform.Activision, "Tustin")
+    users = await client.SearchPlayer(callofduty.Platform.Activision, "Tustin")
 
-    print(data)
+    for u in users:
+        print(await u.profile())
 
     # Temporary
     await client.http.CloseSession()

@@ -5,13 +5,15 @@ import random
 
 import aiohttp
 
+import callofduty.client
+
+from .http import HTTP
+
 from .errors import AuthenticationError, CallofDutyException
 
 log = logging.getLogger(__name__)
 
 class Auth:
-    """ToDo"""
-
     loginUrl = "https://profile.callofduty.com/cod/mapp/login"
     registerDeviceUrl = "https://profile.callofduty.com/cod/mapp/registerDevice"
 
@@ -40,78 +42,45 @@ class Auth:
 
         return self._deviceId
 
-    # async def testing(self):
-    #     bbb = self.session.cookie_jar.__len__()
-    #     print(bbb)
-
-    #     for yeah in self.session.cookie_jar._cookies:
-    #         print(yeah)
-
     async def GetLoginCookies(self):
-        """ToDo"""
-
         await self.session.get(self.loginUrl)
-
-        # aaa = self.session.cookie_jar.__len__()
-
-        # print(aaa)
-
-        # for yeah in self.session.cookie_jar:
-        #     print(yeah)
 
     def GenerateDeviceId(self):
         return hex(random.getrandbits(128)).lstrip('0x')
 
     async def RegisterDevice(self, deviceId: str):
-        """ToDo"""
+        body = {"deviceId": deviceId}
 
-        data = {"deviceId": deviceId}
-
-        async with self.session.post(self.registerDeviceUrl, json=data) as res:
+        async with self.session.post(self.registerDeviceUrl, json=body) as res:
             if res.status != 200:
-                raise AuthenticationError(f"Failed to register device with ID: {deviceId}")
+                raise AuthenticationError(f"Failed to register fake device: {res.status}")
 
             data = await res.json()
 
-            accessToken = json.loads(json.dumps(data))["data"]["authHeader"]
-
-            return accessToken
+            return data['data']['authHeader']
 
     def SetAccessToken(self, accessToken: str):
-        """ToDo"""
-
         self._accessToken = accessToken
 
     def SetDeviceId(self, deviceId: str):
-        """ToDo"""
-
         self._deviceId = deviceId
 
     async def SubmitLogin(self, email: str, password: str):
-        """ToDo"""
-
         headers = {
             "Authorization": f"bearer {self._accessToken}",
             "x_cod_device_id": self._deviceId,
             "Content-Type": "application/json",
         }
+
         data = {"email": email, "password": password}
 
         async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
-            # if res.status != 200:
-            #     raise AuthenticationError("Failed to login")
-
-            data = await res.text()
-
-            return data
+            if res.status != 200:
+                raise AuthenticationError(f"Failed to login: {res.status}")
 
 
 async def Login(email: str, password: str):
-    """ToDo"""
-
     auth = Auth(email, password)
-
-    # await auth.testing()
 
     await auth.GetLoginCookies()
 
@@ -121,13 +90,6 @@ async def Login(email: str, password: str):
     auth.SetAccessToken(accessToken)
     auth.SetDeviceId(deviceId)
 
-    # print(email)
-    # print(password)
-    # print(accessToken)
-    # print(deviceId)
+    await auth.SubmitLogin(email, password)
 
-    test = await auth.SubmitLogin(email, password)
-
-    print(str(test))
-
-    return auth
+    return callofduty.Client(HTTP(auth))

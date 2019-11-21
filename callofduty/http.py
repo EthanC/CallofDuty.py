@@ -3,7 +3,7 @@ import logging
 
 import aiohttp
 
-# from .errors import *
+import urllib.parse
 
 log = logging.getLogger(__name__)
 
@@ -35,8 +35,6 @@ class HTTP:
         self.session = auth.session
 
     async def Request(self, req):
-        """ToDo"""
-
         req.SetHeader("Authorization", f"bearer {self.auth.AccessToken}")
         req.SetHeader("x_cod_device_id", self.auth.DeviceId)
 
@@ -45,7 +43,7 @@ class HTTP:
         ) as res:
             log.debug(f"{res.status} {res.reason} - {res.method} {res.url}")
 
-            data = await res.text()
+            data = await res.json()
 
             if 300 > res.status >= 200:
                 return data
@@ -56,11 +54,17 @@ class HTTP:
         await self.session.close()
 
     async def SearchPlayer(self, platform: str, username: str):
-        """ToDo"""
-
         return await self.Request(
             Request(
                 "GET",
                 f"api/papi-client/crm/cod/v2/platform/{platform}/username/{username}/search",
+            )
+        )
+
+    async def GetProfile(self, platform: str, username: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/stats/cod/v1/title/mw/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/mp?locale=en",
             )
         )
