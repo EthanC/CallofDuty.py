@@ -1,7 +1,6 @@
 import logging
 
 from .enums import Platform
-from .match import Match
 
 log = logging.getLogger(__name__)
 
@@ -16,6 +15,8 @@ class User:
         return await self.http.GetProfile(self.platform.value, self.username)
 
     async def matches(self, count: int = 0, lazy: bool = True):
+        from .match import Match
+
         data = await self.http.GetRecentMatches(self.platform.value, self.username)
 
         matches = []
