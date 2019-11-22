@@ -7,3 +7,12 @@ class Platform(Enum):
     Xbox = "xbl"
     Steam = "steam"
     BattleNet = "battle"
+
+
+class Title(Enum):
+    ModernWarfare = "mw"
+    BlackOps4 = "bo4"
+    WWII = "wwii"
+    InfiniteWarfare = "iw"
+    BlackOps3 = "bo3"
+ 
