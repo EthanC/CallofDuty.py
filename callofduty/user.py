@@ -6,10 +6,19 @@ log = logging.getLogger(__name__)
 
 
 class User:
-    def __init__(self, http: object, platform: str, username: str):
+    def __init__(
+        self,
+        http: object,
+        platform: str,
+        username: str,
+        accountId: int = None,
+        avatarUrls: list = None,
+    ):
         self.http = http
         self.platform = Platform(platform)
         self.username = username
+        self.accountId = accountId
+        self.avatarUrls = avatarUrls
 
     async def profile(self):
         return await self.http.GetProfile(self.platform.value, self.username)

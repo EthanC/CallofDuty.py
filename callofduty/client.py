@@ -23,17 +23,40 @@ class Client:
 
         await self.http.CloseSession()
 
-    async def SearchPlayer(self, platform: Platform, username: str):
+    async def SearchPlayer(self, platform: Platform, username: str, limit: int = 0):
         if platform not in Platform:
             raise CallofDutyException("Invalid platform specified")
 
         data = await self.http.SearchPlayer(platform.value, username)
 
+        if limit > 0:
+            data["data"] = data["data"][:limit]
+
         users = []
 
         for user in data["data"]:
+            platform = user["platform"]
+            username = user["username"]
+            accountId = user.get("accountId")
+            avatarUrls = user.get("avatar")
+
+            if isinstance(accountId, str):
+                accountId = int(accountId)
+
+            if isinstance(avatarUrls, dict):
+                avatarUrls = []
+
+                for key in user["avatar"]:
+                    avatarUrls.append(user["avatar"][key])
+
             users.append(
-                User(self.http, platform=user["platform"], username=user["username"])
+                User(
+                    self.http,
+                    platform=platform,
+                    username=username,
+                    accountId=accountId,
+                    avatarUrls=avatarUrls,
+                )
             )
 
         return users
