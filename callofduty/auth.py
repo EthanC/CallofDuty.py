@@ -5,13 +5,12 @@ import random
 
 import aiohttp
 
-import callofduty.client
-
+from .client import Client
+from .errors import AuthenticationError
 from .http import HTTP
 
-from .errors import AuthenticationError, CallofDutyException
-
 log = logging.getLogger(__name__)
+
 
 class Auth:
     loginUrl = "https://profile.callofduty.com/cod/mapp/login"
@@ -43,29 +42,50 @@ class Auth:
         return self._deviceId
 
     async def GetLoginCookies(self):
+        """Set the session cookies necessary for login."""
+
         await self.session.get(self.loginUrl)
 
     def GenerateDeviceId(self):
-        return hex(random.getrandbits(128)).lstrip('0x')
+        """Return a randomly generated 32 character Device ID."""
+
+        return hex(random.getrandbits(128)).lstrip("0x")
 
     async def RegisterDevice(self, deviceId: str):
+        """
+        Register the specified Device ID with the Call of Duty API.
+
+        Return the corresponding Access Token if successful.
+        """
+
         body = {"deviceId": deviceId}
 
         async with self.session.post(self.registerDeviceUrl, json=body) as res:
             if res.status != 200:
-                raise AuthenticationError(f"Failed to register fake device: {res.status}")
+                raise AuthenticationError(
+                    f"Failed to register fake device (HTTP {res.status} {res.reason})"
+                )
 
             data = await res.json()
 
-            return data['data']['authHeader']
+            return data["data"]["authHeader"]
 
     def SetAccessToken(self, accessToken: str):
+        """Set the Access Token to be used across all requests."""
+
         self._accessToken = accessToken
 
     def SetDeviceId(self, deviceId: str):
+        """Set the Device ID to be used across all requests."""
+
         self._deviceId = deviceId
 
     async def SubmitLogin(self, email: str, password: str):
+        """
+        Submit the specified login credentials to the Call of Duty API along with
+        the previously acquired Access Token and Device ID.
+        """
+
         headers = {
             "Authorization": f"bearer {self._accessToken}",
             "x_cod_device_id": self._deviceId,
@@ -76,10 +96,19 @@ class Auth:
 
         async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
             if res.status != 200:
-                raise AuthenticationError(f"Failed to login: {res.status}")
+                raise AuthenticationError(
+                    f"Failed to login (HTTP {res.status} {res.reason})"
+                )
 
 
 async def Login(email: str, password: str):
+    """
+    Convenience function to make login with the Call of Duty authorization flow
+    as easy as possible.
+
+    Return an authenticated Client if login is successful.
+    """
+
     auth = Auth(email, password)
 
     await auth.GetLoginCookies()
@@ -92,4 +121,4 @@ async def Login(email: str, password: str):
 
     await auth.SubmitLogin(email, password)
 
-    return callofduty.Client(HTTP(auth))
+    return Client(HTTP(auth))

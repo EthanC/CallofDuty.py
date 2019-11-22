@@ -1,9 +1,8 @@
 import asyncio
 import logging
+import urllib.parse
 
 import aiohttp
-
-import urllib.parse
 
 log = logging.getLogger(__name__)
 
@@ -49,7 +48,7 @@ class HTTP:
                 return data
 
     async def CloseSession(self):
-        """ToDo"""
+        """Close the session connector."""
 
         await self.session.close()
 

@@ -3,11 +3,12 @@ class CallofDutyException(Exception):
 
     pass
 
+
 class AuthenticationError(CallofDutyException):
     """ToDo"""
 
     pass
 
+
 class InvalidMatchIdError(CallofDutyException):
     pass
-

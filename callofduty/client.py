@@ -3,13 +3,13 @@ import logging
 
 from .enums import Platform
 from .errors import CallofDutyException
-
-import callofduty.user
+from .user import User
 
 log = logging.getLogger(__name__)
 
+
 class Client:
-    def __init__(self, http):
+    def __init__(self, http: object):
         self.http = http
 
     def __aenter__(self):
@@ -19,6 +19,8 @@ class Client:
         await self.CloseSession()
 
     async def CloseSession(self):
+        """Close the session connector."""
+
         await self.http.CloseSession()
 
     async def SearchPlayer(self, platform: Platform, username: str):
@@ -29,7 +31,9 @@ class Client:
 
         users = []
 
-        for user in data['data']:
-            users.append(callofduty.User(self.http, platform=user['platform'], username=user['username']))
+        for user in data["data"]:
+            users.append(
+                User(self.http, platform=user["platform"], username=user["username"])
+            )
 
         return users
