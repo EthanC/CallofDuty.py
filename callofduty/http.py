@@ -23,8 +23,6 @@ class Request:
             self.headers.update(headers)
 
     def SetHeader(self, key: str, value: str):
-        """ToDo"""
-
         self.headers[key] = value
 
 

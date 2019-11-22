@@ -35,25 +35,23 @@ class Client:
         users = []
 
         for user in data["data"]:
-            platform = user["platform"]
-            username = user["username"]
             accountId = user.get("accountId")
-            avatarUrls = user.get("avatar")
-
             if isinstance(accountId, str):
+                # The API returns the accountId as a string
                 accountId = int(accountId)
 
-            if isinstance(avatarUrls, dict):
+            if isinstance(user["avatar"], dict):
                 avatarUrls = []
-
                 for key in user["avatar"]:
                     avatarUrls.append(user["avatar"][key])
+            else:
+                avatarUrls = None
 
             users.append(
                 User(
                     self.http,
-                    platform=platform,
-                    username=username,
+                    platform=user["platform"],
+                    username=user["username"],
                     accountId=accountId,
                     avatarUrls=avatarUrls,
                 )

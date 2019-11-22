@@ -20,11 +20,12 @@ class Match:
         if data["status"] != "success":
             raise InvalidMatchIdError(f"No match with ID {self.match['matchID']} found")
 
-        # The API doesnt state which team is axis/allies so no array key will be used
+        # The API doesn't state which team is axis/allies,
+        # so no array key will be used
         teams = []
 
         for team in data["data"]["teams"]:
-            it = []  # current team iterator
+            it = []  # Current team iterator
 
             for player in team:
                 it.append(
