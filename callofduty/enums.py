@@ -15,3 +15,9 @@ class Title(Enum):
     WWII = "wwii"
     InfiniteWarfare = "iw"
     BlackOps3 = "bo3"
+
+
+class Mode(Enum):
+    Multiplayer = "mp"
+    Zombies = "zm"
+    Blackout = "wz"
