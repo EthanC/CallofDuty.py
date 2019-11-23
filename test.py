@@ -2,6 +2,7 @@ import asyncio
 import os
 
 import callofduty
+from callofduty.errors import UserNotFoundError
 
 
 async def main():
@@ -9,15 +10,20 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
-    users = await client.SearchPlayer(callofduty.Platform.Activision, "Tustin")
 
-    for u in users:
-        matches = await u.matches()
-        # Maybe throw an exception instead? or return an empty list?
-        if matches == None:
-            continue
-        for match in matches:
-            print(len(await match.teams()))
+    try:
+        user = await client.user(callofduty.Platform('uno'), "Tustin#1365515")
+    except UserNotFoundError:
+        print("error")
+    # users = await client.search(callofduty.Platform.Activision, "Tustin")
+
+    # for u in users:
+    #     matches = await u.matches()
+    #     # Maybe throw an exception instead? or return an empty list?
+    #     if matches == None:
+    #         continue
+    #     for match in matches:
+    #         print(len(await match.teams()))
 
     # Temporary
     await client.http.CloseSession()

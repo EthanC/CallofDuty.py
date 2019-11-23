@@ -8,3 +8,12 @@ class AuthenticationError(CallofDutyException):
 
 class InvalidMatchIdError(CallofDutyException):
     pass
+
+class InvalidPlatformError(CallofDutyException):
+    pass
+
+class InvalidProfileError(CallofDutyException):
+    pass
+
+class UserNotFoundError(CallofDutyException):
+    pass

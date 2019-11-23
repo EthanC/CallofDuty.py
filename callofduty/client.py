@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from .enums import Platform
-from .errors import CallofDutyException
+from .errors import InvalidPlatformError, InvalidProfileError, UserNotFoundError
 from .user import User
 
 log = logging.getLogger(__name__)
@@ -23,9 +23,23 @@ class Client:
 
         await self.http.CloseSession()
 
-    async def SearchPlayer(self, platform: Platform, username: str, limit: int = 0):
+    async def user(self, platform: Platform, username: str):
         if platform not in Platform:
-            raise CallofDutyException("Invalid platform specified")
+            raise InvalidPlatformError()
+
+        user = User(self.http, platform.value, username)
+
+        try:
+            await user.profile()
+
+            return user
+        except InvalidProfileError:
+            raise UserNotFoundError(f"'{username}' was not found.")
+
+
+    async def search(self, platform: Platform, username: str, limit: int = 0):
+        if platform not in Platform:
+            raise InvalidPlatformError()
 
         data = await self.http.SearchPlayer(platform.value, username)
 

@@ -1,7 +1,7 @@
 import logging
 
 from .enums import Platform
-
+from .errors import InvalidProfileError
 log = logging.getLogger(__name__)
 
 
@@ -21,7 +21,12 @@ class User:
         self.avatarUrls = avatarUrls
 
     async def profile(self):
-        return await self.http.GetProfile(self.platform.value, self.username)
+        profile = await self.http.GetProfile(self.platform.value, self.username)
+
+        if profile["status"] != "success":
+            raise InvalidProfileError(profile["data"].get("message") or "Unknown Error")
+
+        return profile
 
     async def matches(self, count: int = 0, lazy: bool = True):
         from .match import Match
