@@ -6,7 +6,7 @@ import random
 import aiohttp
 
 from .client import Client
-from .errors import AuthenticationError
+from .errors import LoginFailure
 from .http import HTTP
 
 log = logging.getLogger(__name__)
@@ -22,22 +22,22 @@ class Auth:
     def __init__(self, email: str, password: str, loop=None):
         self.email = email
         self.password = password
+        self.loop = loop or asyncio.get_event_loop()
+        self.cookieJar = aiohttp.CookieJar()
 
-        self.session = aiohttp.ClientSession(
-            loop=loop or asyncio.get_event_loop(), cookie_jar=aiohttp.CookieJar()
-        )
+        self.session = aiohttp.ClientSession(loop=self.loop, cookie_jar=self.cookieJar)
 
     @property
     def AccessToken(self):
         if self._accessToken is None:
-            raise AuthenticationError("Access Token is null, not authenticated")
+            raise LoginFailure("Access Token is null, not authenticated")
 
         return self._accessToken
 
     @property
     def DeviceId(self):
         if self._deviceId is None:
-            raise AuthenticationError("DeviceId is null, not authenticated")
+            raise LoginFailure("DeviceId is null, not authenticated")
 
         return self._deviceId
 
@@ -62,7 +62,7 @@ class Auth:
 
         async with self.session.post(self.registerDeviceUrl, json=body) as res:
             if res.status != 200:
-                raise AuthenticationError(
+                raise LoginFailure(
                     f"Failed to register fake device (HTTP {res.status} {res.reason})"
                 )
 
@@ -96,9 +96,7 @@ class Auth:
 
         async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
             if res.status != 200:
-                raise AuthenticationError(
-                    f"Failed to login (HTTP {res.status} {res.reason})"
-                )
+                raise LoginFailure(f"Failed to login (HTTP {res.status} {res.reason})")
 
 
 async def Login(email: str, password: str):

@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import callofduty
-from callofduty.errors import UserNotFoundError
+from callofduty.errors import UserNotFound
 
 
 async def main():
@@ -10,10 +10,9 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
-
     try:
-        user = await client.user(callofduty.Platform('uno'), "Tustin#1365515")
-    except UserNotFoundError:
+        user = await client.user(callofduty.Platform("uno"), "Tustin#1365515")
+    except UserNotFound:
         print("error")
     # users = await client.search(callofduty.Platform.Activision, "Tustin")
 

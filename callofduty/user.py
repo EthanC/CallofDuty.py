@@ -1,7 +1,8 @@
 import logging
 
 from .enums import Platform
-from .errors import InvalidProfileError
+from .errors import InvalidProfile
+
 log = logging.getLogger(__name__)
 
 
@@ -22,9 +23,6 @@ class User:
 
     async def profile(self):
         profile = await self.http.GetProfile(self.platform.value, self.username)
-
-        if profile["status"] != "success":
-            raise InvalidProfileError(profile["data"].get("message") or "Unknown Error")
 
         return profile
 

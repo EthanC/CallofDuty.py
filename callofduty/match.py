@@ -1,7 +1,7 @@
 import logging
 
 from .enums import Platform
-from .errors import CallofDutyException, InvalidMatchIdError
+from .errors import CallofDutyException, InvalidMatchId
 from .user import User
 
 log = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ class Match:
         data = await self.http.GetMatch(self.platform.value, self.match["matchID"])
 
         if data["status"] != "success":
-            raise InvalidMatchIdError(f"No match with ID {self.match['matchID']} found")
+            raise InvalidMatchId(f"No match with ID {self.match['matchID']} found")
 
         # The API doesn't state which team is axis/allies,
         # so no array key will be used

@@ -15,4 +15,3 @@ class Title(Enum):
     WWII = "wwii"
     InfiniteWarfare = "iw"
     BlackOps3 = "bo3"
- 

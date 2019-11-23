@@ -4,7 +4,22 @@ import urllib.parse
 
 import aiohttp
 
+from .errors import Forbidden, HTTPException, NotFound
+
 log = logging.getLogger(__name__)
+
+
+async def JSONorText(res: aiohttp.ClientResponse):
+    """
+    Determine the media type of the provided response.
+
+    Return a dict object for JSON data, otherwise return data as string.
+    """
+
+    if res.headers["Content-Type"] == "application/json;charset=UTF-8":
+        return await res.json(encoding="utf-8")
+    else:
+        return await res.text(encoding="utf-8")
 
 
 class Request:
@@ -27,6 +42,8 @@ class Request:
 
 
 class HTTP:
+    """Represents an HTTP client sending HTTP requests to the Call of Duty API."""
+
     def __init__(self, auth):
         self.auth = auth
         self.session = auth.session
@@ -40,10 +57,37 @@ class HTTP:
         ) as res:
             log.debug(f"{res.status} {res.reason} - {res.method} {res.url}")
 
-            data = await res.json()
+            data = await JSONorText(res)
 
+            if isinstance(data, dict):
+                status = data.get("status")
+
+                # The API tends to return HTTP 200 even when an error occurs
+                if status == "error":
+                    raise HTTPException(res, data)
+
+            # HTTP 2XX: Success
             if 300 > res.status >= 200:
                 return data
+
+            # HTTP 429: Too Many Requests
+            if res.status == 429:
+                # TODO Handle rate limiting
+                raise HTTPException(res, data)
+
+            # HTTP 500/502: Internal Server Error/Bad Gateway
+            if res.status == 500 or res.status == 502:
+                # TODO Handle Unconditional retries
+                raise HTTPException(res, data)
+
+            # HTTP 403: Forbidden
+            if res.status == 403:
+                raise Forbidden(res, data)
+            # HTTP 404: Not Found
+            elif res.status == 404:
+                raise NotFound(res, data)
+            else:
+                raise HTTPException(res, data)
 
     async def CloseSession(self):
         """Close the session connector."""
