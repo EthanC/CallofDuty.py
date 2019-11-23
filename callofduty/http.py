@@ -102,26 +102,28 @@ class HTTP:
             )
         )
 
-    async def GetProfile(self, platform: str, username: str):
+    async def GetProfile(self, title: str, platform: str, username: str, mode: str):
         return await self.Request(
             Request(
                 "GET",
-                f"api/papi-client/stats/cod/v1/title/mw/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/mp?locale=en",
+                f"api/papi-client/stats/cod/v1/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/{mode}",
             )
         )
 
-    async def GetRecentMatches(self, platform: str, username: str):
+    async def GetRecentMatches(
+        self, title: str, platform: str, username: str, mode: str, limit: int
+    ):
         return await self.Request(
             Request(
                 "GET",
-                f"api/papi-client/crm/cod/v2/title/mw/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/mp/start/0/end/0/details",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/0/end/0?limit={limit}",
             )
         )
 
-    async def GetMatch(self, platform: str, matchId: str):
+    async def GetMatch(self, title: str, platform: str, matchId: int):
         return await self.Request(
             Request(
                 "GET",
-                f"api/papi-client/ce/v1/title/mw/platform/{platform}/match/{matchId}/matchMapEvents",
+                f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
             )
         )

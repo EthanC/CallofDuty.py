@@ -1,7 +1,7 @@
 import logging
 
-from .enums import Platform
-from .errors import InvalidProfile
+from .enums import Mode, Platform, Title
+from .errors import InvalidMode, InvalidProfile, InvalidTitle
 
 log = logging.getLogger(__name__)
 
@@ -21,27 +21,46 @@ class User:
         self.accountId = accountId
         self.avatarUrls = avatarUrls
 
-    async def profile(self):
-        profile = await self.http.GetProfile(self.platform.value, self.username)
+    async def profile(self, title: Title, mode: Mode):
+        if title not in Title:
+            raise InvalidTitle(f"{title} is not a valid title")
 
-        return profile
+        if mode not in Mode:
+            # TODO Validate mode for title
+            # e.g. Zombies is not a valid mode for Modern Warfare
+            raise InvalidMode(f"{mode} is not a valid mode")
 
-    async def matches(self, count: int = 0, lazy: bool = True):
+        profile = await self.http.GetProfile(
+            title.value, self.platform.value, self.username, mode.value
+        )
+
+        return profile["data"]
+
+    async def matches(
+        self, title: Title, mode: Mode, limit: int = 10, lazy: bool = True
+    ):
         from .match import Match
 
-        data = await self.http.GetRecentMatches(self.platform.value, self.username)
+        if title not in Title:
+            raise InvalidTitle(f"{title} is not a valid title")
+
+        if mode not in Mode:
+            # TODO Validate mode for title
+            # e.g. Zombies is not a valid mode for Modern Warfare
+            raise InvalidMode(f"{mode} is not a valid mode")
+
+        data = await self.http.GetRecentMatches(
+            title.value, self.platform.value, self.username, mode.value, limit
+        )
 
         matches = []
 
-        if data["data"]["matches"] == None:
-            return None
-
-        for it in data["data"]["matches"]:
-            match = Match(self.http, self.platform, it)
-            matches.append(match)
+        for i in data["data"]:
+            _match = Match(self.http, title, self.platform, i)
+            matches.append(_match)
 
             # For clarity
             if lazy == False:
-                match.teams()
+                _match.teams()
 
         return matches

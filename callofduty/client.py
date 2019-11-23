@@ -27,14 +27,7 @@ class Client:
         if platform not in Platform:
             raise InvalidPlatform(f"{platform} is not a valid platform")
 
-        user = User(self.http, platform.value, username)
-
-        try:
-            await user.profile()
-
-            return user
-        except InvalidProfile:
-            raise UserNotFound(f"'{username}' was not found.")
+        return User(self.http, platform.value, username)
 
     async def search(self, platform: Platform, username: str, limit: int = 0):
         if platform not in Platform:

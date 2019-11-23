@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import callofduty
-from callofduty.errors import UserNotFound
+from callofduty import Mode, Platform, Title
 
 
 async def main():
@@ -10,19 +10,17 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
-    try:
-        user = await client.user(callofduty.Platform("uno"), "Tustin#1365515")
-    except UserNotFound:
-        print("error")
-    # users = await client.search(callofduty.Platform.Activision, "Tustin")
+    # user = (await client.search(Platform.Activision, "Tustin"))[1]
+    # print(f"{user.username} ({user.accountId})")
 
-    # for u in users:
-    #     matches = await u.matches()
-    #     # Maybe throw an exception instead? or return an empty list?
-    #     if matches == None:
-    #         continue
-    #     for match in matches:
-    #         print(len(await match.teams()))
+    # profile = await user.profile(Title.ModernWarfare, Mode.Multiplayer)
+    # print(profile)
+
+    match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
+    teams = await match.teams()
+    for team in teams:
+        for player in team:
+            print(player.username)
 
     # Temporary
     await client.http.CloseSession()
