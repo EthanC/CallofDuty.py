@@ -1,8 +1,8 @@
 import asyncio
 import logging
 
-from .enums import Platform
-from .errors import InvalidPlatform, InvalidProfile, UserNotFound
+from .enums import Language, Platform
+from .errors import InvalidLanguage, InvalidPlatform, InvalidProfile, UserNotFound
 from .user import User
 
 log = logging.getLogger(__name__)
@@ -64,3 +64,19 @@ class Client:
             )
 
         return users
+
+    async def GetAppLocalize(self, language: Language = Language.English):
+        if language not in Language:
+            raise InvalidLanguage(f"{language} is not a valid language")
+
+        data = await self.http.GetAppLocalize(language.value)
+
+        return data
+
+    async def GetWebLocalize(self, language: Language = Language.English):
+        if language not in Language:
+            raise InvalidLanguage(f"{language} is not a valid language")
+
+        data = await self.http.GetAppLocalize(language.value)
+
+        return data

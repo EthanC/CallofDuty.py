@@ -16,11 +16,14 @@ async def main():
     # profile = await user.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
-    match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
-    teams = await match.teams()
-    for team in teams:
-        for player in team:
-            print(player.username)
+    # match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
+    # teams = await match.teams()
+    # for team in teams:
+    #     for player in team:
+    #         print(player.username)
+
+    # localize = await client.GetAppLocalize()
+    # print(localize)
 
     # Temporary
     await client.http.CloseSession()

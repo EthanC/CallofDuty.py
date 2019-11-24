@@ -43,6 +43,10 @@ class InvalidMode(ClientException):
     pass
 
 
+class InvalidLanguage(ClientException):
+    pass
+
+
 class HTTPException(CallofDutyException):
     """Exception which is thrown when an HTTP request operation fails."""
 

@@ -21,3 +21,11 @@ class Mode(Enum):
     Multiplayer = "mp"
     Zombies = "zm"
     Blackout = "wz"
+
+
+class Language(Enum):
+    English = "en"
+    French = "fr"
+    German = "de"
+    Italian = "it"
+    Spanish = "es"

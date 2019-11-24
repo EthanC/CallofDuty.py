@@ -127,3 +127,19 @@ class HTTP:
                 f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
             )
         )
+
+    async def GetAppLocalize(self, language: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"content/atvi/callofduty/mycod/web/{language}/data/json/iq-content-xapp.js",
+            )
+        )
+
+    async def GetWebLocalize(self, language: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"content/atvi/callofduty/mycod/web/{language}/data/json/iq-content-xweb.js",
+            )
+        )
