@@ -111,12 +111,19 @@ class HTTP:
         )
 
     async def GetRecentMatches(
-        self, title: str, platform: str, username: str, mode: str, limit: int
+        self,
+        title: str,
+        platform: str,
+        username: str,
+        mode: str,
+        limit: int,
+        startTimestamp: int,
+        endTimeStamp: int,
     ):
         return await self.Request(
             Request(
                 "GET",
-                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/0/end/0?limit={limit}",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/{startTimestamp}/end/{endTimeStamp}?limit={limit}",
             )
         )
 

@@ -36,9 +36,7 @@ class User:
 
         return profile["data"]
 
-    async def matches(
-        self, title: Title, mode: Mode, limit: int = 10, lazy: bool = True
-    ):
+    async def matches(self, title: Title, mode: Mode, **kwargs):
         from .match import Match
 
         if title not in Title:
@@ -49,8 +47,19 @@ class User:
             # e.g. Zombies is not a valid mode for Modern Warfare
             raise InvalidMode(f"{mode} is not a valid mode")
 
+        limit = kwargs.get("limit", 0)
+        startTimestamp = kwargs.get("startTimestamp", 0)
+        endTimestamp = kwargs.get("endTimestamp", 0)
+        lazy = kwargs.get("lazy", True)
+
         data = await self.http.GetRecentMatches(
-            title.value, self.platform.value, self.username, mode.value, limit
+            title.value,
+            self.platform.value,
+            self.username,
+            mode.value,
+            limit,
+            startTimestamp,
+            endTimestamp,
         )
 
         matches = []

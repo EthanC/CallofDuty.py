@@ -16,7 +16,7 @@ async def main():
     # profile = await user.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
-    # match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
+    # match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer, startTimestamp=1573855172000))[0]
     # teams = await match.teams()
     # for team in teams:
     #     for player in team:
