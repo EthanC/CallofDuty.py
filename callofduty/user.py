@@ -47,7 +47,7 @@ class User:
             # e.g. Zombies is not a valid mode for Modern Warfare
             raise InvalidMode(f"{mode} is not a valid mode")
 
-        limit = kwargs.get("limit", 0)
+        limit = kwargs.get("limit", 10)
         startTimestamp = kwargs.get("startTimestamp", 0)
         endTimestamp = kwargs.get("endTimestamp", 0)
         lazy = kwargs.get("lazy", True)
