@@ -3,6 +3,7 @@ import logging
 
 from .enums import Language, Platform
 from .errors import InvalidLanguage, InvalidPlatform, InvalidProfile, UserNotFound
+from .squad import Squad
 from .user import User
 
 log = logging.getLogger(__name__)
@@ -78,5 +79,18 @@ class Client:
             raise InvalidLanguage(f"{language} is not a valid language")
 
         data = await self.http.GetAppLocalize(language.value)
+
+        return data
+
+    async def GetSquadChallenges(self, language: Language = Language.English):
+        if language not in Language:
+            raise InvalidLanguage(f"{language} is not a valid language")
+
+        data = await self.http.GetSquadChallenges()
+
+        return data
+
+    async def SearchSquad(self, query: str):
+        data = await self.http.SearchSquad(query)
 
         return data

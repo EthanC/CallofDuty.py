@@ -23,17 +23,20 @@ async def JSONorText(res: aiohttp.ClientResponse):
 
 
 class Request:
-    baseUrl = "https://www.callofduty.com/"
+    defaultBaseUrl = "https://callofduty.com/"
+
     accessToken = None
     deviceId = None
 
-    def __init__(self, method: str, endpoint: str = None, headers: dict = None):
+    def __init__(self, method: str, endpoint: str = None, **kwargs):
         self.method = method
         self.headers = {}
 
         if endpoint is not None:
-            self.url = f"{self.baseUrl}{endpoint}"
+            baseUrl = kwargs.get("baseUrl", self.defaultBaseUrl)
+            self.url = f"{baseUrl}{endpoint}"
 
+        headers = kwargs.get("headers")
         if isinstance(headers, dict):
             self.headers.update(headers)
 
@@ -148,5 +151,23 @@ class HTTP:
             Request(
                 "GET",
                 f"content/atvi/callofduty/mycod/web/{language}/data/json/iq-content-xweb.js",
+            )
+        )
+
+    async def GetSquadChallenges(self):
+        return await self.Request(
+            Request(
+                "GET",
+                "api/v2/challenge/lookup/current",
+                baseUrl="https://squads.callofduty.com/",
+            )
+        )
+
+    async def SearchSquad(self, query: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/v2/squad/lookup/name/{urllib.parse.quote(query)}",
+                baseUrl="https://squads.callofduty.com/",
             )
         )

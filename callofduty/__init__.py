@@ -9,6 +9,7 @@ from .client import Client
 from .enums import *
 from .errors import *
 from .match import Match
+from .squad import Squad
 from .user import User
 
 try:
