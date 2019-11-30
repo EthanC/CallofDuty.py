@@ -4,7 +4,7 @@ __version__ = "1.1.0"
 
 import logging
 
-from .auth import Auth, Login
+from .auth import Login
 from .client import Client
 from .enums import *
 from .errors import *
