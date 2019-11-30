@@ -24,6 +24,8 @@ async def JSONorText(res: aiohttp.ClientResponse):
 
 class Request:
     defaultBaseUrl = "https://callofduty.com/"
+    myBaseUrl = "https://my.callofduty.com/"
+    squadsBaseUrl = "https://squads.callofduty.com/"
 
     accessToken = None
     deviceId = None
@@ -159,7 +161,7 @@ class HTTP:
             Request(
                 "GET",
                 "api/v2/challenge/lookup/current",
-                baseUrl="https://squads.callofduty.com/",
+                baseUrl=Request.squadsBaseUrl,
             )
         )
 
@@ -168,6 +170,6 @@ class HTTP:
             Request(
                 "GET",
                 f"api/v2/squad/lookup/name/{urllib.parse.quote(query)}",
-                baseUrl="https://squads.callofduty.com/",
+                baseUrl=Request.squadsBaseUrl,
             )
         )
