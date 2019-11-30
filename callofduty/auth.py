@@ -120,7 +120,7 @@ async def Login(email: str, password: str):
     Returns
     -------
     object
-        Authenticated Call of Duty Client.
+        Authenticated Call of Duty client.
     """
 
     auth = Auth(email, password)
