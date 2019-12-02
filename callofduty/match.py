@@ -1,41 +1,57 @@
 import logging
 
 from .enums import Platform, Title
-from .errors import CallofDutyException, InvalidMatchId, InvalidTitle
-from .user import User
+from .object import Object
+from .player import Player
 
 log = logging.getLogger(__name__)
 
 
-class Match:
-    def __init__(self, http: object, title: Title, platform: Platform, match: object):
-        self.http = http
-        self.title = title
-        self.platform = platform
-        self.match = match
+class Match(Object):
+    """
+    Represents a Call of Duty match object.
+
+    Parameters
+    ----------
+    id : int
+        Match ID.
+    platform : callofduty.Platform
+        Platform of the player.
+    title : callofduty.Title
+        Title which the match took place.
+    """
+
+    _type = "match"
+
+    def __init__(self, client: object, data: dict):
+        super().__init__(client, data)
+
+        self.id = data.pop("id")
+        self.platform = Platform(data.pop("platform"))
+        self.title = Title(data.pop("title"))
 
     async def teams(self):
-        matchId = self.match["matchId"]
+        """
+        Get the teams which played in the match.
 
-        # TODO (Tustin) Cache me!
-        data = await self.http.GetMatch(self.title.value, self.platform.value, matchId)
+        Returns
+        -------
+        list
+            Array containing two child arrays, one for each team. Each
+            team's array contains Player objects which represent the
+            players on the team.
+        """
 
-        # The API doesn't state which team is axis/allies,
-        # so no array key will be used
-        teams = []
+        return await self._client.GetMatchTeams(self.title, self.platform, self.id)
 
-        for team in data["data"]["teams"]:
-            it = []  # Current team iterator
+    async def details(self):
+        """
+        Get the full details of the match.
 
-            for player in team:
-                it.append(
-                    User(
-                        self.http,
-                        platform=player["provider"],
-                        username=player["unoUsername"],
-                    )
-                )
+        Returns
+        -------
+        dict
+            JSON data containing the full details of the match.
+        """
 
-            teams.append(it)
-
-        return teams
+        return await self._client.GetMatchDetails(self.title, self.platform, self.id)

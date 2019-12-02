@@ -19,31 +19,39 @@ class LoginFailure(ClientException):
     pass
 
 
-class InvalidMatchId(ClientException):
-    pass
-
-
 class InvalidPlatform(ClientException):
-    pass
+    """
+    Exception which is thrown when an invalid platform is passed to any
+    client function.
+    """
 
-
-class InvalidProfile(ClientException):
-    pass
-
-
-class UserNotFound(ClientException):
     pass
 
 
 class InvalidTitle(ClientException):
+    """
+    Exception which is thrown when an invalid title is passed to any
+    client function.
+    """
+
     pass
 
 
 class InvalidMode(ClientException):
+    """
+    Exception which is thrown when an invalid mode is passed to any
+    client function.
+    """
+
     pass
 
 
 class InvalidLanguage(ClientException):
+    """
+    Exception which is thrown when an invalid language is passed to any
+    client function.
+    """
+
     pass
 
 

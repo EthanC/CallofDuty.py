@@ -16,13 +16,15 @@ async def JSONorText(res: aiohttp.ClientResponse):
     Return a dict object for JSON data, otherwise return data as string.
     """
 
-    if res.headers["Content-Type"] == "application/json;charset=UTF-8":
+    if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
         return await res.json(encoding="utf-8")
     else:
         return await res.text(encoding="utf-8")
 
 
 class Request:
+    """Represents a Request object."""
+
     defaultBaseUrl = "https://callofduty.com/"
     myBaseUrl = "https://my.callofduty.com/"
     squadsBaseUrl = "https://squads.callofduty.com/"
@@ -47,7 +49,7 @@ class Request:
 
 
 class HTTP:
-    """Represents an HTTP client sending HTTP requests to the Call of Duty API."""
+    """HTTP client used to communicate with the Call of Duty API."""
 
     def __init__(self, auth):
         self.auth = auth
@@ -99,47 +101,6 @@ class HTTP:
 
         await self.session.close()
 
-    async def SearchPlayer(self, platform: str, searchTerm: str):
-        return await self.Request(
-            Request(
-                "GET",
-                f"api/papi-client/crm/cod/v2/platform/{platform}/username/{urllib.parse.quote(searchTerm)}/search",
-            )
-        )
-
-    async def GetProfile(self, title: str, platform: str, username: str, mode: str):
-        return await self.Request(
-            Request(
-                "GET",
-                f"api/papi-client/stats/cod/v1/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/{mode}",
-            )
-        )
-
-    async def GetRecentMatches(
-        self,
-        title: str,
-        platform: str,
-        username: str,
-        mode: str,
-        limit: int,
-        startTimestamp: int,
-        endTimeStamp: int,
-    ):
-        return await self.Request(
-            Request(
-                "GET",
-                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/{startTimestamp}/end/{endTimeStamp}?limit={limit}",
-            )
-        )
-
-    async def GetMatch(self, title: str, platform: str, matchId: int):
-        return await self.Request(
-            Request(
-                "GET",
-                f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
-            )
-        )
-
     async def GetAppLocalize(self, language: str):
         return await self.Request(
             Request(
@@ -156,20 +117,85 @@ class HTTP:
             )
         )
 
-    async def GetSquadChallenges(self):
+    async def SearchPlayer(self, platform: str, username: str):
         return await self.Request(
             Request(
                 "GET",
-                "api/v2/challenge/lookup/current",
+                f"api/papi-client/crm/cod/v2/platform/{platform}/username/{urllib.parse.quote(username)}/search",
+            )
+        )
+
+    async def GetPlayerProfile(
+        self, platform: str, username: str, title: str, mode: str
+    ):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/stats/cod/v1/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/profile/type/{mode}",
+            )
+        )
+
+    async def GetPlayerMatches(
+        self,
+        platform: str,
+        username: str,
+        title: str,
+        mode: str,
+        limit: int,
+        startTimestamp: int,
+        endTimeStamp: int,
+    ):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/{startTimestamp}/end/{endTimeStamp}?limit={limit}",
+            )
+        )
+
+    async def GetATVIPlayerMatches(
+        self,
+        platform: str,
+        username: str,
+        title: str,
+        mode: str,
+        limit: int,
+        startTimestamp: int,
+        endTimeStamp: int,
+    ):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/matches/{mode}/start/{startTimestamp}/end/{endTimeStamp}/details?limit={limit}",
+            )
+        )
+
+    async def GetMatch(self, title: str, platform: str, matchId: int):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
+            )
+        )
+
+    async def GetSquad(self, name: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/v2/squad/lookup/name/{urllib.parse.quote(name)}",
                 baseUrl=Request.squadsBaseUrl,
             )
         )
 
-    async def SearchSquad(self, query: str):
+    async def GetPlayerSquad(self, platform: str, username: str):
         return await self.Request(
             Request(
                 "GET",
-                f"api/v2/squad/lookup/name/{urllib.parse.quote(query)}",
+                f"api/v2/squad/lookup/platform/{platform}/gamer/{urllib.parse.quote(username)}",
                 baseUrl=Request.squadsBaseUrl,
             )
+        )
+
+    async def GetMySquad(self):
+        return await self.Request(
+            Request("GET", f"api/v2/squad/lookup/mine/", baseUrl=Request.squadsBaseUrl)
         )

@@ -10,10 +10,24 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
-    # user = (await client.search(Platform.Activision, "Tustin"))[1]
-    # print(f"{user.username} ({user.accountId})")
+    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # print(f"{player.username} ({player.platform})")
 
-    # profile = await user.profile(Title.ModernWarfare, Mode.Multiplayer)
+    # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
+    # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
+    # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, Mode.Multiplayer, match.id)
+    # teams = await match.teams()
+    # for team in teams:
+    #     for player in team:
+    #         print(player.username)
+    # details = await match.details()
+    # print(details)
+
+    # results = await client.SearchPlayers(Platform.Activision, "Tustin")
+    # for player in results:
+    #     print(f"{player.username} ({player.platform})")
+
+    # profile = await player.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
     # match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
@@ -22,17 +36,22 @@ async def main():
     #     for player in team:
     #         print(player.username)
 
-    # localize = await client.GetAppLocalize()
+    # localize = await client.GetLocalize()
     # print(localize)
 
     # challenge = await client.GetSquadChallenges()
     # print(challenge)
 
-    # squad = await client.SearchSquad("Autists")
-    # print(squad)
+    # squad = await client.GetSquad("Autists")
+    # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#8649242")
+    # squad = await client.GetMySquad()
+    # print(f"{squad.name} - {squad.description}")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # for member in squad.members:
+    #     if member.username != squad.owner.username:
+    #         print(f"Member: {member.username} ({member.platform})")
 
-    # Temporary
-    await client.http.CloseSession()
+    await client.Logout()
 
 
 asyncio.run(main())
