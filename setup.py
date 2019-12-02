@@ -28,7 +28,7 @@ setuptools.setup(
     version=version,
     packages=setuptools.find_packages(),
     license="MIT",
-    description="A modern, easy to use, feature-rich, and async-ready API wrapper for Call of Duty written in Python.",
+    description="CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API.",
     long_description=readme,
     long_description_content_type="text/markdown",
     install_requires=["aiohttp"],
