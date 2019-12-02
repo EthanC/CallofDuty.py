@@ -1,3 +1,8 @@
+import logging
+
+log = logging.getLogger(__name__)
+
+
 class Object:
     """Represents a generic Call of Duty object."""
 

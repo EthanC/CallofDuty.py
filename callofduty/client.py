@@ -1,4 +1,3 @@
-import asyncio
 import logging
 
 from .enums import Language, Mode, Platform, Title

@@ -2,7 +2,6 @@ import logging
 
 from .enums import Platform, Title
 from .object import Object
-from .player import Player
 
 log = logging.getLogger(__name__)
 
