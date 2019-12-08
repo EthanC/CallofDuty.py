@@ -22,7 +22,7 @@ setuptools.setup(
     author="EthanC",
     url="https://github.com/EthanC/CallofDuty.py",
     project_urls={
-        "Documentation": "https://ethanc.gitbook.io/callofduty-py/",
+        "Documentation": "https://google.com/",
         "Issue Tracker": "https://github.com/EthanC/CallofDuty.py/issues",
     },
     version=version,
@@ -34,7 +34,7 @@ setuptools.setup(
     install_requires=["aiohttp"],
     python_requires=">=3.7.3",
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
         "Natural Language :: English",
