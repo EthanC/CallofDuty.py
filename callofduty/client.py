@@ -43,6 +43,32 @@ class Client:
 
         return {**web, **app}
 
+    async def GetFriendFeed(self):
+        """
+        Get the Friend Feed of the authenticated Call of Duty player.
+
+        Returns
+        -------
+        dict
+            JSON data of the player's Friend Feed.
+        """
+
+        data = (await self.http.GetFriendFeed())["data"]
+
+        players = []
+
+        for i in data["identities"]:
+            _player = Player(
+                self, {"platform": i["platform"], "username": i["username"]}
+            )
+            players.append(_player)
+
+        return {
+            "events": data["events"],
+            "players": players,
+            "metadata": data["metadata"],
+        }
+
     async def GetPlayer(self, platform: Platform, username: str):
         """
         Get a Call of Duty player using their platform and username.

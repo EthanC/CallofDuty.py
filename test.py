@@ -13,6 +13,10 @@ async def main():
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")
 
+    # feed = await client.GetFriendFeed()
+    # for event in feed["events"][:5]:
+    #     print(event["rendered"])
+
     # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
     # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, Mode.Multiplayer, match.id)

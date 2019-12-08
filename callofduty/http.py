@@ -116,6 +116,11 @@ class HTTP:
             )
         )
 
+    async def GetFriendFeed(self):
+        return await self.Request(
+            Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")
+        )
+
     async def SearchPlayer(self, platform: str, username: str):
         return await self.Request(
             Request(
