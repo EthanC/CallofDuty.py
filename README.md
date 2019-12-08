@@ -1,6 +1,6 @@
 # Welcome to CallofDuty.py
 
- CallofDuty.py CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API. [![](https://img.shields.io/pypi/v/callofduty.py?label=Version&style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/pypi/dm/callofduty.py?style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/twitter/follow/Mxtive?color=1da1f2&label=Twitter&style=for-the-badge)](https://twitter.com/Mxtive) [![](https://img.shields.io/discord/136986169563938816?color=7289DA&label=Discord&style=for-the-badge)](https://discord.gg/callofduty)
+ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API. [![](https://img.shields.io/pypi/v/callofduty.py?label=Version&style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/pypi/dm/callofduty.py?style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/twitter/follow/Mxtive?color=1da1f2&label=Twitter&style=for-the-badge)](https://twitter.com/Mxtive) [![](https://img.shields.io/discord/136986169563938816?color=7289DA&label=Discord&style=for-the-badge)](https://discord.gg/callofduty)
 
 ## Features
 
