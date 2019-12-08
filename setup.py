@@ -22,7 +22,7 @@ setuptools.setup(
     author="EthanC",
     url="https://github.com/EthanC/CallofDuty.py",
     project_urls={
-        "Documentation": "https://google.com/",
+        "Documentation": "https://ethanc.gitbook.io/callofduty-py/",
         "Issue Tracker": "https://github.com/EthanC/CallofDuty.py/issues",
     },
     version=version,

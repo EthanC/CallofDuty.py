@@ -14,7 +14,7 @@ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of
 
 Construct a new Call of Duty client, then use the various services on the client to access different parts of the Call of Duty API.
 
-For complete usage of CallofDuty.py, see the Documentation.
+For complete usage of CallofDuty.py, see the [Documentation](https://ethanc.gitbook.io/callofduty-py/).
 
 ### Installation
 
