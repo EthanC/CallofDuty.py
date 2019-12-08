@@ -1,21 +1,12 @@
-<div align="center">
+# Welcome to CallofDuty.py
 
-# CallofDuty.py
-
-CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API.
-
-<a href="https://pypi.python.org/pypi/callofduty.py"><img src="https://img.shields.io/pypi/v/callofduty.py?label=Version&style=for-the-badge" /></a>
-<a href="https://pypi.python.org/pypi/callofduty.py"><img src="https://img.shields.io/pypi/dm/callofduty.py?style=for-the-badge" /></a>
-<a href="https://twitter.com/Mxtive"><img src="https://img.shields.io/twitter/follow/Mxtive?color=1da1f2&label=Twitter&style=for-the-badge" /></a>
-<a href="https://discord.gg/callofduty"><img src="https://img.shields.io/discord/136986169563938816?color=7289DA&label=Discord&style=for-the-badge" /></a>
-
-</div>
+ CallofDuty.py CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API. [![](https://img.shields.io/pypi/v/callofduty.py?label=Version&style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/pypi/dm/callofduty.py?style=for-the-badge)](https://pypi.python.org/pypi/callofduty.py) [![](https://img.shields.io/twitter/follow/Mxtive?color=1da1f2&label=Twitter&style=for-the-badge)](https://twitter.com/Mxtive) [![](https://img.shields.io/discord/136986169563938816?color=7289DA&label=Discord&style=for-the-badge)](https://discord.gg/callofduty)
 
 ## Features
 
--   Fully asynchronous using async and await
--   Object-oriented nature allows for ease of use
--   More soon...
+* Fully asynchronous using async and await
+* Object-oriented nature allows for ease of use
+* More soon...
 
 ## Usage
 
@@ -27,7 +18,7 @@ For complete usage of CallofDuty.py, see the Documentation.
 
 CallofDuty.py requires Python 3.7 or higher. Once that requirement is met, simply install CallofDuty.py using pip!
 
-```
+```text
 pip install callofduty.py
 ```
 
@@ -35,12 +26,12 @@ pip install callofduty.py
 
 The following is a complete example which demonstrates:
 
--   Searching for a user
--   Listing the first 3 search results
--   Getting the profile of the second result
--   Displaying their basic statistics
+* Searching for a user
+* Listing the first 3 search results
+* Getting the profile of the second result
+* Displaying their basic statistics
 
-```py
+```python
 import asyncio
 
 import callofduty
@@ -67,3 +58,4 @@ async def main():
 
 asyncio.run(main())
 ```
+
