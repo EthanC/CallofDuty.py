@@ -146,6 +146,71 @@ class Client:
 
         return accounts
 
+    async def GetMyFriends(self):
+        """
+        Get the Friends of the authenticated Call of Duty player.
+
+        Returns
+        -------
+        list
+            Array of Player objects for the friends.
+        """
+
+        data = (await self.http.GetMyFriends())["data"]
+
+        friends = []
+
+        for friend in data["uno"]:
+            friends.append(
+                Player(
+                    self,
+                    {
+                        "platform": friend["platform"],
+                        "username": friend["username"],
+                        "accountId": friend.get("accountId"),
+                        "online": friend["status"]["online"],
+                    },
+                )
+            )
+
+        for _platform in data["firstParty"]:
+            for friend in data["firstParty"][_platform]:
+                friends.append(
+                    Player(
+                        self,
+                        {
+                            "platform": friend["platform"],
+                            "username": friend["username"],
+                            "accountId": friend.get("accountId"),
+                            "avatarUrls": [friend.get("avatarUrlLargeSsl")],
+                            "online": friend["status"]["online"],
+                        },
+                    )
+                )
+
+                identities = friend.get("identities", [])
+
+                for _platform in identities:
+                    friends.append(
+                        Player(
+                            self,
+                            {
+                                "platform": friend["identities"][_platform]["platform"],
+                                "username": friend["identities"][_platform]["username"],
+                                "accountId": friend["identities"][_platform][
+                                    "accountId"
+                                ],
+                                "avatarUrls": [
+                                    friend["identities"][_platform].get(
+                                        "avatarUrlLargeSsl"
+                                    )
+                                ],
+                            },
+                        )
+                    )
+
+        return friends
+
     async def GetPlayer(self, platform: Platform, username: str):
         """
         Get a Call of Duty player using their platform and username.

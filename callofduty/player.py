@@ -20,6 +20,8 @@ class Player(Object):
         Account ID for the player's designated platform (typically Activision.)
     avatarUrls : list, optional
         Array of url strings which return an image of the player's avatar.
+    online : bool, optional
+        Boolean indicating whether or not the player is currently online.
     """
 
     _type = "player"
@@ -31,6 +33,7 @@ class Player(Object):
         self.username = data.pop("username")
         self.accountId = data.pop("accountId", None)
         self.avatarUrls = data.pop("avatarUrls", [])
+        self.online = data.pop("online", False)
 
     async def profile(self, title: Title, mode: Mode):
         """

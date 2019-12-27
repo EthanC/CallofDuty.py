@@ -10,6 +10,10 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
+    # friends = await client.GetMyFriends()
+    # for friend in friends:
+    #     print(f"{friend.platform.name}: {friend.username} ({friend.accountId}), Online? {friend.online}")
+
     # identities = await client.GetMyIdentities()
     # for identity in identities:
     #     title = identity["title"].name
