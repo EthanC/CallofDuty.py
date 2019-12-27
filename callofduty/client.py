@@ -96,6 +96,33 @@ class Client:
             "metadata": data["metadata"],
         }
 
+    async def GetMyIdentities(self):
+        """
+        Get the Title Identities for the authenticated Call of Duty player.
+
+        Returns
+        -------
+        list
+            Array of identities containing title, platform, username, and more.
+        """
+
+        data = (await self.http.GetMyIdentities())["data"]
+
+        identities = []
+
+        for identity in data["titleIdentities"]:
+            identities.append(
+                {
+                    "title": Title(identity.pop("title")),
+                    "platform": Platform(identity.pop("platform")),
+                    "username": identity["username"],
+                    "activeDate": identity["activeDate"],
+                    "activityType": identity["activityType"],
+                }
+            )
+
+        return identities
+
     async def GetPlayer(self, platform: Platform, username: str):
         """
         Get a Call of Duty player using their platform and username.

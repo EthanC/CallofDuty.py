@@ -10,6 +10,14 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
+    # identities = await client.GetMyIdentities()
+    # for identity in identities:
+    #     title = identity["title"].name
+    #     username = identity["username"]
+    #     platform = identity["platform"].name
+
+    #     print(f"{title}: {username} ({platform})")
+
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")
 
