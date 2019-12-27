@@ -664,6 +664,32 @@ class Client:
             )["data"],
         )
 
+    async def GetAvailableMaps(
+        self,
+        title: Title,
+        platform: Platform = Platform.PlayStation,
+        mode: Mode = Mode.Multiplayer,
+    ):
+        """
+        Get the Maps available in the specified Title for Heat Map use.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the maps originate.
+        platform : callofduty.Platform, optional
+            Platform which the maps are available on (default is PlayStation.)
+        mode: callofduty.Mode, optional
+            Call of Duty mode to get the maps from (default is Multiplayer.)
+
+        Returns
+        -------
+        list
+            Array of Maps and the Game Modes which are available each map.
+        """
+
+        return (await self.http.GetAvailableMaps(title.value, platform.value, mode.value))["data"]
+
     async def GetSquad(self, name: str):
         """
         Get a Call of Duty Squad using its name.

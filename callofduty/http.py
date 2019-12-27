@@ -231,6 +231,14 @@ class HTTP:
             )
         )
 
+    async def GetAvailableMaps(self, title: str, platform: str, mode: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/ce/v1/title/{title}/platform/{platform}/gameType/{mode}/communityMapData/availability",
+            )
+        )
+
     async def GetSquad(self, name: str):
         return await self.Request(
             Request(

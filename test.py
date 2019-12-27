@@ -58,6 +58,12 @@ async def main():
     # for event in feed["events"][:5]:
     #     print(event["rendered"])
 
+    # maps = await client.GetAvailableMaps(Title.ModernWarfare)
+    # for mapName in maps:
+    #     print(mapName)
+    #     for mode in maps[mapName]:
+    #         print(f" - {mode}")
+
     # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
     # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, Mode.Multiplayer, match.id)
