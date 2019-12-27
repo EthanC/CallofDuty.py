@@ -239,6 +239,14 @@ class HTTP:
             )
         )
 
+    async def GetLootSeason(self, title: str, season: int, platform: str, language: str):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/loot/title/{title}/platform/{platform}/list/loot_season_{season}/{language}",
+            )
+        )
+
     async def GetSquad(self, name: str):
         return await self.Request(
             Request(

@@ -10,6 +10,14 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
+    # season = await client.GetLootSeason(Title.ModernWarfare, 1)
+    # print(season["categoryTitle"])
+    # for i in season["tiers"]:
+    #     itemName = season["tiers"][i]["label"]
+    #     itemRarity = season["tiers"][i]["rarity"]
+    #     itemType = season["tiers"][i]["type"]
+    #     print(f"{itemName} ({itemRarity} {itemType})")
+
     # requests = await client.GetMyFriendRequests()
     # for incoming in requests["incoming"]:
     #     print(f"Incoming Friend Request: {incoming.username} ({incoming.platform})")

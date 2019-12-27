@@ -690,6 +690,35 @@ class Client:
 
         return (await self.http.GetAvailableMaps(title.value, platform.value, mode.value))["data"]
 
+    async def GetLootSeason(self, title: Title, season: int, **kwargs):
+        """
+        Get a Call of Duty Loot Season by its title and number.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the loot season originates.
+        season : int
+            Loot season number.
+        platform : callofduty.Platform, optional
+            Platform which the loot season is available on (default is PlayStation.)
+        language : callofduty.Language, optional
+            Language which the loot data should be in (default is English.)
+
+        Returns
+        -------
+        dict
+            JSON data representing the requested loot season.
+        """
+
+        platform = kwargs.get("platform", Platform.PlayStation)
+        language = kwargs.get("language", Language.English)
+
+        VerifyPlatform(platform)
+        VerifyLanguage(language)
+
+        return (await self.http.GetLootSeason(title.value, season, platform.value, language.value))["data"]
+
     async def GetSquad(self, name: str):
         """
         Get a Call of Duty Squad using its name.
