@@ -211,6 +211,50 @@ class Client:
 
         return friends
 
+    async def GetMyFriendRequests(self):
+        """
+        Get the incoming and outgoing Friend Requests for the authenticated
+        Call of Duty player.
+
+        Returns
+        -------
+        dict
+            JSON data of the player's friend requests.
+        """
+
+        data = (await self.http.GetMyFriends())["data"]
+
+        incoming = []
+        outgoing = []
+
+        for request in data["incomingInvitations"]:
+            incoming.append(
+                Player(
+                    self,
+                    {
+                        "platform": request["platform"],
+                        "username": request["username"],
+                        "accountId": request.get("accountId"),
+                        "online": request["status"]["online"],
+                    },
+                )
+            )
+
+        for request in data["outgoingInvitations"]:
+            outgoing.append(
+                Player(
+                    self,
+                    {
+                        "platform": request["platform"],
+                        "username": request["username"],
+                        "accountId": request.get("accountId"),
+                        "online": request["status"]["online"],
+                    },
+                )
+            )
+
+        return {"incoming": incoming, "outgoing": outgoing}
+
     async def GetPlayer(self, platform: Platform, username: str):
         """
         Get a Call of Duty player using their platform and username.

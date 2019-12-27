@@ -10,6 +10,12 @@ async def main():
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
+    # requests = await client.GetMyFriendRequests()
+    # for incoming in requests["incoming"]:
+    #     print(f"Incoming Friend Request: {incoming.username} ({incoming.platform})")
+    # for outgoing in requests["outgoing"]:
+    #     print(f"Outgoing Friend Request: {outgoing.username} ({outgoing.platform})")
+
     # friends = await client.GetMyFriends()
     # for friend in friends:
     #     print(f"{friend.platform.name}: {friend.username} ({friend.accountId}), Online? {friend.online}")
