@@ -94,3 +94,28 @@ class Player(Object):
         """
 
         return await self._client.GetPlayerSquad(self.platform, self.username)
+
+    async def leaderboard(self, title: Title, **kwargs):
+        """
+        Get the Call of Duty player's position on the specified Leaderboard.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the leaderboard represents.
+        gameType : callofduty.GameType, optional
+            Game type to get the leaderboard for (default is Core.)
+        gameMode : callofduty.GameMode, optional
+            Game mode to get the leaderboard for (default is Career.)
+        timeFrame : callofduty.TimeFrame, optional
+            Time Frame to get the leaderboard for (default is All-Time.)
+
+        Returns
+        -------
+        object
+            Leaderboard object representing the specified details.
+        """
+
+        return await self._client.GetPlayerLeaderboard(
+            title, self.platform, self.username, **kwargs
+        )

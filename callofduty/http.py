@@ -181,6 +181,38 @@ class HTTP:
             )
         )
 
+    async def GetLeaderboard(
+        self,
+        title: str,
+        platform: str,
+        gameType: str,
+        gameMode: str,
+        timeFrame: str,
+        page: int,
+    ):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/leaderboards/v2/title/{title}/platform/{platform}/time/{timeFrame}/type/{gameType}/mode/{gameMode}/page/{page}",
+            )
+        )
+
+    async def GetPlayerLeaderboard(
+        self,
+        title: str,
+        platform: str,
+        username: str,
+        gameType: str,
+        gameMode: str,
+        timeFrame: str,
+    ):
+        return await self.Request(
+            Request(
+                "GET",
+                f"api/papi-client/leaderboards/v2/title/{title}/platform/{platform}/time/{timeFrame}/type/{gameType}/mode/{gameMode}/gamer/{urllib.parse.quote(username)}",
+            )
+        )
+
     async def GetSquad(self, name: str):
         return await self.Request(
             Request(

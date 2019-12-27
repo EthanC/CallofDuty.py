@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import callofduty
-from callofduty import Mode, Platform, Title
+from callofduty import GameMode, GameType, Mode, Platform, TimeFrame, Title
 
 
 async def main():
@@ -12,6 +12,20 @@ async def main():
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")
+
+    # leaderboard = await client.GetLeaderboard(
+    #     Title.ModernWarfare, Platform.BattleNet, gameMode=GameMode.CyberAttack, page=3
+    # )
+    # print((leaderboard.entries)[0])
+
+    # leaderboard = await client.GetPlayerLeaderboard(
+    #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"
+    # )
+    # print((leaderboard.entries)[0])
+
+    # player = await client.GetPlayer(Platform.Steam, "RdJokr")
+    # leaderboard = await player.leaderboard(Title.WWII)
+    # print((leaderboard.entries)[17])
 
     # feed = await client.GetFriendFeed()
     # for event in feed["events"][:5]:

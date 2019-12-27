@@ -29,3 +29,41 @@ class Language(Enum):
     German = "de"
     Italian = "it"
     Spanish = "es"
+
+
+class TimeFrame(Enum):
+    AllTime = "alltime"
+    Monthly = "monthly"
+    Weekly = "weekly"
+
+
+class GameType(Enum):
+    Core = "core"
+    Hardcore = "hc"
+    WorldLeague = "arena"
+
+
+class GameMode(Enum):
+    Career = "career"
+    ZombiesCareer = "zcareer"
+    TeamDeathmatch = "war"
+    TeamDeathmatchBO4 = "tdm"
+    CyberAttack = "cyber"
+    Domination = "dom"
+    SearchAndDestroy = "sd"
+    Headquarters = "hq"
+    FreeForAll = "dm"
+    Hardpoint = "koth"
+    HardpointWWII = "hp"
+    CaptureTheFlag = "ctf"
+    KillConfirmed = "conf"
+    GunGame = "gun"
+    Safeguard = "escort"
+    Control = "control"
+    Heist = "bounty"
+    Solo = "warzone_solo"
+    Duos = "warzone_duo"
+    Quads = "warzone_quad"
+    Gridiron = "ball"
+    OnevOne = "1v1"
+    War = "raid"

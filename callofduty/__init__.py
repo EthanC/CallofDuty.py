@@ -13,6 +13,7 @@ from .auth import Login
 from .client import Client
 from .enums import *
 from .errors import *
+from .leaderboard import Leaderboard
 from .match import Match
 from .player import Player
 from .squad import Squad

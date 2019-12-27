@@ -1,10 +1,19 @@
 import logging
 
-from .enums import Language, Mode, Platform, Title
+from .enums import GameMode, GameType, Language, Mode, Platform, TimeFrame, Title
+from .leaderboard import Leaderboard
 from .match import Match
 from .player import Player
 from .squad import Squad
-from .utils import VerifyLanguage, VerifyMode, VerifyPlatform, VerifyTitle
+from .utils import (
+    VerifyGameMode,
+    VerifyGameType,
+    VerifyLanguage,
+    VerifyMode,
+    VerifyPlatform,
+    VerifyTimeFrame,
+    VerifyTitle,
+)
 
 log = logging.getLogger(__name__)
 
@@ -374,6 +383,107 @@ class Client:
             teams.append(i)
 
         return teams
+
+    async def GetLeaderboard(self, title: Title, platform: Platform, **kwargs):
+        """
+        Get a Call of Duty leaderboard.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the leaderboard represents.
+        platform : callofduty.Platform
+            Platform to get which the leaderboard represents.
+        gameType : callofduty.GameType, optional
+            Game type to get the leaderboard for (default is Core.)
+        gameMode : callofduty.GameMode, optional
+            Game mode to get the leaderboard for (default is Career.)
+        timeFrame : callofduty.TimeFrame, optional
+            Time Frame to get the leaderboard for (default is All-Time.)
+        page : int, optional
+            Leaderboard page to get (default is 1.)
+
+        Returns
+        -------
+        object
+            Leaderboard object representing the specified details.
+        """
+
+        gameType = kwargs.get("gameType", GameType.Core)
+        gameMode = kwargs.get("gameMode", GameMode.Career)
+        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+        page = kwargs.get("page", 1)
+
+        VerifyTitle(title)
+        VerifyPlatform(platform)
+        VerifyGameType(gameType)
+        VerifyGameMode(gameMode)
+        VerifyTimeFrame(timeFrame)
+
+        return Leaderboard(
+            self,
+            (
+                await self.http.GetLeaderboard(
+                    title.value,
+                    platform.value,
+                    gameType.value,
+                    gameMode.value,
+                    timeFrame.value,
+                    page,
+                )
+            )["data"],
+        )
+
+    async def GetPlayerLeaderboard(
+        self, title: Title, platform: Platform, username: str, **kwargs
+    ):
+        """
+        Get a Call of Duty leaderboard.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the leaderboard represents.
+        platform : callofduty.Platform
+            Platform to get which the leaderboard represents.
+        username : str
+            Player's username for the designated platform.
+        gameType : callofduty.GameType, optional
+            Game type to get the leaderboard for (default is Core.)
+        gameMode : callofduty.GameMode, optional
+            Game mode to get the leaderboard for (default is Career.)
+        timeFrame : callofduty.TimeFrame, optional
+            Time Frame to get the leaderboard for (default is All-Time.)
+
+        Returns
+        -------
+        object
+            Leaderboard object representing the specified details.
+        """
+
+        gameType = kwargs.get("gameType", GameType.Core)
+        gameMode = kwargs.get("gameMode", GameMode.Career)
+        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+
+        VerifyTitle(title)
+        VerifyPlatform(platform)
+        VerifyGameType(gameType)
+        VerifyGameMode(gameMode)
+        VerifyTimeFrame(timeFrame)
+
+        return Leaderboard(
+            self,
+            (
+                await self.http.GetPlayerLeaderboard(
+                    title.value,
+                    platform.value,
+                    username,
+                    gameType.value,
+                    gameMode.value,
+                    timeFrame.value,
+                )
+            )["data"],
+        )
 
     async def GetSquad(self, name: str):
         """
