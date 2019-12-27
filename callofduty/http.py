@@ -116,6 +116,9 @@ class HTTP:
             )
         )
 
+    async def GetNewsFeed(self, language: str):
+        return await self.Request(Request("GET", f"site/cod/franchiseFeed/{language}"))
+
     async def GetFriendFeed(self):
         return await self.Request(
             Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")

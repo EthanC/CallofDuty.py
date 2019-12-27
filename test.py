@@ -13,6 +13,10 @@ async def main():
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")
 
+    # news = await client.GetNewsFeed()
+    # for post in news["blog"][:10]:
+    #     print(post["title"])
+
     # leaderboard = await client.GetLeaderboard(
     #     Title.ModernWarfare, Platform.BattleNet, gameMode=GameMode.CyberAttack, page=3
     # )

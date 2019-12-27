@@ -52,6 +52,24 @@ class Client:
 
         return {**web, **app}
 
+    async def GetNewsFeed(self, language: Language = Language.English):
+        """
+        Get the Call of Duty franchise feed, includes blog posts and
+        the Companion App message of the day.
+
+        Parameters
+        ----------
+        language : callofduty.Language, optional
+            Language to use for localization data (default is English.)
+
+        Returns
+        -------
+        dict
+            JSON data containing the Call of Duty franchise feed.
+        """
+
+        return await self.http.GetNewsFeed(language.value)
+
     async def GetFriendFeed(self):
         """
         Get the Friend Feed of the authenticated Call of Duty player.
