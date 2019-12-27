@@ -123,6 +123,29 @@ class Client:
 
         return identities
 
+    async def GetMyAccounts(self):
+        """
+        Get the linked Accounts for the authenticated Call of Duty player.
+
+        Returns
+        -------
+        list
+            Array of Player objects for the linked accounts.
+        """
+
+        data = (await self.http.GetMyAccounts())["data"]
+
+        accounts = []
+
+        for account in data.keys():
+            accounts.append(
+                Player(
+                    self, {"platform": account, "username": data[account]["username"]}
+                )
+            )
+
+        return accounts
+
     async def GetPlayer(self, platform: Platform, username: str):
         """
         Get a Call of Duty player using their platform and username.

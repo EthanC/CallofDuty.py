@@ -15,8 +15,11 @@ async def main():
     #     title = identity["title"].name
     #     username = identity["username"]
     #     platform = identity["platform"].name
-
     #     print(f"{title}: {username} ({platform})")
+
+    # accounts = await client.GetMyAccounts()
+    # for account in accounts:
+    #     print(f"{account.username} ({account.platform.name})")
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")

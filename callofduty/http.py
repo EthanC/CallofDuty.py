@@ -129,6 +129,11 @@ class HTTP:
             Request("GET", "api/papi-client/crm/cod/v2/identities/")
         )
 
+    async def GetMyAccounts(self):
+        return await self.Request(
+            Request("GET", "api/papi-client/crm/cod/v2/accounts/")
+        )
+
     async def SearchPlayer(self, platform: str, username: str):
         return await self.Request(
             Request(
