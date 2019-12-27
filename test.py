@@ -19,6 +19,8 @@ async def main():
     # friends = await client.GetMyFriends()
     # for friend in friends:
     #     print(f"{friend.platform.name}: {friend.username} ({friend.accountId}), Online? {friend.online}")
+    #     for identity in friend.identities:
+    #         print(f" - {identity.platform.name}: {identity.username} ({identity.accountId})")
 
     # identities = await client.GetMyIdentities()
     # for identity in identities:

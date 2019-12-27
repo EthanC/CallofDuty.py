@@ -175,23 +175,11 @@ class Client:
 
         for _platform in data["firstParty"]:
             for friend in data["firstParty"][_platform]:
-                friends.append(
-                    Player(
-                        self,
-                        {
-                            "platform": friend["platform"],
-                            "username": friend["username"],
-                            "accountId": friend.get("accountId"),
-                            "avatarUrls": [friend.get("avatarUrlLargeSsl")],
-                            "online": friend["status"]["online"],
-                        },
-                    )
-                )
+                i = friend.get("identities", [])
+                identities = []
 
-                identities = friend.get("identities", [])
-
-                for _platform in identities:
-                    friends.append(
+                for _platform in i:
+                    identities.append(
                         Player(
                             self,
                             {
@@ -208,6 +196,20 @@ class Client:
                             },
                         )
                     )
+
+                friends.append(
+                    Player(
+                        self,
+                        {
+                            "platform": friend["platform"],
+                            "username": friend["username"],
+                            "accountId": friend.get("accountId"),
+                            "avatarUrls": [friend.get("avatarUrlLargeSsl")],
+                            "online": friend["status"]["online"],
+                            "identities": identities,
+                        },
+                    )
+                )
 
         return friends
 
