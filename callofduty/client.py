@@ -596,19 +596,22 @@ class Client:
         VerifyGameMode(gameMode)
         VerifyTimeFrame(timeFrame)
 
-        return Leaderboard(
-            self,
-            (
-                await self.http.GetLeaderboard(
-                    title.value,
-                    platform.value,
-                    gameType.value,
-                    gameMode.value,
-                    timeFrame.value,
-                    page,
-                )
-            )["data"],
-        )
+        data = (
+            await self.http.GetLeaderboard(
+                title.value,
+                platform.value,
+                gameType.value,
+                gameMode.value,
+                timeFrame.value,
+                page,
+            )
+        )["data"]
+
+        # Leaderboard responses don't include the timeFrame, so we'll
+        # just add it manually.
+        data["timeFrame"] = timeFrame.value
+
+        return Leaderboard(self, data)
 
     async def GetPlayerLeaderboard(
         self, title: Title, platform: Platform, username: str, **kwargs
@@ -647,19 +650,86 @@ class Client:
         VerifyGameMode(gameMode)
         VerifyTimeFrame(timeFrame)
 
-        return Leaderboard(
-            self,
-            (
-                await self.http.GetPlayerLeaderboard(
-                    title.value,
-                    platform.value,
-                    username,
-                    gameType.value,
-                    gameMode.value,
-                    timeFrame.value,
+        data = (
+            await self.http.GetPlayerLeaderboard(
+                title.value,
+                platform.value,
+                username,
+                gameType.value,
+                gameMode.value,
+                timeFrame.value,
+            )
+        )["data"]
+
+        # Leaderboard responses don't include the timeFrame, so we'll
+        # just add it manually.
+        data["timeFrame"] = timeFrame.value
+
+        return Leaderboard(self, data)
+
+    async def GetLeaderboardPlayers(self, title: Title, platform: Platform, **kwargs):
+        """
+        Get the players from a Call of Duty leaderboard.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title which the leaderboard represents.
+        platform : callofduty.Platform
+            Platform to get which the leaderboard represents.
+        gameType : callofduty.GameType, optional
+            Game type to get the leaderboard for (default is Core.)
+        gameMode : callofduty.GameMode, optional
+            Game mode to get the leaderboard for (default is Career.)
+        timeFrame : callofduty.TimeFrame, optional
+            Time Frame to get the leaderboard for (default is All-Time.)
+        page : int, optional
+            Leaderboard page to get (default is 1.)
+
+        Returns
+        -------
+        list
+            Array containing Player objects for each Leaderboard entry.
+        """
+
+        gameType = kwargs.get("gameType", GameType.Core)
+        gameMode = kwargs.get("gameMode", GameMode.Career)
+        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+        page = kwargs.get("page", 1)
+
+        VerifyTitle(title)
+        VerifyPlatform(platform)
+        VerifyGameType(gameType)
+        VerifyGameMode(gameMode)
+        VerifyTimeFrame(timeFrame)
+
+        data = (
+            await self.http.GetLeaderboard(
+                title.value,
+                platform.value,
+                gameType.value,
+                gameMode.value,
+                timeFrame.value,
+                page,
+            )
+        )["data"]
+
+        # Leaderboard responses don't include the timeFrame, so we'll
+        # just add it manually.
+        data["timeFrame"] = timeFrame.value
+
+        data = Leaderboard(self, data)
+
+        players = []
+
+        for _player in data.entries:
+            players.append(
+                Player(
+                    self, {"platform": platform.value, "username": _player["username"]}
                 )
-            )["data"],
-        )
+            )
+
+        return players
 
     async def GetAvailableMaps(
         self,

@@ -1,6 +1,6 @@
 import logging
 
-from .enums import GameMode, GameType, Platform, Title
+from .enums import GameMode, GameType, Platform, TimeFrame, Title
 from .object import Object
 
 log = logging.getLogger(__name__)
@@ -20,6 +20,8 @@ class Leaderboard(Object):
         Game type to get the leaderboard for (default is Core.)
     gameMode : callofduty.GameMode, optional
         Game mode to get the leaderboard for (default is Career.)
+    timeFrame : callofduty.TimeFrame, optional
+        Time Frame to get the leaderboard for (default is All-Time.)
     page : int, optional
         Leaderboard page to get (default is 1.)
     """
@@ -33,9 +35,28 @@ class Leaderboard(Object):
         self.platform = Platform(data.pop("platform"))
         self.gameType = GameType(data.pop("leaderboardType"))
         self.gameMode = GameMode(data.pop("gameMode"))
+        self.timeFrame = TimeFrame(data.pop("timeFrame"))
         self.page = data.pop("page")
 
-        self.requested = data.pop("resultsRequested")
         self.pages = data.pop("totalPages")
         self.columns = data.pop("columns")
         self.entries = data.pop("entries")
+
+    async def players(self):
+        """
+        Get the players from a Call of Duty leaderboard.
+
+        Returns
+        -------
+        list
+            Array containing Player objects for each Leaderboard entry.
+        """
+
+        return await self._client.GetLeaderboardPlayers(
+            self.title,
+            self.platform,
+            gameType=self.gameType,
+            gameMode=self.gameMode,
+            timeFrame=self.timeFrame,
+            page=self.page,
+        )

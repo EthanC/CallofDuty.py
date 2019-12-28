@@ -52,6 +52,8 @@ async def main():
     #     Title.ModernWarfare, Platform.BattleNet, gameMode=GameMode.CyberAttack, page=3
     # )
     # print((leaderboard.entries)[0])
+    # for player in await leaderboard.players():
+    #     print(f"{player.username} ({player.platform})")
 
     # leaderboard = await client.GetPlayerLeaderboard(
     #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"
