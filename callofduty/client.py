@@ -843,3 +843,24 @@ class Client:
         """
 
         return Squad(self, (await self.http.GetMySquad())["data"])
+
+    async def JoinSquad(self, name: str):
+        """
+        Join a Call of Duty Squad using its name.
+
+        Parameters
+        ----------
+        name : str
+            Name of Squad.
+        """
+
+        await self.http.JoinSquad(name)
+
+    async def LeaveSquad(self):
+        """
+        Leave the Call of Duty Squad of the authenticated player.
+
+        Upon leaving a Squad, the player is automatically placed into a random Squad.
+        """
+
+        await self.http.LeaveSquad()

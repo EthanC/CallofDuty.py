@@ -103,6 +103,19 @@ async def main():
     #     if member.username != squad.owner.username:
     #         print(f"Member: {member.username} ({member.platform})")
 
+    # squad = await client.GetMySquad()
+    # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
+
+    # print(f"Leaving Squad '{squad.name}''...")
+    # await client.LeaveSquad()
+
+    # squad = await client.GetSquad("Hmmmm")
+    # print(f"Joining Squad '{squad.name}'...")
+    # await squad.join()
+    # squad = await client.GetMySquad()
+    # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
+
+
     await client.Logout()
 
 

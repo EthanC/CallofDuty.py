@@ -71,3 +71,8 @@ class Squad(Object):
                 )
             )
         self.members = _members
+
+    async def join(self):
+        """Join the Call of Duty Squad."""
+
+        await self._client.JoinSquad(self.name)
