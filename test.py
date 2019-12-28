@@ -74,7 +74,7 @@ async def main():
 
     # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
-    # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, Mode.Multiplayer, match.id)
+    # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, match.id)
     # teams = await match.teams()
     # for team in teams:
     #     for player in team:
@@ -89,17 +89,8 @@ async def main():
     # profile = await player.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
-    # match = (await user.matches(Title.ModernWarfare, Mode.Multiplayer))[0]
-    # teams = await match.teams()
-    # for team in teams:
-    #     for player in team:
-    #         print(player.username)
-
     # localize = await client.GetLocalize()
     # print(localize)
-
-    # challenge = await client.GetSquadChallenges()
-    # print(challenge)
 
     # squad = await client.GetSquad("Autists")
     # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#8649242")
