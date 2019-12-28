@@ -67,3 +67,7 @@ async def main():
 
 asyncio.run(main())
 ```
+
+## Special Thanks
+
+-   [Tustin](https://github.com/Tustin) - Call of Duty API Authorization Flow
