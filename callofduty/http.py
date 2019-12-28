@@ -281,7 +281,11 @@ class HTTP:
 
     async def JoinSquad(self, name: str):
         return await self.Request(
-            Request("GET", f"api/v2/squad/join/{name}", baseUrl=Request.squadsBaseUrl)
+            Request(
+                "GET",
+                f"api/v2/squad/join/{urllib.parse.quote(name)}",
+                baseUrl=Request.squadsBaseUrl,
+            )
         )
 
     async def LeaveSquad(self):
