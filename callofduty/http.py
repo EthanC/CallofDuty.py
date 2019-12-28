@@ -276,7 +276,7 @@ class HTTP:
 
     async def GetMySquad(self):
         return await self.Request(
-            Request("GET", f"api/v2/squad/lookup/mine/", baseUrl=Request.squadsBaseUrl)
+            Request("GET", "api/v2/squad/lookup/mine/", baseUrl=Request.squadsBaseUrl)
         )
 
     async def JoinSquad(self, name: str):
