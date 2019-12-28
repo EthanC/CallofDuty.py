@@ -23,7 +23,7 @@ class Match(Object):
     _type = "match"
 
     def __init__(self, client: object, data: dict):
-        super().__init__(client, data)
+        super().__init__(client)
 
         self.id = data.pop("id")
         self.platform = Platform(data.pop("platform"))

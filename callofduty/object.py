@@ -4,11 +4,18 @@ log = logging.getLogger(__name__)
 
 
 class Object:
-    """Represents a generic Call of Duty object."""
+    """
+    Represents a generic Call of Duty object.
+
+    Parameters
+    ----------
+    client : object
+        Client which manages communication with the Call of Duty API.
+    """
 
     _type = None
 
-    def __init__(self, client, data):
+    def __init__(self, client: object):
         self._client = client
 
     @property
@@ -16,9 +23,9 @@ class Object:
         return self._type
 
     def __repr__(self):
-        repr_str = self.__class__.__name__
+        reprStr = self.__class__.__name__
 
-        return f"<{repr_str}>"
+        return f"<{reprStr}>"
 
     def __str__(self):
         return self.__repr__()

@@ -29,7 +29,7 @@ class Player(Object):
     _type = "player"
 
     def __init__(self, client: object, data: dict):
-        super().__init__(client, data)
+        super().__init__(client)
 
         self.platform = Platform(data.pop("platform"))
         self.username = data.pop("username")

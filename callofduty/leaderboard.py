@@ -29,7 +29,7 @@ class Leaderboard(Object):
     _type = "leaderboard"
 
     def __init__(self, client: object, data: dict):
-        super().__init__(client, data)
+        super().__init__(client)
 
         self.title = Title(data.pop("title"))
         self.platform = Platform(data.pop("platform"))

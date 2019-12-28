@@ -35,7 +35,7 @@ class Squad(Object):
     _type = "squad"
 
     def __init__(self, client: object, data: dict):
-        super().__init__(client, data)
+        super().__init__(client)
 
         self.name = data.pop("name")
         self.description = data.pop("description", None)
