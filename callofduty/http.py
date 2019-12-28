@@ -12,7 +12,15 @@ async def JSONorText(res: aiohttp.ClientResponse):
     """
     Determine the media type of the provided response.
 
-    Return a dict object for JSON data, otherwise return data as string.
+    Parameters
+    ----------
+    res : aiohttp.ClientResponse
+        Response object to determine media type.
+
+    Returns
+    -------
+    object
+        If media type is JSON data, return dict. Otheriwse return data as str.
     """
 
     if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
@@ -25,7 +33,6 @@ class Request:
     """Represents a Request object."""
 
     defaultBaseUrl = "https://callofduty.com/"
-    myBaseUrl = "https://my.callofduty.com/"
     squadsBaseUrl = "https://squads.callofduty.com/"
 
     accessToken = None
@@ -239,7 +246,9 @@ class HTTP:
             )
         )
 
-    async def GetLootSeason(self, title: str, season: int, platform: str, language: str):
+    async def GetLootSeason(
+        self, title: str, season: int, platform: str, language: str
+    ):
         return await self.Request(
             Request(
                 "GET",
