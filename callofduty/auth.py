@@ -12,7 +12,16 @@ log = logging.getLogger(__name__)
 
 
 class Auth:
-    """Implements the Call of Duty authorization flow."""
+    """
+    Implements the Call of Duty authorization flow.
+
+    Parameters
+    ----------
+    email : str
+        Activision account email address.
+    password : str
+        Activision account password.
+    """
 
     loginUrl = "https://profile.callofduty.com/cod/mapp/login"
     registerDeviceUrl = "https://profile.callofduty.com/cod/mapp/registerDevice"
@@ -79,17 +88,10 @@ class Auth:
 
             self._accessToken = data["data"]["authHeader"]
 
-    async def SubmitLogin(self, email: str, password: str):
+    async def SubmitLogin(self):
         """
         Submit the specified login credentials to the Call of Duty API using the
         previously acquired Access Token and Device ID.
-
-        Parameters
-        ----------
-        email : str
-            Activision account email address.
-        password : str
-            Activision account password.
         """
 
         headers = {
@@ -97,7 +99,7 @@ class Auth:
             "x_cod_device_id": self.DeviceId,
         }
 
-        data = {"email": email, "password": password}
+        data = {"email": self.email, "password": self.password}
 
         async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
             if res.status != 200:
@@ -125,6 +127,6 @@ async def Login(email: str, password: str):
     auth = Auth(email, password)
 
     await auth.RegisterDevice()
-    await auth.SubmitLogin(email, password)
+    await auth.SubmitLogin()
 
     return Client(HTTP(auth))
