@@ -188,11 +188,9 @@ class Client:
                                 "accountId": friend["identities"][_platform][
                                     "accountId"
                                 ],
-                                "avatarUrls": [
-                                    friend["identities"][_platform].get(
-                                        "avatarUrlLargeSsl"
-                                    )
-                                ],
+                                "avatarUrl": friend["identities"][_platform].get(
+                                    "avatarUrlLargeSsl"
+                                ),
                             },
                         )
                     )
@@ -204,7 +202,7 @@ class Client:
                             "platform": friend["platform"],
                             "username": friend["username"],
                             "accountId": friend.get("accountId"),
-                            "avatarUrls": [friend.get("avatarUrlLargeSsl")],
+                            "avatarUrl": friend.get("avatarUrlLargeSsl"),
                             "online": friend["status"]["online"],
                             "identities": identities,
                         },
@@ -289,7 +287,7 @@ class Client:
         username : str
             Player's username for the designated platform.
         limit : int, optional
-            Number of search results to return (default is no limit.)
+            Number of search results to return (default is None.)
 
         Returns
         -------
@@ -313,16 +311,15 @@ class Client:
                 # The API returns the accountId as a string
                 accountId = int(accountId)
 
-            avatarUrls = []
-            if isinstance(player["avatar"], dict):
-                for key in player["avatar"]:
-                    avatarUrls.append(player["avatar"][key])
+            avatar = player.get("avatar")
+            if isinstance(avatar, dict):
+                avatar = avatar["avatarUrlLargeSsl"]
 
             data = {
                 "platform": player["platform"],
                 "username": player["username"],
                 "accountId": accountId,
-                "avatarUrls": avatarUrls,
+                "avatarUrl": avatar,
             }
 
             results.append(Player(self, data))
@@ -406,13 +403,13 @@ class Client:
         mode: callofduty.Mode
             Call of Duty mode to get the player's matches from.
         limit : int, optional
-            Number of matches which will be returned.
+            Number of matches which will be returned (default is 10.)
         startTimestamp : int, optional
             Unix timestamp representing the earliest time which a returned
-            match should've occured.
+            match should've occured (default is None.)
         endTimestamp : int, optional
             Unix timestamp representing the latest time which a returned
-            match should've occured.
+            match should've occured (default is None.)
 
         Returns
         -------
@@ -688,7 +685,9 @@ class Client:
             Array of Maps and the Game Modes which are available each map.
         """
 
-        return (await self.http.GetAvailableMaps(title.value, platform.value, mode.value))["data"]
+        return (
+            await self.http.GetAvailableMaps(title.value, platform.value, mode.value)
+        )["data"]
 
     async def GetLootSeason(self, title: Title, season: int, **kwargs):
         """
@@ -717,7 +716,11 @@ class Client:
         VerifyPlatform(platform)
         VerifyLanguage(language)
 
-        return (await self.http.GetLootSeason(title.value, season, platform.value, language.value))["data"]
+        return (
+            await self.http.GetLootSeason(
+                title.value, season, platform.value, language.value
+            )
+        )["data"]
 
     async def GetSquad(self, name: str):
         """

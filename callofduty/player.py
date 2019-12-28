@@ -17,13 +17,13 @@ class Player(Object):
     username : str
         Player's username for the designated platform.
     accountId : int, optional
-        Account ID for the player's designated platform (typically Activision.)
-    avatarUrls : list, optional
-        Array of url strings which return an image of the player's avatar.
+        Account ID for the player's designated platform (default is None.)
+    avatarUrl : str, optional
+        Url which returns an image of the player's avatar (default is None.)
     online : bool, optional
-        Boolean indicating whether or not the player is currently online.
+        Boolean indicating whether or not the player is currently online (default is False.)
     identities : list, optional
-        Array of Player objects containing the player's identities.
+        Array of Player objects containing the player's identities (default is an empty list.)
     """
 
     _type = "player"
@@ -34,7 +34,7 @@ class Player(Object):
         self.platform = Platform(data.pop("platform"))
         self.username = data.pop("username")
         self.accountId = data.pop("accountId", None)
-        self.avatarUrls = data.pop("avatarUrls", [])
+        self.avatarUrl = data.pop("avatarUrl", None)
         self.online = data.pop("online", False)
         self.identities = data.pop("identities", [])
 
@@ -71,13 +71,13 @@ class Player(Object):
         mode: callofduty.Mode
             Call of Duty mode to get the player's matches from.
         limit : int, optional
-            Number of matches which will be returned.
+            Number of matches which will be returned (default is 10.)
         startTimestamp : int, optional
             Unix timestamp representing the earliest time which a returned
-            match should've occured.
+            match should've occured (default is None.)
         endTimestamp : int, optional
             Unix timestamp representing the latest time which a returned
-            match should've occured.
+            match should've occured (default is None.)
 
         Returns
         -------
@@ -89,21 +89,9 @@ class Player(Object):
             self.platform, self.username, title, mode, **kwargs
         )
 
-    async def squad(self):
-        """
-        Get the Call of Duty player's Squad.
-
-        Returns
-        -------
-        object
-            Squad object for the requested Squad.
-        """
-
-        return await self._client.GetPlayerSquad(self.platform, self.username)
-
     async def leaderboard(self, title: Title, **kwargs):
         """
-        Get the Call of Duty player's position on the specified Leaderboard.
+        Get the specified Leaderboard page which contains the Call of Duty player.
 
         Parameters
         ----------
@@ -125,3 +113,15 @@ class Player(Object):
         return await self._client.GetPlayerLeaderboard(
             title, self.platform, self.username, **kwargs
         )
+
+    async def squad(self):
+        """
+        Get the Call of Duty player's Squad.
+
+        Returns
+        -------
+        object
+            Squad object for the requested Squad.
+        """
+
+        return await self._client.GetPlayerSquad(self.platform, self.username)

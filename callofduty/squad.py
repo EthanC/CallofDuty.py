@@ -15,21 +15,21 @@ class Squad(Object):
     name : str
         Name of Squad.
     description : str, optional
-        Description of Squad.
+        Description of Squad (default is None.)
     avatarUrl : str, optional
-        Avatar URL of Squad.
+        Avatar URL of Squad (default is None.)
     created : str, optional
-        Date of Squad creation.
+        Date of Squad creation (default is None.)
     new : bool, optional
-        Boolean indication of whether or not the Squad was recently created.
+        Boolean indication of whether or not the Squad was recently created (default is False.)
     private : bool, optional
-        Boolean indication of whether or not the Squad is private.
+        Boolean indication of whether or not the Squad is private (default is False.)
     points : int, optional
-        Number of points which the Squad currently has.
+        Number of points which the Squad currently has (default is None.)
     owner : object, optional
-        Player object representing the Squad owner.
+        Player object representing the Squad owner (default is None.)
     members : list, optional
-        Array of player objects representing the Squad members.
+        Array of player objects representing the Squad members (default is an empty list.)
     """
 
     _type = "squad"
@@ -41,8 +41,8 @@ class Squad(Object):
         self.description = data.pop("description", None)
         self.avatarUrl = data.pop("avatarUrl", None)
         self.created = data.pop("created", None)
-        self.new = data.pop("newlyFormed", None)
-        self.private = data.pop("private", None)
+        self.new = data.pop("newlyFormed", False)
+        self.private = data.pop("private", False)
         self.points = data.pop("points", None)
 
         # The Squads endpoints do not follow the same structure as the rest,
@@ -53,7 +53,7 @@ class Squad(Object):
                 "platform": data["creator"]["platform"],
                 "username": data["creator"]["gamerTag"],
                 "accountId": data["creator"]["platformId"],
-                "avatarUrls": [data["creator"]["avatarUrl"]],
+                "avatarUrl": data["creator"]["avatarUrl"],
             },
         )
 
@@ -66,7 +66,7 @@ class Squad(Object):
                         "platform": member["platform"],
                         "username": member["gamerTag"],
                         "accountId": member["platformId"],
-                        "avatarUrls": [member["avatarUrl"]],
+                        "avatarUrl": member["avatarUrl"],
                     },
                 )
             )
