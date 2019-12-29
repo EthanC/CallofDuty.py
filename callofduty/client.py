@@ -859,8 +859,15 @@ class Client:
     async def LeaveSquad(self):
         """
         Leave the Call of Duty Squad of the authenticated player.
+        Upon leaving a Squad, the player is automatically placed into
+        a random Squad.
 
-        Upon leaving a Squad, the player is automatically placed into a random Squad.
+        Returns
+        -------
+        object
+            Squad object for the randomly-joined Squad.
         """
 
         await self.http.LeaveSquad()
+
+        return await self.GetMySquad()

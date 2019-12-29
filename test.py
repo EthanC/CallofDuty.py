@@ -107,7 +107,8 @@ async def main():
     # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
 
     # print(f"Leaving Squad '{squad.name}''...")
-    # await client.LeaveSquad()
+    # squad = await client.LeaveSquad()
+    # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
 
     # squad = await client.GetSquad("Hmmmm")
     # print(f"Joining Squad '{squad.name}'...")
