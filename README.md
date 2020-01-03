@@ -59,11 +59,12 @@ async def main():
 
     me = results[1]
     profile = await me.profile(Title.ModernWarfare, Mode.Multiplayer)
+    
     level = profile["level"]
     kd = profile["lifetime"]["all"]["properties"]["kdRatio"]
     wl = profile["lifetime"]["all"]["properties"]["wlRatio"]
 
-    print(f"\n{me.username} ({me.platform})")
+    print(f"\n{me.username} ({me.platform.name})")
     print(f"Level: {level}, K/D Ratio: {kd}, W/L Ratio: {wl}")
 
     await client.Logout()
