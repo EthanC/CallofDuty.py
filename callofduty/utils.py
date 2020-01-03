@@ -43,7 +43,7 @@ def VerifyTitle(value: Title):
         raise InvalidTitle(f"{value} is not a valid title")
 
 
-def VerifyMode(value: Mode):
+def VerifyMode(value: Mode, title: Title):
     """
     Raise an InvalidMode client exception if a value which is not
     present in the Mode enum is passed.
@@ -52,13 +52,16 @@ def VerifyMode(value: Mode):
     ----------
     value : callofduty.Mode
         Value to confirm is present in the Mode enum.
+    title : callofduty.Title
+        Title to confirm is compatible with the Mode.
     """
-
-    # TODO Validate mode for title
-    # e.g. Zombies is not a valid mode for Modern Warfare
 
     if value not in Mode:
         raise InvalidMode(f"{value} is not a valid mode")
+    elif (value == Mode.Zombies) and (title == Title.ModernWarfare):
+        raise InvalidMode(f"{value} is not a valid mode for title {title}")
+    elif (value == Mode.Blackout) and (title != Title.BlackOps4):
+        raise InvalidMode(f"{value} is not a valid mode for title {title}")
 
 
 def VerifyLanguage(value: Language):

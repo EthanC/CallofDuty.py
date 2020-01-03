@@ -352,7 +352,7 @@ class Client:
 
         VerifyPlatform(platform)
         VerifyTitle(title)
-        VerifyMode(mode)
+        VerifyMode(mode, title)
 
         return (
             await self.http.GetPlayerProfile(
@@ -419,7 +419,7 @@ class Client:
 
         VerifyPlatform(platform)
         VerifyTitle(title)
-        VerifyMode(mode)
+        VerifyMode(mode, title)
 
         limit = kwargs.get("limit", 10)
         startTimestamp = kwargs.get("startTimestamp", 0)
@@ -517,7 +517,7 @@ class Client:
 
         VerifyPlatform(platform)
         VerifyTitle(title)
-        VerifyMode(mode)
+        VerifyMode(mode, title)
 
         limit = kwargs.get("limit", 10)
         startTimestamp = kwargs.get("startTimestamp", 0)
