@@ -16,6 +16,7 @@ from .errors import *
 from .leaderboard import Leaderboard
 from .match import Match
 from .player import Player
+from .season import Season
 from .squad import Squad
 
 try:

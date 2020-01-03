@@ -11,11 +11,11 @@ async def main():
     )
 
     # season = await client.GetLootSeason(Title.ModernWarfare, 1)
-    # print(season["categoryTitle"])
-    # for i in season["tiers"]:
-    #     itemName = season["tiers"][i]["label"]
-    #     itemRarity = season["tiers"][i]["rarity"]
-    #     itemType = season["tiers"][i]["type"]
+    # print(f"{season.title.name}: {season.name}")
+    # for i in season.tiers:
+    #     itemName = season.tiers[i]["label"]
+    #     itemRarity = season.tiers[i]["rarity"]
+    #     itemType = season.tiers[i]["type"]
     #     print(f"{itemName} ({itemRarity} {itemType})")
 
     # requests = await client.GetMyFriendRequests()

@@ -4,6 +4,7 @@ from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
 from .match import Match
 from .player import Player
+from .season import Season
 from .squad import Squad
 from .utils import (
     VerifyGameType,
@@ -815,7 +816,7 @@ class Client:
         title : callofduty.Title
             Call of Duty title which the loot season originates.
         season : int
-            Loot season number.
+            Loot season number relative to title.
         platform : callofduty.Platform, optional
             Platform which the loot season is available on (default is PlayStation.)
         language : callofduty.Language, optional
@@ -823,8 +824,8 @@ class Client:
 
         Returns
         -------
-        dict
-            JSON data representing the requested loot season.
+        object
+            Season object for the requested Loot Season.
         """
 
         platform = kwargs.get("platform", Platform.PlayStation)
@@ -833,11 +834,20 @@ class Client:
         VerifyPlatform(platform)
         VerifyLanguage(language)
 
-        return (
+        data = (
             await self.http.GetLootSeason(
                 title.value, season, platform.value, language.value
             )
         )["data"]
+
+        # Loot Season responses don't include these values, so we'll just
+        # add them manually.
+        data["title"] = title.value
+        data["platform"] = platform.value
+        data["season"] = season
+        data["language"] = language.value
+
+        return Season(self, data)
 
     async def GetSquad(self, name: str):
         """
