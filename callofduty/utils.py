@@ -25,7 +25,7 @@ def VerifyPlatform(value: Platform):
     """
 
     if value not in Platform:
-        raise InvalidPlatform(f"{value} is not a valid platform")
+        raise InvalidPlatform(f"{value.name} is not a valid platform")
 
 
 def VerifyTitle(value: Title):
@@ -40,7 +40,7 @@ def VerifyTitle(value: Title):
     """
 
     if value not in Title:
-        raise InvalidTitle(f"{value} is not a valid title")
+        raise InvalidTitle(f"{value.name} is not a valid title")
 
 
 def VerifyMode(value: Mode, title: Title):
@@ -57,11 +57,11 @@ def VerifyMode(value: Mode, title: Title):
     """
 
     if value not in Mode:
-        raise InvalidMode(f"{value} is not a valid mode")
+        raise InvalidMode(f"{value.name} is not a valid mode")
     elif (value == Mode.Zombies) and (title == Title.ModernWarfare):
-        raise InvalidMode(f"{value} is not a valid mode for title {title}")
+        raise InvalidMode(f"{value.name} is not a valid mode for title {title.name}")
     elif (value == Mode.Blackout) and (title != Title.BlackOps4):
-        raise InvalidMode(f"{value} is not a valid mode for title {title}")
+        raise InvalidMode(f"{value.name} is not a valid mode for title {title.name}")
 
 
 def VerifyLanguage(value: Language):
@@ -76,7 +76,7 @@ def VerifyLanguage(value: Language):
     """
 
     if value not in Language:
-        raise InvalidLanguage(f"{value} is not a valid language")
+        raise InvalidLanguage(f"{value.name} is not a valid language")
 
 
 def VerifyTimeFrame(value: TimeFrame):
@@ -91,7 +91,7 @@ def VerifyTimeFrame(value: TimeFrame):
     """
 
     if value not in TimeFrame:
-        raise InvalidTimeFrame(f"{value} is not a valid time frame")
+        raise InvalidTimeFrame(f"{value.name} is not a valid time frame")
 
 
 def VerifyGameType(value: GameType):
@@ -106,4 +106,4 @@ def VerifyGameType(value: GameType):
     """
 
     if value not in GameType:
-        raise InvalidGameType(f"{value} is not a valid game type")
+        raise InvalidGameType(f"{value.name} is not a valid game type")
