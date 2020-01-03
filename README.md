@@ -77,7 +77,7 @@ In general, CallofDuty.py follows [Semantic Versioning](https://semver.org/) as 
 
 ## Contributing
 
-The goal is to cover the entirety of the Call of Duty API, so contributions are always welcome. The calling pattern is pretty well-established, so adding new methods is relatively straightforward. See [`CONTRIBUTING.md`](https://github.com/EthanC/CallofDuty.py/blob/master/CONTRIBUTING.md) for details.
+The goal is to cover the entirety of the Call of Duty API, so contributions are always welcome. The calling pattern is pretty well-established, so adding new methods is relatively straightforward. See [`CONTRIBUTING.md`](https://github.com/EthanC/CallofDuty.py/blob/master/.github/CONTRIBUTING.md) for details.
 
 ## Thanks & Credits
 
