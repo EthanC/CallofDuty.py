@@ -27,7 +27,7 @@ For complete usage of CallofDuty.py, see the Documentation.
 
 ### Installation
 
-CallofDuty.py requires Python 3.7 or higher. Once that requirement is met, simply install CallofDuty.py using pip!
+CallofDuty.py requires Python 3.7 or greater. Once that requirement is met, simply install CallofDuty.py using pip!
 
 ```
 pip install callofduty.py
@@ -37,9 +37,10 @@ pip install callofduty.py
 
 The following is a complete example which demonstrates:
 
+-   Authenticating with the Call of Duty API
 -   Searching for a user
 -   Listing the first 3 search results
--   Getting the profile of the second result
+-   Getting the Modern Warfare Multiplayer profile of the second result
 -   Displaying their basic statistics
 
 ```py
@@ -70,10 +71,15 @@ async def main():
 asyncio.run(main())
 ```
 
-## Special Thanks
+## Versioning
+
+In general, CallofDuty.py follows [Semantic Versioning](https://semver.org/) as closely as possible for tagging releases of the project.
+
+## Contributing
+
+The goal is to cover the entirety of the Call of Duty API, so contributions are always welcome. The calling pattern is pretty well-established, so adding new methods is relatively straightforward. See [`CONTRIBUTING.md`](https://github.com/EthanC/CallofDuty.py/blob/master/CONTRIBUTING.md) for details.
+
+## Thanks & Credits
 
 -   [Tustin](https://github.com/Tustin) - Call of Duty API Authorization Flow
-
-## Credits
-
 -   [Activision](https://www.activision.com/) - Call of Duty Logo & API Service
