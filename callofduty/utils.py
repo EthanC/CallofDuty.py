@@ -1,8 +1,7 @@
 import logging
 
-from .enums import GameMode, GameType, Language, Mode, Platform, TimeFrame, Title
+from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .errors import (
-    InvalidGameMode,
     InvalidGameType,
     InvalidLanguage,
     InvalidMode,
@@ -105,21 +104,3 @@ def VerifyGameType(value: GameType):
 
     if value not in GameType:
         raise InvalidGameType(f"{value} is not a valid game type")
-
-
-def VerifyGameMode(value: GameMode):
-    """
-    Raise an InvalidGameMode client exception if a value which is not
-    present in the GameMode enum is passed.
-
-    Parameters
-    ----------
-    value : callofduty.GameMode
-        Value to confirm is present in the GameMode enum.
-    """
-
-    # TODO Validate game mode for title
-    # e.g. Cyber Attack is not a valid mode for Black Ops 4
-
-    if value not in GameMode:
-        raise InvalidGameMode(f"{value} is not a valid game mode")

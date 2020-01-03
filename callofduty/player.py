@@ -128,7 +128,7 @@ class Player(Object):
             Call of Duty title which the leaderboard represents.
         gameType : callofduty.GameType, optional
             Game type to get the leaderboard for (default is Core.)
-        gameMode : callofduty.GameMode, optional
+        gameMode : str, optional
             Game mode to get the leaderboard for (default is Career.)
         timeFrame : callofduty.TimeFrame, optional
             Time Frame to get the leaderboard for (default is All-Time.)

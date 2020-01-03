@@ -1,12 +1,11 @@
 import logging
 
-from .enums import GameMode, GameType, Language, Mode, Platform, TimeFrame, Title
+from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
 from .match import Match
 from .player import Player
 from .squad import Squad
 from .utils import (
-    VerifyGameMode,
     VerifyGameType,
     VerifyLanguage,
     VerifyMode,
@@ -623,7 +622,7 @@ class Client:
             Platform to get which the leaderboard represents.
         gameType : callofduty.GameType, optional
             Game type to get the leaderboard for (default is Core.)
-        gameMode : callofduty.GameMode, optional
+        gameMode : str, optional
             Game mode to get the leaderboard for (default is Career.)
         timeFrame : callofduty.TimeFrame, optional
             Time Frame to get the leaderboard for (default is All-Time.)
@@ -637,14 +636,13 @@ class Client:
         """
 
         gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", GameMode.Career)
+        gameMode = kwargs.get("gameMode", "career")
         timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
         page = kwargs.get("page", 1)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
-        VerifyGameMode(gameMode)
         VerifyTimeFrame(timeFrame)
 
         data = (
@@ -652,7 +650,7 @@ class Client:
                 title.value,
                 platform.value,
                 gameType.value,
-                gameMode.value,
+                gameMode,
                 timeFrame.value,
                 page,
             )
@@ -680,7 +678,7 @@ class Client:
             Player's username for the designated platform.
         gameType : callofduty.GameType, optional
             Game type to get the leaderboard for (default is Core.)
-        gameMode : callofduty.GameMode, optional
+        gameMode : str, optional
             Game mode to get the leaderboard for (default is Career.)
         timeFrame : callofduty.TimeFrame, optional
             Time Frame to get the leaderboard for (default is All-Time.)
@@ -692,13 +690,12 @@ class Client:
         """
 
         gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", GameMode.Career)
+        gameMode = kwargs.get("gameMode", "career")
         timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
-        VerifyGameMode(gameMode)
         VerifyTimeFrame(timeFrame)
 
         data = (
@@ -707,7 +704,7 @@ class Client:
                 platform.value,
                 username,
                 gameType.value,
-                gameMode.value,
+                gameMode,
                 timeFrame.value,
             )
         )["data"]
@@ -730,7 +727,7 @@ class Client:
             Platform to get which the leaderboard represents.
         gameType : callofduty.GameType, optional
             Game type to get the leaderboard for (default is Core.)
-        gameMode : callofduty.GameMode, optional
+        gameMode : str, optional
             Game mode to get the leaderboard for (default is Career.)
         timeFrame : callofduty.TimeFrame, optional
             Time Frame to get the leaderboard for (default is All-Time.)
@@ -744,14 +741,13 @@ class Client:
         """
 
         gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", GameMode.Career)
+        gameMode = kwargs.get("gameMode", "career")
         timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
         page = kwargs.get("page", 1)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
-        VerifyGameMode(gameMode)
         VerifyTimeFrame(timeFrame)
 
         data = (
@@ -759,7 +755,7 @@ class Client:
                 title.value,
                 platform.value,
                 gameType.value,
-                gameMode.value,
+                gameMode,
                 timeFrame.value,
                 page,
             )

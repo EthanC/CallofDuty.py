@@ -1,6 +1,6 @@
 import logging
 
-from .enums import GameMode, GameType, Platform, TimeFrame, Title
+from .enums import GameType, Platform, TimeFrame, Title
 from .object import Object
 
 log = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ class Leaderboard(Object):
         Platform to get which the leaderboard represents.
     gameType : callofduty.GameType, optional
         Game type to get the leaderboard for (default is Core.)
-    gameMode : callofduty.GameMode, optional
+    gameMode : str, optional
         Game mode to get the leaderboard for (default is Career.)
     timeFrame : callofduty.TimeFrame, optional
         Time Frame to get the leaderboard for (default is All-Time.)
@@ -34,7 +34,7 @@ class Leaderboard(Object):
         self.title = Title(data.pop("title"))
         self.platform = Platform(data.pop("platform"))
         self.gameType = GameType(data.pop("leaderboardType"))
-        self.gameMode = GameMode(data.pop("gameMode"))
+        self.gameMode = data.pop("gameMode")
         self.timeFrame = TimeFrame(data.pop("timeFrame"))
         self.page = data.pop("page")
 

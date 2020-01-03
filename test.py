@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import callofduty
-from callofduty import GameMode, GameType, Mode, Platform, TimeFrame, Title
+from callofduty import GameType, Mode, Platform, TimeFrame, Title
 
 
 async def main():
@@ -52,7 +52,7 @@ async def main():
     #     print(post["title"])
 
     # leaderboard = await client.GetLeaderboard(
-    #     Title.ModernWarfare, Platform.BattleNet, gameMode=GameMode.CyberAttack, page=3
+    #     Title.ModernWarfare, Platform.BattleNet, "cyber", page=3
     # )
     # print((leaderboard.entries)[0])
     # for player in await leaderboard.players():

@@ -73,15 +73,6 @@ class InvalidGameType(ClientException):
     pass
 
 
-class InvalidGameMode(ClientException):
-    """
-    Exception which is thrown when an invalid game mode is passed to any
-    client function.
-    """
-
-    pass
-
-
 class HTTPException(CallofDutyException):
     """Exception which is thrown when an HTTP request operation fails."""
 
