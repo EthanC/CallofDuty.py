@@ -2,10 +2,6 @@ import re
 
 import setuptools
 
-version = ""
-readme = ""
-requirements = []
-
 with open("callofduty/__init__.py") as file:
     version = re.search(
         r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', file.read(), re.MULTILINE
