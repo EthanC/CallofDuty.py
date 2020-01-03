@@ -1,6 +1,6 @@
 # How to Contribute
 
-I'd be glad to accept your contributions to this project, there are a just a few guidelines that you need to follow.
+Contributions to this project are gladly accepted, there are a just a few guidelines that need to be followed.
 
 ## Reporting Issues
 
