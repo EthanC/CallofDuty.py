@@ -44,6 +44,9 @@ async def main():
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # print(f"{player.username} ({player.platform})")
 
+    # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Multiplayer, limit=20)
+    # print(summary)
+
     # news = await client.GetNewsFeed()
     # for post in news["blog"][:10]:
     #     print(post["title"])
@@ -115,7 +118,6 @@ async def main():
     # await squad.join()
     # squad = await client.GetMySquad()
     # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
-
 
     await client.Logout()
 

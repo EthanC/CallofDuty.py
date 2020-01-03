@@ -181,7 +181,7 @@ class HTTP:
             )
         )
 
-    async def GetATVIPlayerMatches(
+    async def GetPlayerMatchesDetailed(
         self,
         platform: str,
         username: str,

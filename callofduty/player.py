@@ -89,6 +89,35 @@ class Player(Object):
             self.platform, self.username, title, mode, **kwargs
         )
 
+    async def matchesSummary(self, title: Title, mode: Mode, **kwargs):
+        """
+        Get the Call of Duty player's match history for the specified title and mode.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title to get the player's matches from.
+        mode: callofduty.Mode
+            Call of Duty mode to get the player's matches from.
+        limit : int, optional
+            Number of matches which will be returned (default is 10.)
+        startTimestamp : int, optional
+            Unix timestamp representing the earliest time which a returned
+            match should've occured (default is None.)
+        endTimestamp : int, optional
+            Unix timestamp representing the latest time which a returned
+            match should've occured (default is None.)
+
+        Returns
+        -------
+        dict
+            JSON data containing recent matches summary.
+        """
+
+        return await self._client.GetPlayerMatchesSummary(
+            self.platform, self.username, title, mode, **kwargs
+        )
+
     async def leaderboard(self, title: Title, **kwargs):
         """
         Get the specified Leaderboard page which contains the Call of Duty player.
