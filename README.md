@@ -1,8 +1,6 @@
 <div align="center">
 
-# CallofDuty.py
-
-CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API.
+![CallofDuty.py](https://i.imgur.com/HXy6Dkd.png)
 
 <a href="https://pypi.python.org/pypi/callofduty.py"><img src="https://img.shields.io/pypi/v/callofduty.py?label=Version&style=for-the-badge" /></a>
 <a href="https://pypi.python.org/pypi/callofduty.py"><img src="https://img.shields.io/pypi/dm/callofduty.py?style=for-the-badge" /></a>
@@ -11,11 +9,15 @@ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of
 
 </div>
 
+# CallofDuty.py
+
+CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API.
+
 ## Features
 
--   Fully asynchronous using async and await
--   Object-oriented nature allows for ease of use
--   More soon...
+-   Asynchronous and Pythonic using `async` and `await`
+-   Object-oriented and predictable abstractions
+-   100% coverage of the supported Call of Duty API
 
 ## Usage
 
@@ -71,3 +73,7 @@ asyncio.run(main())
 ## Special Thanks
 
 -   [Tustin](https://github.com/Tustin) - Call of Duty API Authorization Flow
+
+## Credits
+
+-   [Activision](https://www.activision.com/) - Call of Duty Logo & API Service
