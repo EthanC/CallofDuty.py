@@ -29,7 +29,7 @@ class Match(Object):
         self.platform: Platform = Platform(data.pop("platform"))
         self.title: Title = Title(data.pop("title"))
 
-    async def teams(self):
+    async def teams(self) -> list:
         """
         Get the teams which played in the match.
 
@@ -43,7 +43,7 @@ class Match(Object):
 
         return await self._client.GetMatchTeams(self.title, self.platform, self.id)
 
-    async def details(self):
+    async def details(self) -> dict:
         """
         Get the full details of the match.
 

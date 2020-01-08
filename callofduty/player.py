@@ -38,7 +38,7 @@ class Player(Object):
         self.online: bool = data.pop("online", False)
         self.identities: list = data.pop("identities", [])
 
-    async def profile(self, title: Title, mode: Mode):
+    async def profile(self, title: Title, mode: Mode) -> dict:
         """
         Get the Call of Duty player's profile for the specified title and mode.
 
@@ -60,7 +60,7 @@ class Player(Object):
             self.platform, self.username, title, mode
         )
 
-    async def matches(self, title: Title, mode: Mode, **kwargs):
+    async def matches(self, title: Title, mode: Mode, **kwargs) -> list:
         """
         Get the Call of Duty player's match history for the specified title and mode.
 
@@ -89,7 +89,7 @@ class Player(Object):
             self.platform, self.username, title, mode, **kwargs
         )
 
-    async def matchesSummary(self, title: Title, mode: Mode, **kwargs):
+    async def matchesSummary(self, title: Title, mode: Mode, **kwargs) -> dict:
         """
         Get the Call of Duty player's match history for the specified title and mode.
 

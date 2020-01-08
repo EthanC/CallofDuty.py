@@ -48,7 +48,7 @@ class Leaderboard(Object):
         self.columns: list = data.pop("columns")
         self.entries: list = data.pop("entries")
 
-    async def players(self):
+    async def players(self) -> list:
         """
         Get the players from a Call of Duty leaderboard.
 
