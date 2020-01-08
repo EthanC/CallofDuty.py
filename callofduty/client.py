@@ -30,7 +30,7 @@ class Client:
 
         await self.http.CloseSession()
 
-    async def GetLocalize(self, language: Language = Language.English):
+    async def GetLocalize(self, language: Language = Language.English) -> dict:
         """
         Get the localized strings used by the Call of Duty Companion App
         and website.
@@ -53,7 +53,7 @@ class Client:
 
         return {**web, **app}
 
-    async def GetNewsFeed(self, language: Language = Language.English):
+    async def GetNewsFeed(self, language: Language = Language.English) -> dict:
         """
         Get the Call of Duty franchise feed, includes blog posts and
         the Companion App message of the day.
@@ -71,7 +71,7 @@ class Client:
 
         return await self.http.GetNewsFeed(language.value)
 
-    async def GetFriendFeed(self):
+    async def GetFriendFeed(self) -> dict:
         """
         Get the Friend Feed of the authenticated Call of Duty player.
 
@@ -97,7 +97,7 @@ class Client:
             "metadata": data["metadata"],
         }
 
-    async def GetMyIdentities(self):
+    async def GetMyIdentities(self) -> list:
         """
         Get the Title Identities for the authenticated Call of Duty player.
 
@@ -124,7 +124,7 @@ class Client:
 
         return identities
 
-    async def GetMyAccounts(self):
+    async def GetMyAccounts(self) -> List[Player]:
         """
         Get the linked Accounts for the authenticated Call of Duty player.
 
@@ -147,7 +147,7 @@ class Client:
 
         return accounts
 
-    async def GetMyFriends(self):
+    async def GetMyFriends(self) -> List[Player]:
         """
         Get the Friends of the authenticated Call of Duty player.
 
@@ -212,7 +212,7 @@ class Client:
 
         return friends
 
-    async def GetMyFriendRequests(self):
+    async def GetMyFriendRequests(self) -> dict:
         """
         Get the incoming and outgoing Friend Requests for the authenticated
         Call of Duty player.
@@ -256,7 +256,7 @@ class Client:
 
         return {"incoming": incoming, "outgoing": outgoing}
 
-    async def GetPlayer(self, platform: Platform, username: str):
+    async def GetPlayer(self, platform: Platform, username: str) -> Player:
         """
         Get a Call of Duty player using their platform and username.
 
@@ -277,7 +277,9 @@ class Client:
 
         return Player(self, {"platform": platform.value, "username": username})
 
-    async def SearchPlayers(self, platform: Platform, username: str, **kwargs):
+    async def SearchPlayers(
+        self, platform: Platform, username: str, **kwargs
+    ) -> List[Player]:
         """
         Search Call of Duty players by platform and username.
 
@@ -329,7 +331,7 @@ class Client:
 
     async def GetPlayerProfile(
         self, platform: Platform, username: str, title: Title, mode: Mode
-    ):
+    ) -> dict:
         """
         Get a Call of Duty player's profile for the specified title and mode.
 
@@ -361,7 +363,7 @@ class Client:
             )
         )["data"]
 
-    async def GetMatch(self, title: Title, platform: Platform, matchId: int):
+    async def GetMatch(self, title: Title, platform: Platform, matchId: int) -> Match:
         """
         Get a Call of Duty match using its title, platform, mode, and ID.
 
@@ -389,7 +391,7 @@ class Client:
 
     async def GetPlayerMatches(
         self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
-    ):
+    ) -> List[Match]:
         """
         Get a Call of Duty player's match history for the specified title and mode.
 
@@ -487,7 +489,7 @@ class Client:
 
     async def GetPlayerMatchesSummary(
         self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
-    ):
+    ) -> dict:
         """
         Get a Call of Duty player's match history summary for the specified title and mode.
 
@@ -536,7 +538,9 @@ class Client:
             )
         )["data"]["summary"]
 
-    async def GetMatchDetails(self, title: Title, platform: Platform, matchId: int):
+    async def GetMatchDetails(
+        self, title: Title, platform: Platform, matchId: int
+    ) -> dict:
         """
         Get a Call of Duty match's details.
 
@@ -560,7 +564,9 @@ class Client:
 
         return (await self.http.GetMatch(title.value, platform.value, matchId))["data"]
 
-    async def GetMatchTeams(self, title: Title, platform: Platform, matchId: int):
+    async def GetMatchTeams(
+        self, title: Title, platform: Platform, matchId: int
+    ) -> list:
         """
         Get the teams which played in a Call of Duty match.
 
@@ -612,7 +618,9 @@ class Client:
 
         return teams
 
-    async def GetLeaderboard(self, title: Title, platform: Platform, **kwargs):
+    async def GetLeaderboard(
+        self, title: Title, platform: Platform, **kwargs
+    ) -> Leaderboard:
         """
         Get a Call of Duty leaderboard.
 
@@ -666,7 +674,7 @@ class Client:
 
     async def GetPlayerLeaderboard(
         self, title: Title, platform: Platform, username: str, **kwargs
-    ):
+    ) -> Leaderboard:
         """
         Get a Call of Duty leaderboard.
 
@@ -717,7 +725,9 @@ class Client:
 
         return Leaderboard(self, data)
 
-    async def GetLeaderboardPlayers(self, title: Title, platform: Platform, **kwargs):
+    async def GetLeaderboardPlayers(
+        self, title: Title, platform: Platform, **kwargs
+    ) -> List[Player]:
         """
         Get the players from a Call of Duty leaderboard.
 
@@ -785,7 +795,7 @@ class Client:
         title: Title,
         platform: Platform = Platform.PlayStation,
         mode: Mode = Mode.Multiplayer,
-    ):
+    ) -> list:
         """
         Get the Maps available in the specified Title for Heat Map use.
 
@@ -808,7 +818,7 @@ class Client:
             await self.http.GetAvailableMaps(title.value, platform.value, mode.value)
         )["data"]
 
-    async def GetLootSeason(self, title: Title, season: int, **kwargs):
+    async def GetLootSeason(self, title: Title, season: int, **kwargs) -> Season:
         """
         Get a Call of Duty Loot Season by its title and number.
 
@@ -850,7 +860,7 @@ class Client:
 
         return Season(self, data)
 
-    async def GetSquad(self, name: str):
+    async def GetSquad(self, name: str) -> Squad:
         """
         Get a Call of Duty Squad using its name.
 
@@ -867,7 +877,7 @@ class Client:
 
         return Squad(self, (await self.http.GetSquad(name))["data"])
 
-    async def GetPlayerSquad(self, platform: Platform, username: str):
+    async def GetPlayerSquad(self, platform: Platform, username: str) -> Squad:
         """
         Get a Call of Duty player's Squad using their platform and username.
 
@@ -890,7 +900,7 @@ class Client:
             self, (await self.http.GetPlayerSquad(platform.value, username))["data"]
         )
 
-    async def GetMySquad(self):
+    async def GetMySquad(self) -> Squad:
         """
         Get the Squad of the authenticated Call of Duty player.
 
@@ -914,7 +924,7 @@ class Client:
 
         await self.http.JoinSquad(name)
 
-    async def LeaveSquad(self):
+    async def LeaveSquad(self) -> Squad:
         """
         Leave the Call of Duty Squad of the authenticated player.
         Upon leaving a Squad, the player is automatically placed into

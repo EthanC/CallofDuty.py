@@ -106,7 +106,7 @@ class Auth:
                 raise LoginFailure(f"Failed to login (HTTP {res.status} {res.reason})")
 
 
-async def Login(email: str, password: str):
+async def Login(email: str, password: str) -> Client:
     """
     Convenience function to make login with the Call of Duty authorization flow
     as easy as possible.
