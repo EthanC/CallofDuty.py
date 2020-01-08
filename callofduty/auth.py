@@ -38,7 +38,7 @@ class Auth:
         self.session = aiohttp.ClientSession(loop=self.loop, cookie_jar=self.cookieJar)
 
     @property
-    def AccessToken(self):
+    def AccessToken(self) -> str:
         """
         Returns
         -------
@@ -53,7 +53,7 @@ class Auth:
         return self._accessToken
 
     @property
-    def DeviceId(self):
+    def DeviceId(self) -> str:
         """
         Returns
         -------

@@ -1,5 +1,6 @@
 import logging
 import urllib.parse
+from typing import Union
 
 import aiohttp
 
@@ -8,7 +9,7 @@ from .errors import Forbidden, HTTPException, NotFound
 log = logging.getLogger(__name__)
 
 
-async def JSONorText(res: aiohttp.ClientResponse):
+async def JSONorText(res: aiohttp.ClientResponse) -> Union[dict, str]:
     """
     Determine the media type of the provided response.
 
@@ -107,7 +108,7 @@ class HTTP:
 
         await self.session.close()
 
-    async def GetAppLocalize(self, language: str):
+    async def GetAppLocalize(self, language: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -115,7 +116,7 @@ class HTTP:
             )
         )
 
-    async def GetWebLocalize(self, language: str):
+    async def GetWebLocalize(self, language: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -123,30 +124,30 @@ class HTTP:
             )
         )
 
-    async def GetNewsFeed(self, language: str):
+    async def GetNewsFeed(self, language: str) -> dict:
         return await self.Request(Request("GET", f"site/cod/franchiseFeed/{language}"))
 
-    async def GetFriendFeed(self):
+    async def GetFriendFeed(self) -> dict:
         return await self.Request(
             Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")
         )
 
-    async def GetMyIdentities(self):
+    async def GetMyIdentities(self) -> dict:
         return await self.Request(
             Request("GET", "api/papi-client/crm/cod/v2/identities/")
         )
 
-    async def GetMyAccounts(self):
+    async def GetMyAccounts(self) -> dict:
         return await self.Request(
             Request("GET", "api/papi-client/crm/cod/v2/accounts/")
         )
 
-    async def GetMyFriends(self):
+    async def GetMyFriends(self) -> dict:
         return await self.Request(
             Request("GET", "api/papi-client/codfriends/v1/compendium")
         )
 
-    async def SearchPlayer(self, platform: str, username: str):
+    async def SearchPlayer(self, platform: str, username: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -156,7 +157,7 @@ class HTTP:
 
     async def GetPlayerProfile(
         self, platform: str, username: str, title: str, mode: str
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -173,7 +174,7 @@ class HTTP:
         limit: int,
         startTimestamp: int,
         endTimeStamp: int,
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -190,7 +191,7 @@ class HTTP:
         limit: int,
         startTimestamp: int,
         endTimeStamp: int,
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -198,7 +199,7 @@ class HTTP:
             )
         )
 
-    async def GetMatch(self, title: str, platform: str, matchId: int):
+    async def GetMatch(self, title: str, platform: str, matchId: int) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -214,7 +215,7 @@ class HTTP:
         gameMode: str,
         timeFrame: str,
         page: int,
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -230,7 +231,7 @@ class HTTP:
         gameType: str,
         gameMode: str,
         timeFrame: str,
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -238,7 +239,7 @@ class HTTP:
             )
         )
 
-    async def GetAvailableMaps(self, title: str, platform: str, mode: str):
+    async def GetAvailableMaps(self, title: str, platform: str, mode: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -248,7 +249,7 @@ class HTTP:
 
     async def GetLootSeason(
         self, title: str, season: int, platform: str, language: str
-    ):
+    ) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -256,7 +257,7 @@ class HTTP:
             )
         )
 
-    async def GetSquad(self, name: str):
+    async def GetSquad(self, name: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -265,7 +266,7 @@ class HTTP:
             )
         )
 
-    async def GetPlayerSquad(self, platform: str, username: str):
+    async def GetPlayerSquad(self, platform: str, username: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -274,12 +275,12 @@ class HTTP:
             )
         )
 
-    async def GetMySquad(self):
+    async def GetMySquad(self) -> dict:
         return await self.Request(
             Request("GET", "api/v2/squad/lookup/mine/", baseUrl=Request.squadsBaseUrl)
         )
 
-    async def JoinSquad(self, name: str):
+    async def JoinSquad(self, name: str) -> dict:
         return await self.Request(
             Request(
                 "GET",
@@ -288,7 +289,7 @@ class HTTP:
             )
         )
 
-    async def LeaveSquad(self):
+    async def LeaveSquad(self) -> dict:
         return await self.Request(
             Request("GET", "api/v2/squad/leave/", baseUrl=Request.squadsBaseUrl)
         )
