@@ -24,23 +24,29 @@ class Leaderboard(Object):
         Time Frame to get the leaderboard for (default is All-Time.)
     page : int, optional
         Leaderboard page to get (default is 1.)
+    pages : int, optional
+        Total number of pages available for the leaderboard.
+    columns : list, optional
+        Array of strings containing the column headers for the leaderboard.
+    entries : list, optional
+        Array of leaderboard entries.
     """
 
-    _type = "leaderboard"
+    _type: str = "leaderboard"
 
     def __init__(self, client: object, data: dict):
         super().__init__(client)
 
-        self.title = Title(data.pop("title"))
-        self.platform = Platform(data.pop("platform"))
-        self.gameType = GameType(data.pop("leaderboardType"))
-        self.gameMode = data.pop("gameMode")
-        self.timeFrame = TimeFrame(data.pop("timeFrame"))
-        self.page = data.pop("page")
+        self.title: Title = Title(data.pop("title"))
+        self.platform: Platform = Platform(data.pop("platform"))
+        self.gameType: GameType = GameType(data.pop("leaderboardType"))
+        self.gameMode: str = data.pop("gameMode")
+        self.timeFrame: TimeFrame = TimeFrame(data.pop("timeFrame"))
+        self.page: int = data.pop("page")
 
-        self.pages = data.pop("totalPages")
-        self.columns = data.pop("columns")
-        self.entries = data.pop("entries")
+        self.pages: int = data.pop("totalPages")
+        self.columns: list = data.pop("columns")
+        self.entries: list = data.pop("entries")
 
     async def players(self):
         """

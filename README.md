@@ -16,6 +16,7 @@ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of
 ## Features
 
 -   Asynchronous and Pythonic using `async` and `await`
+-   Type checks and editor completion using [Type Hints](https://www.python.org/dev/peps/pep-0484/)
 -   Object-oriented and predictable abstractions
 -   100% coverage of the supported Call of Duty API
 
@@ -27,7 +28,7 @@ For complete usage of CallofDuty.py, see the Documentation.
 
 ### Installation
 
-CallofDuty.py requires Python 3.7 or greater. Once that requirement is met, simply install CallofDuty.py using pip!
+CallofDuty.py requires Python 3.8 or greater. Once this requirement is met, simply install CallofDuty.py using pip (or [Poetry](https://python-poetry.org/docs/))!
 
 ```
 pip install callofduty.py
@@ -59,7 +60,7 @@ async def main():
 
     me = results[1]
     profile = await me.profile(Title.ModernWarfare, Mode.Multiplayer)
-    
+
     level = profile["level"]
     kd = profile["lifetime"]["all"]["properties"]["kdRatio"]
     wl = profile["lifetime"]["all"]["properties"]["wlRatio"]
@@ -69,7 +70,7 @@ async def main():
 
     await client.Logout()
 
-asyncio.run(main())
+asyncio.get_event_loop().run_until_complete(main())
 ```
 
 ## Versioning

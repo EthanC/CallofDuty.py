@@ -28,15 +28,15 @@ class Season(Object):
         Language which the loot data should be in (default is English.)
     """
 
-    _type = "season"
+    _type: str = "season"
 
     def __init__(self, client: object, data: dict):
         super().__init__(client)
 
-        self.title = Title(data.pop("title"))
-        self.season = data.pop("season")
-        self.platform = Platform(data.pop("platform"))
-        self.name = data.pop("categoryTitle", None)
-        self.tiers = data.pop("tiers", None)
-        self.chase = data.pop("chase", None)
-        self.language = Language(data.pop("language"))
+        self.title: str = Title(data.pop("title"))
+        self.season: int = data.pop("season")
+        self.platform: Platform = Platform(data.pop("platform"))
+        self.name: str = data.pop("categoryTitle", None)
+        self.tiers: dict = data.pop("tiers", None)
+        self.chase: dict = data.pop("chase", None)
+        self.language: Language = Language(data.pop("language"))

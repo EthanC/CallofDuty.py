@@ -26,17 +26,17 @@ class Player(Object):
         Array of Player objects containing the player's identities (default is an empty list.)
     """
 
-    _type = "player"
+    _type: str = "player"
 
     def __init__(self, client: object, data: dict):
         super().__init__(client)
 
-        self.platform = Platform(data.pop("platform"))
-        self.username = data.pop("username")
-        self.accountId = data.pop("accountId", None)
-        self.avatarUrl = data.pop("avatarUrl", None)
-        self.online = data.pop("online", False)
-        self.identities = data.pop("identities", [])
+        self.platform: Platform = Platform(data.pop("platform"))
+        self.username: str = data.pop("username")
+        self.accountId: int = data.pop("accountId", None)
+        self.avatarUrl: str = data.pop("avatarUrl", None)
+        self.online: bool = data.pop("online", False)
+        self.identities: list = data.pop("identities", [])
 
     async def profile(self, title: Title, mode: Mode):
         """

@@ -78,14 +78,14 @@ class HTTPException(CallofDutyException):
 
     def __init__(self, res, data):
         self.res = res
-        self.message = "An unknown error occurred"
+        self.message: str = "An unknown error occurred"
 
         if isinstance(data, dict):
             try:
-                data = data.get("data")
-                self.message = data.get("message", self.message)
+                data: dict = data.get("data")
+                self.message: str = data.get("message", self.message)
             except AttributeError:
-                self.message = data
+                self.message: str = str(data)
 
         super().__init__(f"{self.res.status} {self.res.reason} - {self.message}")
 

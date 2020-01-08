@@ -20,14 +20,14 @@ class Match(Object):
         Title which the match took place.
     """
 
-    _type = "match"
+    _type: str = "match"
 
     def __init__(self, client: object, data: dict):
         super().__init__(client)
 
-        self.id = data.pop("id")
-        self.platform = Platform(data.pop("platform"))
-        self.title = Title(data.pop("title"))
+        self.id: int = data.pop("id")
+        self.platform: Platform = Platform(data.pop("platform"))
+        self.title: Title = Title(data.pop("title"))
 
     async def teams(self):
         """

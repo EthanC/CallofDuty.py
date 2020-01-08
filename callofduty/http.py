@@ -32,21 +32,21 @@ async def JSONorText(res: aiohttp.ClientResponse):
 class Request:
     """Represents a Request object."""
 
-    defaultBaseUrl = "https://callofduty.com/"
-    squadsBaseUrl = "https://squads.callofduty.com/"
+    defaultBaseUrl: str = "https://callofduty.com/"
+    squadsBaseUrl: str = "https://squads.callofduty.com/"
 
-    accessToken = None
-    deviceId = None
+    accessToken: str = None
+    deviceId: str = None
 
     def __init__(self, method: str, endpoint: str = None, **kwargs):
-        self.method = method
-        self.headers = {}
+        self.method: str = method
+        self.headers: dict = {}
 
         if endpoint is not None:
-            baseUrl = kwargs.get("baseUrl", self.defaultBaseUrl)
-            self.url = f"{baseUrl}{endpoint}"
+            baseUrl: str = kwargs.get("baseUrl", self.defaultBaseUrl)
+            self.url: str = f"{baseUrl}{endpoint}"
 
-        headers = kwargs.get("headers")
+        headers: dict = kwargs.get("headers")
         if isinstance(headers, dict):
             self.headers.update(headers)
 
@@ -73,7 +73,7 @@ class HTTP:
             data = await JSONorText(res)
 
             if isinstance(data, dict):
-                status = data.get("status")
+                status: str = data.get("status")
 
                 # The API tends to return HTTP 200 even when an error occurs
                 if status == "error":

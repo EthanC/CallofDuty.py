@@ -26,12 +26,12 @@ class Auth:
     loginUrl = "https://profile.callofduty.com/cod/mapp/login"
     registerDeviceUrl = "https://profile.callofduty.com/cod/mapp/registerDevice"
 
-    _accessToken = None
-    _deviceId = None
+    _accessToken: str = None
+    _deviceId: str = None
 
     def __init__(self, email: str, password: str):
-        self.email = email
-        self.password = password
+        self.email: str = email
+        self.password: str = password
 
         self.loop = asyncio.get_event_loop()
         self.cookieJar = aiohttp.CookieJar()
@@ -74,9 +74,9 @@ class Auth:
         Set the corresponding Access Token if successful.
         """
 
-        self._deviceId = hex(random.getrandbits(128)).lstrip("0x")
+        self._deviceId: str = hex(random.getrandbits(128)).lstrip("0x")
 
-        body = {"deviceId": self.DeviceId}
+        body: dict = {"deviceId": self.DeviceId}
 
         async with self.session.post(self.registerDeviceUrl, json=body) as res:
             if res.status != 200:
@@ -84,7 +84,7 @@ class Auth:
                     f"Failed to register fake device (HTTP {res.status} {res.reason})"
                 )
 
-            data = await res.json()
+            data: dict = await res.json()
 
             self._accessToken = data["data"]["authHeader"]
 
@@ -94,12 +94,12 @@ class Auth:
         previously acquired Access Token and Device ID.
         """
 
-        headers = {
+        headers: dict = {
             "Authorization": f"Bearer {self.AccessToken}",
             "x_cod_device_id": self.DeviceId,
         }
 
-        data = {"email": self.email, "password": self.password}
+        data: dict = {"email": self.email, "password": self.password}
 
         async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
             if res.status != 200:
@@ -124,7 +124,7 @@ async def Login(email: str, password: str):
         Authenticated Call of Duty client.
     """
 
-    auth = Auth(email, password)
+    auth: Auth = Auth(email, password)
 
     await auth.RegisterDevice()
     await auth.SubmitLogin()

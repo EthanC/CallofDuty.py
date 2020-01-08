@@ -13,19 +13,17 @@ class Object:
         Client which manages communication with the Call of Duty API.
     """
 
-    _type = None
+    _type: str = None
 
     def __init__(self, client: object):
-        self._client = client
+        self._client: object = client
 
     @property
     def type(self):
         return self._type
 
     def __repr__(self):
-        reprStr = self.__class__.__name__
-
-        return f"<{reprStr}>"
+        return f"<{self.__class__.__name__}>"
 
     def __str__(self):
         return self.__repr__()

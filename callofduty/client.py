@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
@@ -47,8 +48,8 @@ class Client:
 
         VerifyLanguage(language)
 
-        web = await self.http.GetWebLocalize(language.value)
-        app = await self.http.GetAppLocalize(language.value)
+        web: dict = await self.http.GetWebLocalize(language.value)
+        app: dict = await self.http.GetAppLocalize(language.value)
 
         return {**web, **app}
 
@@ -80,12 +81,12 @@ class Client:
             JSON data of the player's Friend Feed.
         """
 
-        data = (await self.http.GetFriendFeed())["data"]
+        data: dict = (await self.http.GetFriendFeed())["data"]
 
-        players = []
+        players: List[Player] = []
 
         for i in data["identities"]:
-            _player = Player(
+            _player: Player = Player(
                 self, {"platform": i["platform"], "username": i["username"]}
             )
             players.append(_player)
@@ -106,9 +107,9 @@ class Client:
             Array of identities containing title, platform, username, and more.
         """
 
-        data = (await self.http.GetMyIdentities())["data"]
+        data: dict = (await self.http.GetMyIdentities())["data"]
 
-        identities = []
+        identities: list = []
 
         for identity in data["titleIdentities"]:
             identities.append(
@@ -133,9 +134,9 @@ class Client:
             Array of Player objects for the linked accounts.
         """
 
-        data = (await self.http.GetMyAccounts())["data"]
+        data: dict = (await self.http.GetMyAccounts())["data"]
 
-        accounts = []
+        accounts: List[Player] = []
 
         for account in data.keys():
             accounts.append(
@@ -156,9 +157,9 @@ class Client:
             Array of Player objects for the friends.
         """
 
-        data = (await self.http.GetMyFriends())["data"]
+        data: dict = (await self.http.GetMyFriends())["data"]
 
-        friends = []
+        friends: List[Player] = []
 
         for friend in data["uno"]:
             friends.append(
@@ -175,8 +176,8 @@ class Client:
 
         for _platform in data["firstParty"]:
             for friend in data["firstParty"][_platform]:
-                i = friend.get("identities", [])
-                identities = []
+                i: list = friend.get("identities", [])
+                identities: List[Player] = []
 
                 for _platform in i:
                     identities.append(
@@ -222,10 +223,10 @@ class Client:
             JSON data of the player's friend requests.
         """
 
-        data = (await self.http.GetMyFriends())["data"]
+        data: dict = (await self.http.GetMyFriends())["data"]
 
-        incoming = []
-        outgoing = []
+        incoming: List[Player] = []
+        outgoing: List[Player] = []
 
         for request in data["incomingInvitations"]:
             incoming.append(
@@ -297,23 +298,23 @@ class Client:
 
         VerifyPlatform(platform)
 
-        data = (await self.http.SearchPlayer(platform.value, username))["data"]
+        data: dict = (await self.http.SearchPlayer(platform.value, username))["data"]
 
-        limit = kwargs.get("limit", 0)
+        limit: int = kwargs.get("limit", 0)
         if limit > 0:
             data = data[:limit]
 
-        results = []
+        results: List[Player] = []
 
         for player in data:
-            accountId = player.get("accountId")
+            accountId: int = player.get("accountId")
             if isinstance(accountId, str):
                 # The API returns the accountId as a string
-                accountId = int(accountId)
+                accountId: int = int(accountId)
 
-            avatar = player.get("avatar")
+            avatar: dict = player.get("avatar")
             if isinstance(avatar, dict):
-                avatar = avatar["avatarUrlLargeSsl"]
+                avatar: str = avatar["avatarUrlLargeSsl"]
 
             data = {
                 "platform": player["platform"],
@@ -421,14 +422,14 @@ class Client:
         VerifyTitle(title)
         VerifyMode(mode, title)
 
-        limit = kwargs.get("limit", 10)
-        startTimestamp = kwargs.get("startTimestamp", 0)
-        endTimestamp = kwargs.get("endTimestamp", 0)
+        limit: int = kwargs.get("limit", 10)
+        startTimestamp: int = kwargs.get("startTimestamp", 0)
+        endTimestamp: int = kwargs.get("endTimestamp", 0)
 
         if platform == Platform.Activision:
             # The preferred matches endpoint does not currently support
             # the Activision (uno) platform.
-            data = (
+            data: dict = (
                 await self.http.GetPlayerMatchesDetailed(
                     platform.value,
                     username,
@@ -440,7 +441,7 @@ class Client:
                 )
             )["data"]["matches"]
 
-            matches = []
+            matches: List[Match] = []
 
             for _match in data:
                 matches.append(
@@ -455,7 +456,7 @@ class Client:
                     )
                 )
         else:
-            data = (
+            data: dict = (
                 await self.http.GetPlayerMatches(
                     platform.value,
                     username,
@@ -467,7 +468,7 @@ class Client:
                 )
             )["data"]
 
-            matches = []
+            matches: List[Match] = []
 
             for _match in data:
                 matches.append(
@@ -519,9 +520,9 @@ class Client:
         VerifyTitle(title)
         VerifyMode(mode, title)
 
-        limit = kwargs.get("limit", 10)
-        startTimestamp = kwargs.get("startTimestamp", 0)
-        endTimestamp = kwargs.get("endTimestamp", 0)
+        limit: int = kwargs.get("limit", 10)
+        startTimestamp: int = kwargs.get("startTimestamp", 0)
+        endTimestamp: int = kwargs.get("endTimestamp", 0)
 
         return (
             await self.http.GetPlayerMatchesDetailed(
@@ -583,17 +584,17 @@ class Client:
         VerifyPlatform(platform)
         VerifyTitle(title)
 
-        data = (await self.http.GetMatch(title.value, platform.value, matchId))["data"][
-            "teams"
-        ]
+        data: dict = (await self.http.GetMatch(title.value, platform.value, matchId))[
+            "data"
+        ]["teams"]
 
         # The API does not state which team is allies/axis, so no array
         # keys will be used.
-        teams = []
+        teams: list = []
 
         for team in data:
             # Current team iterator
-            i = []
+            i: List[Player] = []
 
             for player in team:
                 i.append(
@@ -636,17 +637,17 @@ class Client:
             Leaderboard object representing the specified details.
         """
 
-        gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", "career")
-        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
-        page = kwargs.get("page", 1)
+        gameType: GameType = kwargs.get("gameType", GameType.Core)
+        gameMode: str = kwargs.get("gameMode", "career")
+        timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+        page: int = kwargs.get("page", 1)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
         VerifyTimeFrame(timeFrame)
 
-        data = (
+        data: dict = (
             await self.http.GetLeaderboard(
                 title.value,
                 platform.value,
@@ -690,16 +691,16 @@ class Client:
             Leaderboard object representing the specified details.
         """
 
-        gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", "career")
-        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+        gameType: GameType = kwargs.get("gameType", GameType.Core)
+        gameMode: str = kwargs.get("gameMode", "career")
+        timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
         VerifyTimeFrame(timeFrame)
 
-        data = (
+        data: dict = (
             await self.http.GetPlayerLeaderboard(
                 title.value,
                 platform.value,
@@ -741,17 +742,17 @@ class Client:
             Array containing Player objects for each Leaderboard entry.
         """
 
-        gameType = kwargs.get("gameType", GameType.Core)
-        gameMode = kwargs.get("gameMode", "career")
-        timeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
-        page = kwargs.get("page", 1)
+        gameType: GameType = kwargs.get("gameType", GameType.Core)
+        gameMode: str = kwargs.get("gameMode", "career")
+        timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
+        page: int = kwargs.get("page", 1)
 
         VerifyTitle(title)
         VerifyPlatform(platform)
         VerifyGameType(gameType)
         VerifyTimeFrame(timeFrame)
 
-        data = (
+        data: dict = (
             await self.http.GetLeaderboard(
                 title.value,
                 platform.value,
@@ -766,9 +767,9 @@ class Client:
         # just add it manually.
         data["timeFrame"] = timeFrame.value
 
-        data = Leaderboard(self, data)
+        data: Leaderboard = Leaderboard(self, data)
 
-        players = []
+        players: List[Player] = []
 
         for _player in data.entries:
             players.append(

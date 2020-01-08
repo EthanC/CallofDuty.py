@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import callofduty
-from callofduty import GameType, Mode, Platform, TimeFrame, Title
+from callofduty import Mode, Platform, Title
 
 
 async def main():
@@ -20,9 +20,9 @@ async def main():
 
     # requests = await client.GetMyFriendRequests()
     # for incoming in requests["incoming"]:
-    #     print(f"Incoming Friend Request: {incoming.username} ({incoming.platform})")
+    #     print(f"Incoming Friend Request: {incoming.username} ({incoming.platform.name})")
     # for outgoing in requests["outgoing"]:
-    #     print(f"Outgoing Friend Request: {outgoing.username} ({outgoing.platform})")
+    #     print(f"Outgoing Friend Request: {outgoing.username} ({outgoing.platform.name})")
 
     # friends = await client.GetMyFriends()
     # for friend in friends:
@@ -42,8 +42,9 @@ async def main():
     #     print(f"{account.username} ({account.platform.name})")
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
-    # print(f"{player.username} ({player.platform})")
+    # print(f"{player.username} ({player.platform.name})")
 
+    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Multiplayer, limit=20)
     # print(summary)
 
@@ -52,11 +53,11 @@ async def main():
     #     print(post["title"])
 
     # leaderboard = await client.GetLeaderboard(
-    #     Title.ModernWarfare, Platform.BattleNet, "cyber", page=3
+    #     Title.ModernWarfare, Platform.BattleNet, gameMode="cyber", page=3
     # )
     # print((leaderboard.entries)[0])
     # for player in await leaderboard.players():
-    #     print(f"{player.username} ({player.platform})")
+    #     print(f"{player.username} ({player.platform.name})")
 
     # leaderboard = await client.GetPlayerLeaderboard(
     #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"
@@ -78,6 +79,10 @@ async def main():
     #         print(f" - {mode}")
 
     # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
+    # for match in matches:
+    #     print(match.id)
+
+    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
     # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, match.id)
     # teams = await match.teams()
@@ -91,6 +96,7 @@ async def main():
     # for player in results:
     #     print(f"{player.username} ({player.platform})")
 
+    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # profile = await player.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
@@ -98,8 +104,13 @@ async def main():
     # print(localize)
 
     # squad = await client.GetSquad("Autists")
+    # print(f"{squad.name} - {squad.description}")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # for member in squad.members:
+    #     if member.username != squad.owner.username:
+    #         print(f"Member: {member.username} ({member.platform})")
+
     # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#8649242")
-    # squad = await client.GetMySquad()
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
     # for member in squad.members:
@@ -107,7 +118,11 @@ async def main():
     #         print(f"Member: {member.username} ({member.platform})")
 
     # squad = await client.GetMySquad()
-    # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
+    # print(f"{squad.name} - {squad.description}")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # for member in squad.members:
+    #     if member.username != squad.owner.username:
+    #         print(f"Member: {member.username} ({member.platform})")
 
     # print(f"Leaving Squad '{squad.name}''...")
     # squad = await client.LeaveSquad()
@@ -122,4 +137,4 @@ async def main():
     await client.Logout()
 
 
-asyncio.run(main())
+asyncio.get_event_loop().run_until_complete(main())
