@@ -1,22 +1,24 @@
 import asyncio
 import os
 
+from dotenv import load_dotenv
+
 import callofduty
 from callofduty import Mode, Platform, Title
 
 
 async def main():
+    load_dotenv()
     client = await callofduty.Login(
         os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
     )
 
-    # season = await client.GetLootSeason(Title.ModernWarfare, 1)
+    # season = await client.GetLootSeason(Title.BlackOps4, 3)
     # print(f"{season.title.name}: {season.name}")
-    # for i in season.tiers:
-    #     itemName = season.tiers[i]["label"]
-    #     itemRarity = season.tiers[i]["rarity"]
-    #     itemType = season.tiers[i]["type"]
-    #     print(f"{itemName} ({itemRarity} {itemType})")
+    # for tier in season.tiers:
+    #     print(f"Tier {tier.tier}: {tier.name} - {tier.rarity} {tier.category}")
+    # for chase in season.chase:
+    #     print(f"Chase: {chase.name} - {chase.rarity} {chase.category}")
 
     # requests = await client.GetMyFriendRequests()
     # for incoming in requests["incoming"]:

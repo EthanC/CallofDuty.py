@@ -3,9 +3,9 @@ from typing import List
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
+from .loot import Season
 from .match import Match
 from .player import Player
-from .season import Season
 from .squad import Squad
 from .utils import (
     VerifyGameType,

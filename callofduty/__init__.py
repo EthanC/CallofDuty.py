@@ -1,11 +1,13 @@
 """
 CallofDuty.py is an asynchronous, object-oriented Python wrapper for
 the Call of Duty API.
+
+GitHub: https://github.com/EthanC/CallofDuty.py
 """
 
-__title__ = "CallofDuty.py"
-__author__ = "EthanC"
-__version__ = "0.1.0"
+__title__: str = "CallofDuty.py"
+__author__: str = "EthanC"
+__version__: str = "0.1.0"
 
 import logging
 
@@ -14,9 +16,9 @@ from .client import Client
 from .enums import *
 from .errors import *
 from .leaderboard import Leaderboard
+from .loot import LootItem, Season
 from .match import Match
 from .player import Player
-from .season import Season
 from .squad import Squad
 
 try:
