@@ -23,8 +23,8 @@ class Auth:
         Activision account password.
     """
 
-    loginUrl = "https://profile.callofduty.com/cod/mapp/login"
-    registerDeviceUrl = "https://profile.callofduty.com/cod/mapp/registerDevice"
+    loginUrl: str = "https://profile.callofduty.com/cod/mapp/login"
+    registerDeviceUrl: str = "https://profile.callofduty.com/cod/mapp/registerDevice"
 
     _accessToken: str = None
     _deviceId: str = None
