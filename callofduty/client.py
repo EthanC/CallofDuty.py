@@ -185,7 +185,9 @@ class Client:
                             self,
                             {
                                 "platform": friend["identities"][_platform]["platform"],
-                                "username": friend["identities"][_platform]["username"],
+                                "username": friend["identities"][_platform].get(
+                                    "username"
+                                ),
                                 "accountId": friend["identities"][_platform][
                                     "accountId"
                                 ],
