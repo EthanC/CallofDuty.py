@@ -63,7 +63,7 @@ class HTTP:
         self.session = auth.session
 
     async def Request(self, req):
-        req.SetHeader("Authorization", f"bearer {self.auth.AccessToken}")
+        req.SetHeader("Authorization", f"Bearer {self.auth.AccessToken}")
         req.SetHeader("x_cod_device_id", self.auth.DeviceId)
 
         async with self.session.request(
