@@ -57,9 +57,8 @@ async def main():
     # leaderboard = await client.GetLeaderboard(
     #     Title.ModernWarfare, Platform.BattleNet, gameMode="cyber", page=3
     # )
-    # print((leaderboard.entries)[0])
-    # for player in await leaderboard.players():
-    #     print(f"{player.username} ({player.platform.name})")
+    # for entry in leaderboard.entries:
+    #     print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
     # leaderboard = await client.GetPlayerLeaderboard(
     #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"

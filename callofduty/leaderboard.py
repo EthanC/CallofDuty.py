@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from .enums import GameType, Platform, TimeFrame, Title
 from .object import Object
@@ -29,10 +30,10 @@ class Leaderboard(Object):
     columns : list, optional
         Array of strings containing the column headers for the leaderboard.
     entries : list, optional
-        Array of leaderboard entries.
+        Array of Leaderboard Entry objects containing the entries for the leaderboard.
     """
 
-    _type: str = "leaderboard"
+    _type: str = "Leaderboard"
 
     def __init__(self, client: object, data: dict):
         super().__init__(client)
@@ -46,7 +47,14 @@ class Leaderboard(Object):
 
         self.pages: int = data.pop("totalPages")
         self.columns: list = data.pop("columns")
-        self.entries: list = data.pop("entries")
+        self.entries: List[LeaderboardEntry] = []
+
+        for entry in data.pop("entries", []):
+            # Leaderboard Entries don't include this value, so we'll just
+            # add it manually.
+            entry["platform"] = self.platform.value
+            
+            self.entries.append(LeaderboardEntry(self, entry))
 
     async def players(self) -> list:
         """
@@ -55,7 +63,7 @@ class Leaderboard(Object):
         Returns
         -------
         list
-            Array containing Player objects for each Leaderboard entry.
+            Array of Player objects for each leaderboard entry.
         """
 
         return await self._client.GetLeaderboardPlayers(
@@ -66,3 +74,36 @@ class Leaderboard(Object):
             timeFrame=self.timeFrame,
             page=self.page,
         )
+
+
+class LeaderboardEntry(Object):
+    """
+    Represents a Call of Duty leaderboard entry object.
+
+    Parameters
+    ----------
+    platform : callofduty.Platform
+        Platform of the player.
+    username : str
+        Player's username for the designated platform.
+    rank : int
+        Leaderboard position for the designated entry.
+    updated : int, optional
+        Value in seconds representing how long ago the leaderboard entry was updated.
+    rating : int, optional
+        Unknown rating value.
+    values : dict, optional
+        JSON data containing values for the leaderboard entry.
+    """
+
+    _type: str = "LeaderboardEntry"
+
+    def __init__(self, client: object, data: dict):
+        super().__init__(client)
+
+        self.platform: Platform = Platform(data.pop("platform"))
+        self.username: str = data.pop("username")
+        self.rank: int = int(data.pop("rank"))
+        self.updated: int = int(data.pop("updateTime"))
+        self.rating: int = data.pop("rating")
+        self.values: dict = data.pop("values")
