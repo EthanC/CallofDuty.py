@@ -5,10 +5,6 @@ the Call of Duty API.
 GitHub: https://github.com/EthanC/CallofDuty.py
 """
 
-__title__: str = "CallofDuty.py"
-__author__: str = "EthanC"
-__version__: str = "0.1.0"
-
 import logging
 
 from .auth import Login
