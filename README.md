@@ -23,11 +23,9 @@ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of
 
 Construct a new Call of Duty client, then use the various services on the client to access different parts of the Call of Duty API.
 
-For complete usage of CallofDuty.py, see the Documentation.
-
 ### Installation
 
-CallofDuty.py requires Python 3.8 or greater. Once this requirement is met, simply install CallofDuty.py using pip (or [Poetry](https://python-poetry.org/docs/))!
+CallofDuty.py requires Python 3.8 or greater. Once this requirement is met, simply install CallofDuty.py using pip (or [Poetry](https://python-poetry.org/docs/cli/#add))!
 
 ```
 pip install callofduty.py
