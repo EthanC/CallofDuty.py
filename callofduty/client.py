@@ -8,6 +8,7 @@ from .match import Match
 from .player import Player
 from .squad import Squad
 from .utils import (
+    StripHTML,
     VerifyGameType,
     VerifyLanguage,
     VerifyMode,
@@ -66,25 +67,35 @@ class Client:
 
         return await self.http.GetNewsFeed(language.value)
 
-    async def GetFriendFeed(self) -> dict:
+    async def GetFriendFeed(self, **kwargs) -> dict:
         """
         Get the Friend Feed of the authenticated Call of Duty player.
+
+        Parameters
+        ----------
+        stripHTML : bool, optional
+            Whether to strip the HTML formatting from rendered event strings (default is True.)
 
         Returns
         -------
         dict
-            JSON data of the player's Friend Feed.
+            JSON data of the authenticated player's Friend Feed.
         """
+
+        stripHTML: bool = kwargs.get("stripHTML", True)
 
         data: dict = (await self.http.GetFriendFeed())["data"]
 
         players: List[Player] = []
-
         for i in data["identities"]:
             _player: Player = Player(
                 self, {"platform": i["platform"], "username": i["username"]}
             )
             players.append(_player)
+
+        if stripHTML is True:
+            for i in data["events"]:
+                i["rendered"] = StripHTML(i["rendered"])
 
         return {
             "events": data["events"],

@@ -1,4 +1,5 @@
 import logging
+import re
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .errors import (
@@ -107,3 +108,28 @@ def VerifyGameType(value: GameType):
 
     if value not in GameType:
         raise InvalidGameType(f"{value.name} is not a valid game type")
+
+
+def StripHTML(input: str) -> str:
+    """
+    Strip the HTML formatting from a string.
+
+    Parameters
+    ----------
+    input : str
+        HTML formatted string.
+
+    Returns
+    -------
+    str
+        Input string without the HTML formatting.
+    """
+
+    # Regex is hideous, but this gets the job done faster than an external
+    # library. This is also future-proof against any sort of HTML characters,
+    # such as &nbsp and &amp.
+    expression: re.Pattern = re.compile(
+        "<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
+    )
+
+    return re.sub(expression, "", input)
