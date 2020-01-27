@@ -2,20 +2,20 @@ import logging
 import urllib.parse
 from typing import Union
 
-import aiohttp
+import httpx
 
 from .errors import Forbidden, HTTPException, NotFound
 
 log = logging.getLogger(__name__)
 
 
-async def JSONorText(res: aiohttp.ClientResponse) -> Union[dict, str]:
+async def JSONorText(res: httpx.Response) -> Union[dict, str]:
     """
     Determine the media type of the provided response.
 
     Parameters
     ----------
-    res : aiohttp.ClientResponse
+    res : httpx.Response
         Response object to determine media type.
 
     Returns
@@ -25,9 +25,9 @@ async def JSONorText(res: aiohttp.ClientResponse) -> Union[dict, str]:
     """
 
     if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
-        return await res.json(encoding="utf-8")
+        return res.json()
     else:
-        return await res.text(encoding="utf-8")
+        return res.text()
 
 
 class Request:
@@ -60,19 +60,18 @@ class HTTP:
 
     def __init__(self, auth):
         self.auth = auth
-        self.session = auth.session
+        self.session: httpx.AsyncClient = auth.session
 
-    async def Request(self, req):
+    async def Request(self, req: Request):
         req.SetHeader("Authorization", f"Bearer {self.auth.AccessToken}")
         req.SetHeader("x_cod_device_id", self.auth.DeviceId)
 
-        async with self.session.request(
-            req.method, req.url, headers=req.headers
-        ) as res:
-            log.debug(f"{res.status} {res.reason} - {res.method} {res.url}")
+        async with self.session as client:
+            res: httpx.Response = await client.request(
+                req.method, req.url, headers=req.headers
+            )
 
-            data = await JSONorText(res)
-
+            data: Union[dict, str] = await JSONorText(res)
             if isinstance(data, dict):
                 status: str = data.get("status")
 
@@ -81,32 +80,27 @@ class HTTP:
                     raise HTTPException(res, data)
 
             # HTTP 2XX: Success
-            if 300 > res.status >= 200:
+            if 300 > res.status_code >= 200:
                 return data
 
             # HTTP 429: Too Many Requests
-            if res.status == 429:
+            if res.status_code == 429:
                 # TODO Handle rate limiting
                 raise HTTPException(res, data)
 
             # HTTP 500/502: Internal Server Error/Bad Gateway
-            if res.status == 500 or res.status == 502:
+            if res.status_code == 500 or res.status_code == 502:
                 # TODO Handle Unconditional retries
                 raise HTTPException(res, data)
 
             # HTTP 403: Forbidden
-            if res.status == 403:
+            if res.status_code == 403:
                 raise Forbidden(res, data)
             # HTTP 404: Not Found
-            elif res.status == 404:
+            elif res.status_code == 404:
                 raise NotFound(res, data)
             else:
                 raise HTTPException(res, data)
-
-    async def CloseSession(self):
-        """Close the session connector."""
-
-        await self.session.close()
 
     async def GetAppLocalize(self, language: str) -> dict:
         return await self.Request(

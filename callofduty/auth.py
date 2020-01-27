@@ -1,8 +1,7 @@
-import asyncio
 import logging
 import random
 
-import aiohttp
+import httpx
 
 from .client import Client
 from .errors import LoginFailure
@@ -33,9 +32,7 @@ class Auth:
         self.email: str = email
         self.password: str = password
 
-        self.loop = asyncio.get_event_loop()
-        self.cookieJar = aiohttp.CookieJar()
-        self.session = aiohttp.ClientSession(loop=self.loop, cookie_jar=self.cookieJar)
+        self.session: httpx.AsyncClient = httpx.AsyncClient()
 
     @property
     def AccessToken(self) -> str:
@@ -78,15 +75,17 @@ class Auth:
 
         body: dict = {"deviceId": self.DeviceId}
 
-        async with self.session.post(self.registerDeviceUrl, json=body) as res:
-            if res.status != 200:
+        async with self.session as client:
+            res: httpx.Response = await client.post(self.registerDeviceUrl, json=body)
+
+            if res.status_code != 200:
                 raise LoginFailure(
-                    f"Failed to register fake device (HTTP {res.status} {res.reason})"
+                    f"Failed to register fake device (HTTP {res.status_code})"
                 )
 
-            data: dict = await res.json()
+            data: dict = res.json()
 
-            self._accessToken = data["data"]["authHeader"]
+            self._accessToken: str = data["data"]["authHeader"]
 
     async def SubmitLogin(self):
         """
@@ -101,9 +100,11 @@ class Auth:
 
         data: dict = {"email": self.email, "password": self.password}
 
-        async with self.session.post(self.loginUrl, json=data, headers=headers) as res:
-            if res.status != 200:
-                raise LoginFailure(f"Failed to login (HTTP {res.status} {res.reason})")
+        async with self.session as client:
+            res: httpx.Response = await client.post(self.loginUrl, json=data, headers=headers)
+
+            if res.status_code != 200:
+                raise LoginFailure(f"Failed to login (HTTP {res.status_code})")
 
 
 async def Login(email: str, password: str) -> Client:

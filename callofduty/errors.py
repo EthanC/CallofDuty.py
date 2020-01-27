@@ -87,7 +87,7 @@ class HTTPException(CallofDutyException):
             except AttributeError:
                 self.message: str = str(data)
 
-        super().__init__(f"{self.res.status} {self.res.reason} - {self.message}")
+        super().__init__(f"HTTP {self.res.status_code} - {self.message}")
 
 
 class Forbidden(HTTPException):

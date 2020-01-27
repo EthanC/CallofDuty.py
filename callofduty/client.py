@@ -25,11 +25,6 @@ class Client:
     def __init__(self, http: object):
         self.http = http
 
-    async def Logout(self):
-        """Close the client session."""
-
-        await self.http.CloseSession()
-
     async def GetLocalize(self, language: Language = Language.English) -> dict:
         """
         Get the localized strings used by the Call of Duty Companion App

@@ -63,11 +63,15 @@ async def main():
     # leaderboard = await client.GetPlayerLeaderboard(
     #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"
     # )
-    # print((leaderboard.entries)[0])
+    # for entry in leaderboard.entries:
+    #     if entry.username == "Mxtive#1930":
+    #         print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
     # player = await client.GetPlayer(Platform.Steam, "RdJokr")
     # leaderboard = await player.leaderboard(Title.WWII)
-    # print((leaderboard.entries)[17])
+    # for entry in leaderboard.entries:
+    #     if entry.username == player.username:
+    #         print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
     # feed = await client.GetFriendFeed()
     # for event in feed["events"][:5]:
@@ -95,7 +99,7 @@ async def main():
 
     # results = await client.SearchPlayers(Platform.Activision, "Tustin")
     # for player in results:
-    #     print(f"{player.username} ({player.platform})")
+    #     print(f"{player.username} ({player.platform.name})")
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # profile = await player.profile(Title.ModernWarfare, Mode.Multiplayer)
@@ -106,24 +110,24 @@ async def main():
 
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
-    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")
     # for member in squad.members:
     #     if member.username != squad.owner.username:
-    #         print(f"Member: {member.username} ({member.platform})")
+    #         print(f"Member: {member.username} ({member.platform.name})")
 
     # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#8649242")
     # print(f"{squad.name} - {squad.description}")
-    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")
     # for member in squad.members:
     #     if member.username != squad.owner.username:
-    #         print(f"Member: {member.username} ({member.platform})")
+    #         print(f"Member: {member.username} ({member.platform.name})")
 
     # squad = await client.GetMySquad()
     # print(f"{squad.name} - {squad.description}")
-    # print(f"Owner: {squad.owner.username} ({squad.owner.platform})")
+    # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")
     # for member in squad.members:
     #     if member.username != squad.owner.username:
-    #         print(f"Member: {member.username} ({member.platform})")
+    #         print(f"Member: {member.username} ({member.platform.name})")
 
     # print(f"Leaving Squad '{squad.name}''...")
     # squad = await client.LeaveSquad()
@@ -134,8 +138,6 @@ async def main():
     # await squad.join()
     # squad = await client.GetMySquad()
     # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
-
-    await client.Logout()
 
 
 asyncio.get_event_loop().run_until_complete(main())
