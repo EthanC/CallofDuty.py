@@ -18,7 +18,6 @@ CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of
 -   Asynchronous and Pythonic using `async` and `await`
 -   Type checks and editor completion using [Type Hints](https://www.python.org/dev/peps/pep-0484/)
 -   Object-oriented and predictable abstractions
--   100% coverage of the supported Call of Duty API
 
 ## Usage
 
@@ -73,9 +72,11 @@ async def main():
 asyncio.get_event_loop().run_until_complete(main())
 ```
 
-## Versioning
+## Releases
 
-In general, CallofDuty.py follows [Semantic Versioning](https://semver.org/) as closely as possible for tagging releases of the project.
+CallofDuty.py follows [Semantic Versioning](https://semver.org/) for tagging releases of the project.
+
+Changelogs can be found on the [Releases](https://github.com/EthanC/CallofDuty.py/releases) page and follow the [Keep a Changelog](https://keepachangelog.com/) format.
 
 ## Contributing
 
