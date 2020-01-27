@@ -56,7 +56,7 @@ async def main():
 
     results = await client.SearchPlayers(Platform.Activision, "Captain Price", limit=3)
     for player in results:
-        print(f"{player.username} ({player.platform})")
+        print(f"{player.username} ({player.platform.name})")
 
     me = results[1]
     profile = await me.profile(Title.ModernWarfare, Mode.Multiplayer)
