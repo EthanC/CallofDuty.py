@@ -3,7 +3,7 @@ from typing import List, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
-from .loadout import Loadout
+from .loadout import Loadout, LoadoutItem
 from .loot import Season
 from .match import Match
 from .player import Player
@@ -902,6 +902,47 @@ class Client:
             loadouts.append(Loadout(self, _loadout))
 
         return loadouts
+
+    async def GetPlayerLoadoutUnlocks(
+        self, platform: Platform, username: str, title: Title, **kwargs
+    ) -> List[LoadoutItem]:
+        """
+        Get a Call of Duty player's available loadout unlocks for the specified title and mode.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Call of Duty title to get the player's loadouts from.
+        mode: callofduty.Mode, optional
+            Call of Duty mode to get the player's loadouts from (default is Multiplayer.)
+
+        Returns
+        -------
+        list
+            Array of loadout item objects.
+        """
+
+        mode: Mode = kwargs.get("mode", Mode.Multiplayer)
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+        VerifyMode(mode, title)
+
+        data: dict = (
+            await self.http.GetPlayerLoadouts(
+                platform.value, username, title.value, mode.value
+            )
+        )["data"]
+
+        unlocks: List[LoadoutItem] = []
+        for unlock in data["availableUnlocks"]:
+            unlocks.append(LoadoutItem(self, {"id": unlock}))
+
+        return unlocks
 
     async def GetSquad(self, name: str) -> Squad:
         """

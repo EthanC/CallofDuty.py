@@ -134,6 +134,10 @@ async def main():
     #             if wildcard.id is not None:
     #                 print(f" - Wildcard: {wildcard.id}")
 
+    # unlocks = await client.GetPlayerLoadoutUnlocks(Platform.PlayStation, "ImMotive__", Title.BlackOps4)
+    # for unlock in unlocks:
+    #     print(unlock.id)
+
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")
