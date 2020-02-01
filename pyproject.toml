@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "callofduty.py"
-version = "1.0.0"
+version = "1.0.1"
 description = "CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API."
 license = "MIT"
 authors = ["EthanC <EthanC@github.com>"]
