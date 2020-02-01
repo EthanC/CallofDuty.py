@@ -574,7 +574,7 @@ class Client:
 
     async def GetMatchTeams(
         self, title: Title, platform: Platform, matchId: int
-    ) -> list:
+    ) -> List[List[Player]]:
         """
         Get the teams which played in a Call of Duty match.
 

@@ -1,7 +1,9 @@
 import logging
+from typing import List
 
 from .enums import Platform, Title
 from .object import Object
+from .player import Player
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -29,7 +31,7 @@ class Match(Object):
         self.platform: Platform = Platform(data.pop("platform"))
         self.title: Title = Title(data.pop("title"))
 
-    async def teams(self) -> list:
+    async def teams(self) -> List[List[Player]]:
         """
         Get the teams which played in the match.
 
