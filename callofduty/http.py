@@ -288,6 +288,16 @@ class HTTP:
             )
         )
 
+    async def GetAuthenticityStamp(
+        self, platform: str, username: str, phrase: str, title: str
+    ) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/zmauth/v1/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/zombies/match/authenticated/phrase/{urllib.parse.quote(phrase)}",
+            )
+        )
+
     async def GetSquad(self, name: str) -> Union[dict, str]:
         return await self.Send(
             Request(

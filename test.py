@@ -138,6 +138,11 @@ async def main():
     # for unlock in unlocks:
     #     print(unlock.id)
 
+    # stamp = await client.GetAuthenticityStamp(
+    #     Platform.BattleNet, "Slicky#21337", "Swiftly Snarling Gamy Generators"
+    # )
+    # print(stamp)
+
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")

@@ -944,6 +944,40 @@ class Client:
 
         return unlocks
 
+    async def GetAuthenticityStamp(
+        self, platform: Platform, username: str, phrase: str, **kwargs
+    ) -> dict:
+        """
+        Get a Call of Duty Authenticity Stamp for the specified player and phrase.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        phrase : str
+            Authenticity Stamp code.
+        title : callofduty.Title, optional
+            Call of Duty title to get the authenticity stamp from (default is Black Ops 4.)
+
+        Returns
+        -------
+        dict
+            JSON data for the requested Authenticity Stamp.
+        """
+
+        title: Title = kwargs.get("title", Title.BlackOps4)
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+
+        return (
+            await self.http.GetAuthenticityStamp(
+                platform.value, username, phrase, title.value
+            )
+        )["data"]
+
     async def GetSquad(self, name: str) -> Squad:
         """
         Get a Call of Duty Squad using its name.
