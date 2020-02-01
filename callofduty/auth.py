@@ -1,5 +1,6 @@
 import logging
 import random
+from typing import Dict, Optional
 
 import httpx
 
@@ -7,7 +8,7 @@ from .client import Client
 from .errors import LoginFailure
 from .http import HTTP
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Auth:
@@ -25,8 +26,8 @@ class Auth:
     loginUrl: str = "https://profile.callofduty.com/cod/mapp/login"
     registerDeviceUrl: str = "https://profile.callofduty.com/cod/mapp/registerDevice"
 
-    _accessToken: str = None
-    _deviceId: str = None
+    _accessToken: Optional[str] = None
+    _deviceId: Optional[str] = None
 
     def __init__(self, email: str, password: str):
         self.email: str = email
@@ -35,7 +36,7 @@ class Auth:
         self.session: httpx.AsyncClient = httpx.AsyncClient()
 
     @property
-    def AccessToken(self) -> str:
+    def AccessToken(self) -> Optional[str]:
         """
         Returns
         -------
@@ -50,7 +51,7 @@ class Auth:
         return self._accessToken
 
     @property
-    def DeviceId(self) -> str:
+    def DeviceId(self) -> Optional[str]:
         """
         Returns
         -------
@@ -66,14 +67,13 @@ class Auth:
 
     async def RegisterDevice(self):
         """
-        Generate and register a Device ID with the Call of Duty API.
-
-        Set the corresponding Access Token if successful.
+        Generate and register a Device ID with the Call of Duty API. Set
+        the corresponding Access Token if successful.
         """
 
-        self._deviceId: str = hex(random.getrandbits(128)).lstrip("0x")
+        self._deviceId: Optional[str] = hex(random.getrandbits(128)).lstrip("0x")
 
-        body: dict = {"deviceId": self.DeviceId}
+        body: Dict[str, Optional[str]] = {"deviceId": self.DeviceId}
 
         async with self.session as client:
             res: httpx.Response = await client.post(self.registerDeviceUrl, json=body)
@@ -85,7 +85,7 @@ class Auth:
 
             data: dict = res.json()
 
-            self._accessToken: str = data["data"]["authHeader"]
+            self._accessToken: Optional[str] = data["data"]["authHeader"]
 
     async def SubmitLogin(self):
         """
@@ -93,15 +93,17 @@ class Auth:
         previously acquired Access Token and Device ID.
         """
 
-        headers: dict = {
+        headers: Dict[str, str] = {
             "Authorization": f"Bearer {self.AccessToken}",
             "x_cod_device_id": self.DeviceId,
         }
 
-        data: dict = {"email": self.email, "password": self.password}
+        data: Dict[str, str] = {"email": self.email, "password": self.password}
 
         async with self.session as client:
-            res: httpx.Response = await client.post(self.loginUrl, json=data, headers=headers)
+            res: httpx.Response = await client.post(
+                self.loginUrl, json=data, headers=headers
+            )
 
             if res.status_code != 200:
                 raise LoginFailure(f"Failed to login (HTTP {res.status_code})")

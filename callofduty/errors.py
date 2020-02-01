@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class CallofDutyException(Exception):
     """Base exception class for CallofDuty.py"""
 
@@ -74,20 +77,29 @@ class InvalidGameType(ClientException):
 
 
 class HTTPException(CallofDutyException):
-    """Exception which is thrown when an HTTP request operation fails."""
+    """
+    Exception which is thrown when an HTTP request operation fails.
 
-    def __init__(self, res, data):
-        self.res = res
-        self.message: str = "An unknown error occurred"
+    Parameters
+    ----------
+    statusCode : int
+        HTTP status code of the request.
+    res : dict
+        Response of the HTTP request.
+    """
 
-        if isinstance(data, dict):
+    def __init__(self, statusCode: int, res: Union[dict, str]):
+        if isinstance(res, dict):
             try:
-                data: dict = data.get("data")
-                self.message: str = data.get("message", self.message)
+                message: Union[dict, str] = res["data"].get("message", res)
             except AttributeError:
-                self.message: str = str(data)
+                # This allows us to capture reasoning from the Squads
+                # endpoints which don't follow the usual response structure.
+                message: Union[dict, str] = res.get("data", res)
+        else:
+            message: Union[dict, str] = res
 
-        super().__init__(f"HTTP {self.res.status_code} - {self.message}")
+        super().__init__(f"HTTP {statusCode} - {message}")
 
 
 class Forbidden(HTTPException):

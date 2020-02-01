@@ -1,6 +1,9 @@
 import logging
+from typing import Optional
 
-log = logging.getLogger(__name__)
+from .client import Client
+
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Object:
@@ -9,17 +12,17 @@ class Object:
 
     Parameters
     ----------
-    client : object
+    client : callofduty.Client
         Client which manages communication with the Call of Duty API.
     """
 
-    _type: str = None
+    _type: Optional[str] = None
 
-    def __init__(self, client: object):
-        self._client: object = client
+    def __init__(self, client: Client):
+        self._client: Client = client
 
     @property
-    def type(self) -> str:
+    def type(self) -> Optional[str]:
         return self._type
 
     def __repr__(self) -> str:

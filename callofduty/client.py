@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import List, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 class Client:
     """Client which manages communication with the Call of Duty API."""
 
-    def __init__(self, http: object):
+    def __init__(self, http):
         self.http = http
 
     async def GetLocalize(self, language: Language = Language.English) -> dict:
@@ -317,14 +317,12 @@ class Client:
         results: List[Player] = []
 
         for player in data:
-            accountId: int = player.get("accountId")
-            if isinstance(accountId, str):
-                # The API returns the accountId as a string
-                accountId: int = int(accountId)
+            # The API returns the accountId as a string
+            accountId: int = int(player.get("accountId"))
 
-            avatar: dict = player.get("avatar")
+            avatar: Union[dict, str] = player.get("avatar")
             if isinstance(avatar, dict):
-                avatar: str = avatar["avatarUrlLargeSsl"]
+                avatar: Union[dict, str] = avatar["avatarUrlLargeSsl"]
 
             data = {
                 "platform": player["platform"],
@@ -785,15 +783,10 @@ class Client:
         # just add it manually.
         data["timeFrame"] = timeFrame.value
 
-        data: Leaderboard = Leaderboard(self, data)
-
         players: List[Player] = []
-
-        for _player in data.entries:
+        for entry in Leaderboard(self, data).entries:
             players.append(
-                Player(
-                    self, {"platform": platform.value, "username": _player["username"]}
-                )
+                Player(self, {"platform": platform.value, "username": entry.username})
             )
 
         return players

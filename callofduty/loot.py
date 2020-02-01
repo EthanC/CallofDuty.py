@@ -1,10 +1,10 @@
 import logging
-from typing import List
+from typing import List, Optional
 
 from .enums import Language, Platform, Title
 from .object import Object
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Season(Object):
@@ -31,21 +31,21 @@ class Season(Object):
 
     _type: str = "Season"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
-        self.title: str = Title(data.pop("title"))
+        self.title: Title = Title(data.pop("title"))
         self.season: int = data.pop("season")
         self.platform: Platform = Platform(data.pop("platform"))
-        self.name: str = data.pop("categoryTitle", None)
+        self.name: Optional[str] = data.pop("categoryTitle", None)
         self.tiers: List[LootItem] = []
         self.chase: List[LootItem] = []
         self.language: Language = Language(data.pop("language"))
 
-        for tier in (_tiers := data.pop("tiers", [])):
+        for tier in (_tiers := data.pop("tiers", [])) :
             self.tiers.append(LootItem(self, _tiers[tier]))
 
-        for chase in (_chase := data.pop("chase", [])):
+        for chase in (_chase := data.pop("chase", [])) :
             self.chase.append(LootItem(self, _chase[chase]))
 
 
@@ -73,7 +73,7 @@ class LootItem(Object):
 
     _type: str = "LootItem"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.id: str = data.pop("name")

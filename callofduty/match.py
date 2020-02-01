@@ -3,7 +3,7 @@ import logging
 from .enums import Platform, Title
 from .object import Object
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Match(Object):
@@ -20,9 +20,9 @@ class Match(Object):
         Title which the match took place.
     """
 
-    _type: str = "match"
+    _type: str = "Match"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.id: int = data.pop("id")

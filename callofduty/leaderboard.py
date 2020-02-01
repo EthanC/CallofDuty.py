@@ -1,10 +1,10 @@
 import logging
-from typing import List
+from typing import Dict, List, Union
 
 from .enums import GameType, Platform, TimeFrame, Title
 from .object import Object
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Leaderboard(Object):
@@ -35,7 +35,7 @@ class Leaderboard(Object):
 
     _type: str = "Leaderboard"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.title: Title = Title(data.pop("title"))
@@ -44,7 +44,6 @@ class Leaderboard(Object):
         self.gameMode: str = data.pop("gameMode")
         self.timeFrame: TimeFrame = TimeFrame(data.pop("timeFrame"))
         self.page: int = data.pop("page")
-
         self.pages: int = data.pop("totalPages")
         self.columns: list = data.pop("columns")
         self.entries: List[LeaderboardEntry] = []
@@ -53,7 +52,7 @@ class Leaderboard(Object):
             # Leaderboard Entries don't include this value, so we'll just
             # add it manually.
             entry["platform"] = self.platform.value
-            
+
             self.entries.append(LeaderboardEntry(self, entry))
 
     async def players(self) -> list:
@@ -98,7 +97,7 @@ class LeaderboardEntry(Object):
 
     _type: str = "LeaderboardEntry"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.platform: Platform = Platform(data.pop("platform"))
@@ -106,4 +105,4 @@ class LeaderboardEntry(Object):
         self.rank: int = int(data.pop("rank"))
         self.updated: int = int(data.pop("updateTime"))
         self.rating: int = data.pop("rating")
-        self.values: dict = data.pop("values")
+        self.values: Dict[str, Union[int, float]] = data.pop("values")

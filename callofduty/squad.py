@@ -1,10 +1,10 @@
 import logging
-from typing import List
+from typing import List, Optional
 
 from .object import Object
 from .player import Player
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Squad(Object):
@@ -33,22 +33,22 @@ class Squad(Object):
         Array of player objects representing the Squad members (default is an empty list.)
     """
 
-    _type: str = "squad"
+    _type: str = "Squad"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.name: str = data.pop("name")
-        self.description: str = data.pop("description", None)
-        self.avatarUrl: str = data.pop("avatarUrl", None)
-        self.created: str = data.pop("created", None)
+        self.description: Optional[str] = data.pop("description", None)
+        self.avatarUrl: Optional[str] = data.pop("avatarUrl", None)
+        self.created: Optional[str] = data.pop("created", None)
         self.new: bool = data.pop("newlyFormed", False)
         self.private: bool = data.pop("private", False)
-        self.points: int = data.pop("points", None)
+        self.points: Optional[int] = data.pop("points", None)
 
         # The Squads endpoints do not follow the same structure as the rest,
         # so the following is a hacky solution to that problem...
-        self.owner = Player(
+        self.owner: Player = Player(
             client,
             {
                 "platform": data["creator"]["platform"],

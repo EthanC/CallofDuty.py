@@ -1,9 +1,10 @@
 import logging
+from typing import List, Optional
 
 from .enums import Mode, Platform, Title
 from .object import Object
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Player(Object):
@@ -26,17 +27,17 @@ class Player(Object):
         Array of Player objects containing the player's identities (default is an empty list.)
     """
 
-    _type: str = "player"
+    _type: str = "Player"
 
-    def __init__(self, client: object, data: dict):
+    def __init__(self, client, data: dict):
         super().__init__(client)
 
         self.platform: Platform = Platform(data.pop("platform"))
         self.username: str = data.pop("username")
-        self.accountId: int = data.pop("accountId", None)
-        self.avatarUrl: str = data.pop("avatarUrl", None)
+        self.accountId: Optional[int] = data.pop("accountId", None)
+        self.avatarUrl: Optional[str] = data.pop("avatarUrl", None)
         self.online: bool = data.pop("online", False)
-        self.identities: list = data.pop("identities", [])
+        self.identities: List[Player] = data.pop("identities", [])
 
     async def profile(self, title: Title, mode: Mode) -> dict:
         """

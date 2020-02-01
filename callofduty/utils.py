@@ -11,7 +11,7 @@ from .errors import (
     InvalidTitle,
 )
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 def VerifyPlatform(value: Platform):
@@ -128,7 +128,7 @@ def StripHTML(input: str) -> str:
     # Regex is hideous, but this gets the job done faster than an external
     # library. This is also future-proof against any sort of HTML characters,
     # such as &nbsp and &amp.
-    expression: re.Pattern = re.compile(
+    expression: re.Pattern[str] = re.compile(
         "<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
     )
 
