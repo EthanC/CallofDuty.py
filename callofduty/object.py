@@ -1,8 +1,6 @@
 import logging
 from typing import Optional
 
-from .client import Client
-
 log: logging.Logger = logging.getLogger(__name__)
 
 
@@ -18,8 +16,8 @@ class Object:
 
     _type: Optional[str] = None
 
-    def __init__(self, client: Client):
-        self._client: Client = client
+    def __init__(self, client):
+        self._client = client
 
     @property
     def type(self) -> Optional[str]:
