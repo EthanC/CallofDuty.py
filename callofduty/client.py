@@ -959,7 +959,7 @@ class Client:
         phrase : str
             Authenticity Stamp code.
         title : callofduty.Title, optional
-            Call of Duty title to get the authenticity stamp from (default is Black Ops 4.)
+            Call of Duty title to get the Authenticity Stamp from (default is Black Ops 4.)
 
         Returns
         -------

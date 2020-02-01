@@ -144,6 +144,27 @@ class Player(Object):
             title, self.platform, self.username, **kwargs
         )
 
+    async def authenticityStamp(self, phrase: str, **kwargs) -> dict:
+        """
+        Get a Call of Duty Authenticity Stamp for the player and specified phrase.
+
+        Parameters
+        ----------
+        phrase : str
+            Authenticity Stamp code.
+        title : callofduty.Title, optional
+            Call of Duty title to get the Authenticity Stamp from (default is Black Ops 4.)
+
+        Returns
+        -------
+        dict
+            JSON data for the requested Authenticity Stamp.
+        """
+
+        return await self._client.GetAuthenticityStamp(
+            self.platform, self.username, phrase, **kwargs
+        )
+
     async def squad(self):
         """
         Get the Call of Duty player's Squad.
