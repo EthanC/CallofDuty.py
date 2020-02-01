@@ -12,6 +12,7 @@ from .client import Client
 from .enums import *
 from .errors import *
 from .leaderboard import Leaderboard, LeaderboardEntry
+from .loadout import Loadout, LoadoutItem, LoadoutWeapon
 from .loot import LootItem, Season
 from .match import Match
 from .player import Player

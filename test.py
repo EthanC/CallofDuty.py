@@ -108,6 +108,32 @@ async def main():
     # localize = await client.GetLocalize()
     # print(localize)
 
+    # loadouts = await client.GetPlayerLoadouts(Platform.PlayStation, "ImMotive__", Title.BlackOps4)
+    # for loadout in loadouts:
+    #     if loadout.name != "":
+    #         print(f"Class: {loadout.name} (Unlocked: {loadout.unlocked})")
+    #         if loadout.primary.id is not None:
+    #             print(f" - Primary Weapon: {loadout.primary.id} (Variant: {loadout.primary.variant})")
+    #             print(f"  - Camo: {loadout.primary.camo}")
+    #             for attachment in loadout.primary.attachments:
+    #                 if attachment.id is not None:
+    #                     print(f"  - Attachment: {attachment.id}")
+    #         if loadout.secondary.id is not None:
+    #             print(f" - Secondary Weapon: {loadout.secondary.id} (Variant: {loadout.secondary.variant})")
+    #             print(f"  - Camo: {loadout.secondary.camo}")
+    #             for attachment in loadout.secondary.attachments:
+    #                 if attachment.id is not None:
+    #                     print(f"  - Attachment: {attachment.id}")
+    #         for equipment in loadout.equipment:
+    #             if equipment.id is not None:
+    #                 print(f" - Equipment: {equipment.id}")
+    #         for perk in loadout.perks:
+    #             if perk.id is not None:
+    #                 print(f" - Perk: {perk.id}")
+    #         for wildcard in loadout.wildcards:
+    #             if wildcard.id is not None:
+    #                 print(f" - Wildcard: {wildcard.id}")
+
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")

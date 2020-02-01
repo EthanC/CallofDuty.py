@@ -33,7 +33,11 @@ class Auth:
         self.email: str = email
         self.password: str = password
 
-        self.session: httpx.AsyncClient = httpx.AsyncClient()
+        # Certain endpoints, such as the one used by GetPlayerLoadouts,
+        # take a bit longer to recieve data; Hence the increased read_timeout.
+        self.session: httpx.AsyncClient = httpx.AsyncClient(
+            timeout=httpx.Timeout(read_timeout=10)
+        )
 
     @property
     def AccessToken(self) -> Optional[str]:

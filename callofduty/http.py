@@ -278,6 +278,16 @@ class HTTP:
             )
         )
 
+    async def GetPlayerLoadouts(
+        self, platform: str, username: str, title: str, mode: str
+    ) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/loadouts/v3/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/mode/{mode}",
+            )
+        )
+
     async def GetSquad(self, name: str) -> Union[dict, str]:
         return await self.Send(
             Request(
