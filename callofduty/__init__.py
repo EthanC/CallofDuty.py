@@ -11,7 +11,7 @@ from .auth import Login
 from .client import Client
 from .enums import *
 from .errors import *
-from .leaderboard import Leaderboard
+from .leaderboard import Leaderboard, LeaderboardEntry
 from .loot import LootItem, Season
 from .match import Match
 from .player import Player
