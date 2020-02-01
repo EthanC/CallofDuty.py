@@ -2,6 +2,7 @@ import logging
 from typing import List, Optional
 
 from .enums import Mode, Platform, Title
+from .loadout import Loadout, LoadoutItem
 from .object import Object
 
 log: logging.Logger = logging.getLogger(__name__)
@@ -144,9 +145,51 @@ class Player(Object):
             title, self.platform, self.username, **kwargs
         )
 
+    async def loadouts(self, title: Title, **kwargs) -> List[Loadout]:
+        """
+        Get the Call of Duty player's loadouts for the specified title and mode.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title to get the player's loadouts from.
+        mode: callofduty.Mode, optional
+            Call of Duty mode to get the player's loadouts from (default is Multiplayer.)
+
+        Returns
+        -------
+        list
+            Array of loadout objects.
+        """
+
+        return await self._client.GetPlayerLoadouts(
+            self.platform, self.username, title, **kwargs
+        )
+
+    async def loadoutUnlocks(self, title: Title, **kwargs) -> List[LoadoutItem]:
+        """
+        Get the Call of Duty player's loadout unlocks for the specified title and mode.
+
+        Parameters
+        ----------
+        title : callofduty.Title
+            Call of Duty title to get the player's loadout unlocks from.
+        mode: callofduty.Mode, optional
+            Call of Duty mode to get the player's loadout unlocks from (default is Multiplayer.)
+
+        Returns
+        -------
+        list
+            Array of loadout item objects.
+        """
+
+        return await self._client.GetPlayerLoadoutUnlocks(
+            self.platform, self.username, title, **kwargs
+        )
+
     async def authenticityStamp(self, phrase: str, **kwargs) -> dict:
         """
-        Get a Call of Duty Authenticity Stamp for the player and specified phrase.
+        Get the Call of Duty player's Authenticity Stamp for the specified phrase.
 
         Parameters
         ----------

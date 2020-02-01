@@ -134,7 +134,18 @@ async def main():
     #             if wildcard.id is not None:
     #                 print(f" - Wildcard: {wildcard.id}")
 
+    # player = await client.GetPlayer(Platform.PlayStation, "ImMotive__")
+    # loadouts = await player.loadouts(Title.BlackOps4)
+    # for loadout in loadouts:
+    #     if loadout.name != "":
+    #         print(f"Class: {loadout.name} (Unlocked: {loadout.unlocked})")
+
     # unlocks = await client.GetPlayerLoadoutUnlocks(Platform.PlayStation, "ImMotive__", Title.BlackOps4)
+    # for unlock in unlocks:
+    #     print(unlock.id)
+
+    # player = await client.GetPlayer(Platform.PlayStation, "ImMotive__")
+    # unlocks = await player.loadoutUnlocks(Title.BlackOps4)
     # for unlock in unlocks:
     #     print(unlock.id)
 
