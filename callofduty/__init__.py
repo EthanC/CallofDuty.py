@@ -17,6 +17,7 @@ from .loot import LootItem, Season
 from .match import Match
 from .player import Player
 from .squad import Squad
+from .stamp import AuthenticityStamp
 
 try:
     from logging import NullHandler

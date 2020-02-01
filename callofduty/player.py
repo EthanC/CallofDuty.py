@@ -187,7 +187,7 @@ class Player(Object):
             self.platform, self.username, title, **kwargs
         )
 
-    async def authenticityStamp(self, phrase: str, **kwargs) -> dict:
+    async def authenticityStamp(self, phrase: str, **kwargs):
         """
         Get the Call of Duty player's Authenticity Stamp for the specified phrase.
 
@@ -200,8 +200,8 @@ class Player(Object):
 
         Returns
         -------
-        dict
-            JSON data for the requested Authenticity Stamp.
+        callofduty.AuthenticityStamp
+            AuthenticityStamp object representing the requested Authenticity Stamp.
         """
 
         return await self._client.GetAuthenticityStamp(

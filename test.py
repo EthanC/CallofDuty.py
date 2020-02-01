@@ -152,11 +152,11 @@ async def main():
     # stamp = await client.GetAuthenticityStamp(
     #     Platform.BattleNet, "Slicky#21337", "Swiftly Snarling Gamy Generators"
     # )
-    # print(stamp)
+    # print(stamp.data)
 
     # player = await client.GetPlayer(Platform.BattleNet, "Slicky#21337")
     # stamp = await player.authenticityStamp("Swiftly Snarling Gamy Generators")
-    # print(stamp)
+    # print(stamp.stats)
 
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")

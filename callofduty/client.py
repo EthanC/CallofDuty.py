@@ -8,6 +8,7 @@ from .loot import Season
 from .match import Match
 from .player import Player
 from .squad import Squad
+from .stamp import AuthenticityStamp
 from .utils import (
     StripHTML,
     VerifyGameType,
@@ -946,7 +947,7 @@ class Client:
 
     async def GetAuthenticityStamp(
         self, platform: Platform, username: str, phrase: str, **kwargs
-    ) -> dict:
+    ) -> AuthenticityStamp:
         """
         Get a Call of Duty Authenticity Stamp for the specified player and phrase.
 
@@ -963,8 +964,8 @@ class Client:
 
         Returns
         -------
-        dict
-            JSON data for the requested Authenticity Stamp.
+        callofduty.AuthenticityStamp
+            AuthenticityStamp object representing the requested Authenticity Stamp.
         """
 
         title: Title = kwargs.get("title", Title.BlackOps4)
@@ -972,11 +973,20 @@ class Client:
         VerifyPlatform(platform)
         VerifyTitle(title)
 
-        return (
+        data: dict = (
             await self.http.GetAuthenticityStamp(
                 platform.value, username, phrase, title.value
             )
         )["data"]
+
+        # Authenticity Stamp responses don't include the platform,
+        # title, username, or mode, so we'll just add them manually.
+        data["platform"] = platform.value
+        data["username"] = username
+        data["title"] = title.value
+        data["mode"] = Mode.Zombies.value
+
+        return AuthenticityStamp(self, data)
 
     async def GetSquad(self, name: str) -> Squad:
         """
