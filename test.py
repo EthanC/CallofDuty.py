@@ -158,6 +158,32 @@ async def main():
     # stamp = await player.authenticityStamp("Swiftly Snarling Gamy Generators")
     # print(stamp.stats)
 
+    # req = await client.AddFriend(5273496286943517033)
+    # print(f"Friend Request Status: {req}")
+
+    # req = await client.RemoveFriend(13940176918450289589)
+    # print(f"Friend Request Status: {req}")
+
+    # results = await client.SearchPlayers(Platform.Activision, "Tustin")
+    # for player in results:
+    #     print(f"{player.username} ({player.platform.name})")
+    #     if player.username == "Tustin#1365515":
+    #         req = await player.removeFriend()
+    #         print(f"Removed Friend ({req})")
+    #         req = await player.addFriend()
+    #         print(f"Added Friend ({req})")
+
+    # favs = await client.GetMyFavorites()
+    # for favorite in favs:
+    #     print(f"Favorite: {favorite.username} ({favorite.platform.name})")
+
+    # favs = await client.AddFavorite(Platform.Activision, "Dad#1869899")
+    # print(f"Favorites: {len(favs)}")
+
+    # player = await client.GetPlayer(Platform.Activision, "Dad#1869899")
+    # favs = await player.removeFavorite()
+    # print(f"Favorites: {len(favs)}")
+
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")

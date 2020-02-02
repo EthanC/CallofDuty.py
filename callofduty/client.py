@@ -1,5 +1,5 @@
 import logging
-from typing import List, Union
+from typing import List, Optional, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
 from .leaderboard import Leaderboard
@@ -19,7 +19,7 @@ from .utils import (
     VerifyTitle,
 )
 
-log = logging.getLogger(__name__)
+log: logging.Logger = logging.getLogger(__name__)
 
 
 class Client:
@@ -266,6 +266,32 @@ class Client:
 
         return {"incoming": incoming, "outgoing": outgoing}
 
+    async def GetMyFavorites(self) -> List[Player]:
+        """
+        Get the Favorite Friends for the authenticated Call of Duty player.
+
+        Returns
+        -------
+        list
+            Array of Player objects containing Favorite Friends.
+        """
+
+        data: dict = (await self.http.GetMyFavorites())["data"]
+
+        favorites: List[Player] = []
+        for _favorite in data:
+            favorites.append(
+                Player(
+                    self,
+                    {
+                        "platform": _favorite["friendPlatform"],
+                        "username": _favorite["friendUsername"],
+                    },
+                )
+            )
+
+        return favorites
+
     async def GetPlayer(self, platform: Platform, username: str) -> Player:
         """
         Get a Call of Duty player using their platform and username.
@@ -319,8 +345,10 @@ class Client:
         results: List[Player] = []
 
         for player in data:
-            # The API returns the accountId as a string
-            accountId: int = int(player.get("accountId"))
+            accountId: Optional[int] = player.get("accountId")
+            if accountId is not None:
+                # The API returns the accountId as a string
+                accountId: Optional[int] = int(player.get("accountId"))
 
             avatar: Union[dict, str] = player.get("avatar")
             if isinstance(avatar, dict):
@@ -987,6 +1015,106 @@ class Client:
         data["mode"] = Mode.Zombies.value
 
         return AuthenticityStamp(self, data)
+
+    async def AddFriend(self, accountId: int) -> str:
+        """
+        Send a Friend Request to the specified Activision ID.
+
+        Parameters
+        ----------
+        accountId : int
+            Account ID for the player's Activision ID.
+
+        Returns
+        -------
+        str
+            Status of the Friend Request.
+        """
+
+        return (await self.http.AddFriend(accountId))["data"]
+
+    async def RemoveFriend(self, accountId: int) -> str:
+        """
+        Remove Friend or Friend Request to the specified Activision ID.
+
+        Parameters
+        ----------
+        accountId : int
+            Account ID for the player's Activision ID.
+
+        Returns
+        -------
+        str
+            Status of the Friend Request removal.
+        """
+
+        return (await self.http.RemoveFriend(accountId))["data"]
+
+    async def AddFavorite(self, platform: Platform, username: str) -> List[Player]:
+        """
+        Set the specified Player as a Favorite Friend.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+
+        Returns
+        -------
+        list
+            Array of Player objects of all Favorite Friends.
+        """
+
+        data: dict = (await self.http.AddFavorite(platform.value, username))["data"]
+
+        favorites: List[Player] = []
+        for _favorite in data:
+            favorites.append(
+                Player(
+                    self,
+                    {
+                        "platform": _favorite["friendPlatform"],
+                        "username": _favorite["friendUsername"],
+                    },
+                )
+            )
+
+        return favorites
+
+    async def RemoveFavorite(self, platform: Platform, username: str) -> List[Player]:
+        """
+        Remove the specified Player as a Favorite Friend.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+
+        Returns
+        -------
+        list
+            Array of Player objects of all Favorite Friends.
+        """
+
+        data: dict = (await self.http.RemoveFavorite(platform.value, username))["data"]
+
+        favorites: List[Player] = []
+        for _favorite in data:
+            favorites.append(
+                Player(
+                    self,
+                    {
+                        "platform": _favorite["friendPlatform"],
+                        "username": _favorite["friendUsername"],
+                    },
+                )
+            )
+
+        return favorites
 
     async def GetSquad(self, name: str) -> Squad:
         """

@@ -2,6 +2,7 @@ import logging
 from typing import List, Optional
 
 from .enums import Mode, Platform, Title
+from .errors import InvalidPlatform
 from .loadout import Loadout, LoadoutItem
 from .object import Object
 
@@ -207,6 +208,60 @@ class Player(Object):
         return await self._client.GetAuthenticityStamp(
             self.platform, self.username, phrase, **kwargs
         )
+
+    async def addFriend(self) -> str:
+        """
+        Send a Friend Request to the player's Activision ID.
+
+        Returns
+        -------
+        str
+            Status of the Friend Request.
+        """
+
+        if self.platform is not Platform.Activision:
+            raise InvalidPlatform()
+
+        return await self._client.AddFriend(self.accountId)
+
+    async def removeFriend(self) -> str:
+        """
+        Remove a Friend or Friend Request to the player's Activision ID.
+
+        Returns
+        -------
+        str
+            Status of the Friend Request removal.
+        """
+
+        if self.platform is not Platform.Activision:
+            raise InvalidPlatform()
+
+        return await self._client.RemoveFriend(self.accountId)
+
+    async def addFavorite(self) -> list:
+        """
+        Set the Player as a Favorite Friend.
+
+        Returns
+        -------
+        list
+            Array of Player objects of all Favorite Friends.
+        """
+
+        return await self._client.AddFavorite(self.platform, self.username)
+
+    async def removeFavorite(self) -> list:
+        """
+        Remove the Player as a Favorite Friend.
+
+        Returns
+        -------
+        list
+            Array of Player objects of all Favorite Friends.
+        """
+
+        return await self._client.RemoveFavorite(self.platform, self.username)
 
     async def squad(self):
         """

@@ -164,6 +164,9 @@ class HTTP:
             Request("GET", "api/papi-client/codfriends/v1/compendium")
         )
 
+    async def GetMyFavorites(self) -> Union[dict, str]:
+        return await self.Send(Request("GET", "api/papi-client/relationships/v1/list/"))
+
     async def SearchPlayer(self, platform: str, username: str) -> Union[dict, str]:
         return await self.Send(
             Request(
@@ -295,6 +298,32 @@ class HTTP:
             Request(
                 "GET",
                 f"api/papi-client/zmauth/v1/title/{title}/platform/{platform}/gamer/{urllib.parse.quote(username)}/zombies/match/authenticated/phrase/{urllib.parse.quote(phrase)}",
+            )
+        )
+
+    async def AddFriend(self, accountId: int) -> Union[dict, str]:
+        return await self.Send(
+            Request("GET", f"api/papi-client/codfriends/v1/invite/uno/id/{accountId}")
+        )
+
+    async def RemoveFriend(self, accountId: int) -> Union[dict, str]:
+        return await self.Send(
+            Request("GET", f"api/papi-client/codfriends/v1/remove/uno/id/{accountId}")
+        )
+
+    async def AddFavorite(self, platform: str, username: str) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/relationships/v1/friend/platform/{platform}/gamer/{urllib.parse.quote(username)}/set/fav",
+            )
+        )
+
+    async def RemoveFavorite(self, platform: str, username: str) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/relationships/v1/friend/platform/{platform}/gamer/{urllib.parse.quote(username)}/delete",
             )
         )
 
