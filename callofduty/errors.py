@@ -96,6 +96,10 @@ class HTTPException(CallofDutyException):
                 # This allows us to capture reasoning from the Squads
                 # endpoints which don't follow the usual response structure.
                 message: Union[dict, str] = res.get("data", res)
+            except KeyError:
+                # This allows us to capture reasoning from the legacy
+                # endpoints which don't follow the usual response structure.
+                message: Union[dict, str] = res.get("message", res)
         else:
             message: Union[dict, str] = res
 

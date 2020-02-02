@@ -27,7 +27,7 @@ async def JSONorText(res: Response) -> Union[dict, str]:
     if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
         return res.json()
     else:
-        return res.text()
+        return res.text
 
 
 class Request:
