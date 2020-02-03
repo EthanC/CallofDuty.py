@@ -50,9 +50,9 @@ async def main():
     # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Multiplayer, limit=20)
     # print(summary)
 
-    # news = await client.GetNewsFeed()
-    # for post in news["blog"][:10]:
-    #     print(post["title"])
+    # news = await client.GetNewsFeed(limit=10)
+    # for post in news:
+    #     print(f"{post.published.date()}: {post.title}")
 
     # videos = await client.GetVideoFeed()
     # for video in videos:

@@ -2,7 +2,7 @@ import logging
 from typing import List, Optional, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
-from .feed import Video
+from .feed import Blog, Video
 from .leaderboard import Leaderboard
 from .loadout import Loadout, LoadoutItem
 from .loot import Season
@@ -52,23 +52,38 @@ class Client:
 
         return {**web, **app}
 
-    async def GetNewsFeed(self, language: Language = Language.English) -> dict:
+    async def GetNewsFeed(
+        self, language: Language = Language.English, **kwargs
+    ) -> List[Blog]:
         """
-        Get the Call of Duty franchise feed, includes blog posts and
-        the Companion App message of the day.
+        Get the Call of Duty blog post feed.
 
         Parameters
         ----------
         language : callofduty.Language, optional
             Language to use for localization data (default is English.)
+        limit : int, optional
+            Number of news results to return (default is None.)
 
         Returns
         -------
-        dict
-            JSON data containing the Call of Duty franchise feed.
+        list
+            Array of Blog objects.
         """
 
-        return await self.http.GetNewsFeed(language.value)
+        VerifyLanguage(language)
+
+        data: dict = await self.http.GetNewsFeed(language.value)
+
+        limit: int = kwargs.get("limit", 0)
+        if limit > 0:
+            data["blog"] = data["blog"][:limit]
+
+        blogs: List[Blog] = []
+        for _post in data["blog"]:
+            blogs.append(Blog(self, _post))
+
+        return blogs
 
     async def GetVideoFeed(self, language: Language = Language.English) -> List[Video]:
         """
