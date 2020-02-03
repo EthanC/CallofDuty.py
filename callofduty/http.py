@@ -327,6 +327,16 @@ class HTTP:
             )
         )
 
+    async def BlockPlayer(self, accountId: int) -> Union[dict, str]:
+        return await self.Send(
+            Request("GET", f"api/papi-client/codfriends/v1/block/uno/id/{accountId}")
+        )
+
+    async def UnblockPlayer(self, accountId: int) -> Union[dict, str]:
+        return await self.Send(
+            Request("GET", f"api/papi-client/codfriends/v1/unblock/uno/id/{accountId}")
+        )
+
     async def GetSquad(self, name: str) -> Union[dict, str]:
         return await self.Send(
             Request(

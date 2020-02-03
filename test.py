@@ -184,6 +184,14 @@ async def main():
     # favs = await player.removeFavorite()
     # print(f"Favorites: {len(favs)}")
 
+    # results = await client.SearchPlayers(Platform.Activision, "Tustin")
+    # for player in results:
+    #     if player.username == "Tustin#1365515":
+    #         await player.block()
+    #         await player.unblock()
+    #         req = await player.addFriend()
+    #         print(req)
+
     # squad = await client.GetSquad("Autists")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")

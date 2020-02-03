@@ -1116,6 +1116,38 @@ class Client:
 
         return favorites
 
+    async def BlockPlayer(self, accountId: int) -> None:
+        """
+        Block communications to and from the specified Activision ID.
+
+        Parameters
+        ----------
+        accountId : int
+            Account ID for the player's Activision ID.
+
+        Returns
+        -------
+        None
+        """
+
+        await self.http.BlockPlayer(accountId)
+
+    async def UnblockPlayer(self, accountId: int) -> None:
+        """
+        Unblock communications to and from the specified Activision ID.
+
+        Parameters
+        ----------
+        accountId : int
+            Account ID for the player's Activision ID.
+
+        Returns
+        -------
+        None
+        """
+
+        await self.http.UnblockPlayer(accountId)
+
     async def GetSquad(self, name: str) -> Squad:
         """
         Get a Call of Duty Squad using its name.

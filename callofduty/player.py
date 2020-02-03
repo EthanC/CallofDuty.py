@@ -263,6 +263,34 @@ class Player(Object):
 
         return await self._client.RemoveFavorite(self.platform, self.username)
 
+    async def block(self) -> None:
+        """
+        Block communications to and from the specified Activision ID.
+
+        Returns
+        -------
+        None
+        """
+
+        if self.platform is not Platform.Activision:
+            raise InvalidPlatform()
+
+        await self._client.BlockPlayer(self.accountId)
+
+    async def unblock(self) -> None:
+        """
+        Unblock communications to and from the specified Activision ID.
+
+        Returns
+        -------
+        None
+        """
+
+        if self.platform is not Platform.Activision:
+            raise InvalidPlatform()
+
+        await self._client.UnblockPlayer(self.accountId)
+
     async def squad(self):
         """
         Get the Call of Duty player's Squad.
