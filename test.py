@@ -54,6 +54,10 @@ async def main():
     # for post in news["blog"][:10]:
     #     print(post["title"])
 
+    # videos = await client.GetVideoFeed()
+    # for video in videos:
+    #     print(f"{video.title} - {video.url}")
+
     # leaderboard = await client.GetLeaderboard(
     #     Title.ModernWarfare, Platform.BattleNet, gameMode="cyber", page=3
     # )

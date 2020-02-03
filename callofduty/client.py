@@ -2,6 +2,7 @@ import logging
 from typing import List, Optional, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
+from .feed import Video
 from .leaderboard import Leaderboard
 from .loadout import Loadout, LoadoutItem
 from .loot import Season
@@ -68,6 +69,31 @@ class Client:
         """
 
         return await self.http.GetNewsFeed(language.value)
+
+    async def GetVideoFeed(self, language: Language = Language.English) -> List[Video]:
+        """
+        Get the Call of Duty intel video feed.
+
+        Parameters
+        ----------
+        language : callofduty.Language, optional
+            Language to use for localization data (default is English.)
+
+        Returns
+        -------
+        list
+            Array of Video objects.
+        """
+
+        VerifyLanguage(language)
+
+        data: dict = await self.http.GetVideoFeed(language.value)
+
+        videos: List[Video] = []
+        for _video in data["videos"]:
+            videos.append(Video(self, _video))
+
+        return videos
 
     async def GetFriendFeed(self, **kwargs) -> dict:
         """

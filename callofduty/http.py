@@ -148,6 +148,14 @@ class HTTP:
     async def GetNewsFeed(self, language: str) -> Union[dict, str]:
         return await self.Send(Request("GET", f"site/cod/franchiseFeed/{language}"))
 
+    async def GetVideoFeed(self, language: str) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"content/atvi/callofduty/mycod/web/{language}/data/json/videos.js",
+            )
+        )
+
     async def GetFriendFeed(self) -> Union[dict, str]:
         return await self.Send(
             Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")
