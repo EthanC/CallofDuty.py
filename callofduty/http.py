@@ -363,3 +363,9 @@ class HTTP:
         return await self.Send(
             Request("GET", "api/v2/squad/leave/", baseUrl=Request.squadsBaseUrl)
         )
+
+    async def ReportSquad(self, id: str) -> Union[dict, str]:
+        return await self.Send(
+            Request("GET", f"api/v2/squad/report/{id}", baseUrl=Request.squadsBaseUrl)
+        )
+

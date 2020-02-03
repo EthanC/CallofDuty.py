@@ -13,6 +13,8 @@ class Squad(Object):
 
     Parameters
     ----------
+    id : str
+        ID of Squad.
     name : str
         Name of Squad.
     description : str, optional
@@ -38,6 +40,7 @@ class Squad(Object):
     def __init__(self, client, data: dict):
         super().__init__(client)
 
+        self.id: str = data.pop("hash")
         self.name: str = data.pop("name")
         self.description: Optional[str] = data.pop("description", None)
         self.avatarUrl: Optional[str] = data.pop("avatarUrl", None)
@@ -76,3 +79,8 @@ class Squad(Object):
         """Join the Call of Duty Squad."""
 
         await self._client.JoinSquad(self.name)
+
+    async def report(self):
+        """Report the Call of Duty Squad."""
+
+        await self._client.ReportSquad(self.id)

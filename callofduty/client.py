@@ -1195,3 +1195,15 @@ class Client:
         await self.http.LeaveSquad()
 
         return await self.GetMySquad()
+
+    async def ReportSquad(self, id: str):
+        """
+        Report a Call of Duty Squad to Activision.
+
+        Parameters
+        ----------
+        id : str
+            ID of the Squad to report.
+        """
+
+        await self.http.ReportSquad(id)

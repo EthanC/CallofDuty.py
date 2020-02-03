@@ -215,5 +215,8 @@ async def main():
     # squad = await client.GetMySquad()
     # print(f"Current Squad: {squad.name} - {squad.description} (Members: {len(squad.members)})")
 
+    # squad = await client.GetSquad("Hmmmm")
+    # await squad.report()
+
 
 asyncio.get_event_loop().run_until_complete(main())
