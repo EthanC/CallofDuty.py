@@ -2,7 +2,7 @@ import logging
 from typing import List, Optional, Union
 
 from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
-from .feed import Blog, Video
+from .feed import Blog, FeedItem, Video
 from .leaderboard import Leaderboard
 from .loadout import Loadout, LoadoutItem
 from .loot import Season
@@ -11,7 +11,6 @@ from .player import Player
 from .squad import Squad
 from .stamp import AuthenticityStamp
 from .utils import (
-    StripHTML,
     VerifyGameType,
     VerifyLanguage,
     VerifyMode,
@@ -118,41 +117,32 @@ class Client:
 
         return videos
 
-    async def GetFriendFeed(self, **kwargs) -> dict:
+    async def GetFriendFeed(self, **kwargs) -> List[FeedItem]:
         """
         Get the Friend Feed of the authenticated Call of Duty player.
 
         Parameters
         ----------
-        stripHTML : bool, optional
-            Whether to strip the HTML formatting from rendered event strings (default is True.)
+        limit : int, optional
+            Number of video results to return (default is None.)
 
         Returns
         -------
-        dict
-            JSON data of the authenticated player's Friend Feed.
+        list
+            Array of FeedItem objects.
         """
 
-        stripHTML: bool = kwargs.get("stripHTML", True)
+        data: dict = (await self.http.GetFriendFeed())["data"]["events"]
 
-        data: dict = (await self.http.GetFriendFeed())["data"]
+        limit: int = kwargs.get("limit", 0)
+        if limit > 0:
+            data = data[:limit]
 
-        players: List[Player] = []
-        for i in data["identities"]:
-            _player: Player = Player(
-                self, {"platform": i["platform"], "username": i["username"]}
-            )
-            players.append(_player)
+        feed: List[FeedItem] = []
+        for _item in data:
+            feed.append(FeedItem(self, _item))
 
-        if stripHTML is True:
-            for i in data["events"]:
-                i["rendered"] = StripHTML(i["rendered"])
-
-        return {
-            "events": data["events"],
-            "players": players,
-            "metadata": data["metadata"],
-        }
+        return feed
 
     async def GetMyIdentities(self) -> list:
         """

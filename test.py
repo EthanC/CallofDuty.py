@@ -77,9 +77,14 @@ async def main():
     #     if entry.username == player.username:
     #         print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
-    # feed = await client.GetFriendFeed()
-    # for event in feed["events"][:5]:
-    #     print(event["rendered"])
+    # feed = await client.GetFriendFeed(limit=3)
+    # for item in feed:
+    #     print(f"[{item.date.strftime('%Y-%m-%d %H:%M')}] {item.text}")
+    #     if (match := item.match) is not None:
+    #         for team in await match.teams():
+    #             for player in team:
+    #                 if player.username != item.player.username:
+    #                     print(f"                   {player.username} ({player.platform.name})")
 
     # maps = await client.GetAvailableMaps(Title.ModernWarfare)
     # for mapName in maps:

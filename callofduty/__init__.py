@@ -11,7 +11,7 @@ from .auth import Login
 from .client import Client
 from .enums import *
 from .errors import *
-from .feed import Blog, Video
+from .feed import Blog, FeedItem, Video
 from .leaderboard import Leaderboard, LeaderboardEntry
 from .loadout import Loadout, LoadoutItem, LoadoutWeapon
 from .loot import LootItem, Season

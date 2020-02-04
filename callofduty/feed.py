@@ -2,10 +2,60 @@ import logging
 from datetime import datetime
 from typing import List, Optional
 
+from .enums import Title
+from .match import Match
 from .object import Object
+from .player import Player
 from .utils import StripHTML
 
 log: logging.Logger = logging.getLogger(__name__)
+
+
+class FeedItem(Object):
+    """
+    Represents a Call of Duty feed item object.
+
+    Parameters
+    ----------
+    player : callofduty.Player
+        Player object of the feed item.
+    title : callofduty.Title
+        Title of the feed item.
+    match : callofduty.Match, optional
+        Match object of the feed item.
+    category : str
+        Category of the feed item.
+    date : datetime
+        Creation date and time of the feed item.
+    html : str
+        Body of the feed item formatted in HTML.
+    text : str
+        Body of the feed item.
+    favorited : bool
+        Boolean value indicating whether the feed item is favorited.
+    """
+
+    _type: str = "FeedItem"
+
+    def __init__(self, client, data: dict):
+        super().__init__(client)
+
+        self.player: Player = Player(
+            self, {"platform": data.pop("platform"), "username": data.pop("username")}
+        )
+        self.title: Title = Title(data.pop("title"))
+        self.match: Optional[Match] = None
+        self.category: str = data.pop("category")
+        self.date: datetime = datetime.fromtimestamp((data.pop("date") / 1000))
+        self.html: str = data.pop("rendered")
+        self.text: str = StripHTML(self.html)
+        self.favorited: bool = data.pop("favorited")
+
+        if (_matchId := data["meta"].get("matchId")) is not None:
+            self.match: Optional[Match] = Match(
+                client,
+                {"id": _matchId, "platform": self.player.platform, "title": self.title},
+            )
 
 
 class Blog(Object):
