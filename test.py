@@ -54,7 +54,7 @@ async def main():
     # for post in news:
     #     print(f"{post.published.date()}: {post.title}")
 
-    # videos = await client.GetVideoFeed()
+    # videos = await client.GetVideoFeed(limit=3)
     # for video in videos:
     #     print(f"{video.title} - {video.url}")
 

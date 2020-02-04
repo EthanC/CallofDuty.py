@@ -85,7 +85,9 @@ class Client:
 
         return blogs
 
-    async def GetVideoFeed(self, language: Language = Language.English) -> List[Video]:
+    async def GetVideoFeed(
+        self, language: Language = Language.English, **kwargs
+    ) -> List[Video]:
         """
         Get the Call of Duty intel video feed.
 
@@ -93,6 +95,8 @@ class Client:
         ----------
         language : callofduty.Language, optional
             Language to use for localization data (default is English.)
+        limit : int, optional
+            Number of video results to return (default is None.)
 
         Returns
         -------
@@ -102,10 +106,14 @@ class Client:
 
         VerifyLanguage(language)
 
-        data: dict = await self.http.GetVideoFeed(language.value)
+        data: dict = (await self.http.GetVideoFeed(language.value))["videos"]
+
+        limit: int = kwargs.get("limit", 0)
+        if limit > 0:
+            data = data[:limit]
 
         videos: List[Video] = []
-        for _video in data["videos"]:
+        for _video in data:
             videos.append(Video(self, _video))
 
         return videos
