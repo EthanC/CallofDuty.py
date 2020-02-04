@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "callofduty.py"
-version = "1.1.0"
+version = "1.2.0"
 description = "CallofDuty.py is an asynchronous, object-oriented Python wrapper for the Call of Duty API."
 license = "MIT"
 authors = ["EthanC <EthanC@github.com>"]
@@ -15,7 +15,7 @@ keywords = [
     "api",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Framework :: AsyncIO",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -32,10 +32,10 @@ classifiers = [
 packages = [{ include = "callofduty" }]
 
 [tool.poetry.urls]
-"Issue Tracker" = "https://github.com/EthanC/CallofDuty.py/issues"
-"Releases" = "https://github.com/EthanC/CallofDuty.py/releases"
-"Twitter" = "https://twitter.com/Mxtive"
 "Discord" = "https://discord.gg/callofduty"
+"Twitter" = "https://twitter.com/Mxtive"
+"Changelog" = "https://github.com/EthanC/CallofDuty.py/releases"
+"Issue Tracker" = "https://github.com/EthanC/CallofDuty.py/issues"
 
 [tool.poetry.dependencies]
 python = "^3.8"
