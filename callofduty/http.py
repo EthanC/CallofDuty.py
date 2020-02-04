@@ -175,6 +175,16 @@ class HTTP:
             )
         )
 
+    async def SetFeedFavorite(self, set: int, json: dict) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "POST",
+                f"api/papi-client/userfeed/v1/favorite/set/{set}/en",
+                baseUrl=Request.myBaseUrl,
+                json=json,
+            )
+        )
+
     async def GetMyIdentities(self) -> Union[dict, str]:
         return await self.Send(Request("GET", "api/papi-client/crm/cod/v2/identities/"))
 

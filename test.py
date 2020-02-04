@@ -96,6 +96,16 @@ async def main():
     #     print(item.text)
     #     await item.unreact()
 
+    # feed = await client.GetFriendFeed(limit=1)
+    # for item in feed:
+    #     print(item.text)
+    #     test = await item.favorite()
+
+    # feed = await client.GetFriendFeed(limit=1)
+    # for item in feed:
+    #     print(item.text)
+    #     await item.unfavorite()
+
     # maps = await client.GetAvailableMaps(Title.ModernWarfare)
     # for mapName in maps:
     #     print(mapName)

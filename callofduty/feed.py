@@ -89,7 +89,41 @@ class FeedItem(Object):
         None
         """
 
-        return await self._client.RemoveFeedReaction(
+        await self._client.RemoveFeedReaction(
+            self.player.platform,
+            self.player.username,
+            self.title,
+            (self.date.timestamp() * 1000),
+            self.category,
+        )
+
+    async def favorite(self) -> None:
+        """
+        Set the Call of Duty Friend Feed item as a favorite.
+
+        Returns
+        -------
+        None
+        """
+
+        await self._client.SetFeedFavorite(
+            self.player.platform,
+            self.player.username,
+            self.title,
+            (self.date.timestamp() * 1000),
+            self.category,
+        )
+
+    async def unfavorite(self) -> None:
+        """
+        Unset the Call of Duty Friend Feed item as a favorite.
+
+        Returns
+        -------
+        None
+        """
+
+        await self._client.RemoveFeedFavorite(
             self.player.platform,
             self.player.username,
             self.title,

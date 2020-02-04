@@ -189,7 +189,7 @@ class Client:
             "category": category,
         }
 
-        return await self.http.SetFeedReaction(reaction.value, json)
+        await self.http.SetFeedReaction(reaction.value, json)
 
     async def RemoveFeedReaction(
         self,
@@ -231,7 +231,91 @@ class Client:
             "category": category,
         }
 
-        return await self.http.SetFeedReaction(Reaction.Remove.value, json)
+        await self.http.SetFeedReaction(Reaction.Remove.value, json)
+
+    async def SetFeedFavorite(
+        self,
+        platform: Platform,
+        username: str,
+        title: Title,
+        date: int,
+        category: str,
+    ) -> None:
+        """
+        Set a Call of Duty Friend Feed item as a favorite.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Title of the feed item.
+        date : int
+            Timstamp of the feed item.
+        category : str
+            Category of the feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+
+        json: dict = {
+            "username": username,
+            "platform": platform.value,
+            "title": title.value,
+            "date": date,
+            "category": category,
+        }
+
+        await self.http.SetFeedFavorite(1, json)
+
+    async def RemoveFeedFavorite(
+        self,
+        platform: Platform,
+        username: str,
+        title: Title,
+        date: int,
+        category: str,
+    ) -> None:
+        """
+        Unset a Call of Duty Friend Feed item as a favorite.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Title of the feed item.
+        date : int
+            Timstamp of the feed item.
+        category : str
+            Category of the feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+
+        json: dict = {
+            "username": username,
+            "platform": platform.value,
+            "title": title.value,
+            "date": date,
+            "category": category,
+        }
+
+        await self.http.SetFeedFavorite(0, json)
 
     async def GetMyIdentities(self) -> list:
         """
