@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 
 import callofduty
-from callofduty import Mode, Platform, Title
+from callofduty import Mode, Platform, Reaction, Title
 
 
 async def main():
@@ -85,6 +85,16 @@ async def main():
     #             for player in team:
     #                 if player.username != item.player.username:
     #                     print(f"                   {player.username} ({player.platform.name})")
+
+    # feed = await client.GetFriendFeed(limit=5)
+    # for item in feed:
+    #     print(item.text)
+    #     await item.react(Reaction.Fire)
+
+    # feed = await client.GetFriendFeed(limit=5)
+    # for item in feed:
+    #     print(item.text)
+    #     await item.unreact()
 
     # maps = await client.GetAvailableMaps(Title.ModernWarfare)
     # for mapName in maps:

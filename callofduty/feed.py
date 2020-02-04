@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from typing import List, Optional
 
-from .enums import Title
+from .enums import Reaction, Title
 from .match import Match
 from .object import Object
 from .player import Player
@@ -56,6 +56,46 @@ class FeedItem(Object):
                 client,
                 {"id": _matchId, "platform": self.player.platform, "title": self.title},
             )
+
+    async def react(self, reaction: Reaction) -> None:
+        """
+        Set a Reaction to the Call of Duty Friend Feed item.
+
+        Parameters
+        ----------
+        reaction : callofduty.Reaction
+            Reaction to add to the feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        await self._client.SetFeedReaction(
+            reaction,
+            self.player.platform,
+            self.player.username,
+            self.title,
+            (self.date.timestamp() * 1000),
+            self.category,
+        )
+
+    async def unreact(self) -> None:
+        """
+        Unset the Reaction to the Call of Duty Friend Feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        return await self._client.RemoveFeedReaction(
+            self.player.platform,
+            self.player.username,
+            self.title,
+            (self.date.timestamp() * 1000),
+            self.category,
+        )
 
 
 class Blog(Object):

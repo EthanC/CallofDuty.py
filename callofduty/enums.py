@@ -41,3 +41,12 @@ class GameType(Enum):
     Core = "core"
     Hardcore = "hc"
     WorldLeague = "arena"
+
+
+class Reaction(Enum):
+    Fire = "love"
+    ThumbsUp = "thumbs_up"
+    Cool = "cool"
+    Shocked = "shock"
+    FistBump = "congrats"
+    Remove = "none"

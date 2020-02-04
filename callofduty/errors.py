@@ -76,6 +76,15 @@ class InvalidGameType(ClientException):
     pass
 
 
+class InvalidReaction(ClientException):
+    """
+    Exception which is thrown when an invalid reaction is passed to any
+    client function.
+    """
+
+    pass
+
+
 class HTTPException(CallofDutyException):
     """
     Exception which is thrown when an HTTP request operation fails.

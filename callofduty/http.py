@@ -43,10 +43,13 @@ class Request:
     baseUrl : str, optional
         Base URL to use for the request (default is https://callofduty.com/)
     headers : dict, optional
-        Headers to send along with the request (default is None.)
+        Headers to include in the request (default is None.)
+    json : dict, optional
+        JSON data to include in the body of the request (default is None.)
     """
 
     defaultBaseUrl: str = "https://callofduty.com/"
+    myBaseUrl: str = "https://my.callofduty.com/"
     squadsBaseUrl: str = "https://squads.callofduty.com/"
 
     accessToken: Optional[str] = None
@@ -55,6 +58,7 @@ class Request:
     def __init__(self, method: str, endpoint: Optional[str] = None, **kwargs):
         self.method: str = method
         self.headers: Dict[str, str] = {}
+        self.json: dict = kwargs.get("json", {})
 
         if endpoint is not None:
             baseUrl: str = kwargs.get("baseUrl", self.defaultBaseUrl)
@@ -95,7 +99,7 @@ class HTTP:
 
         async with self.session as client:
             res: Response = await client.request(
-                req.method, req.url, headers=req.headers
+                req.method, req.url, headers=req.headers, json=req.json
             )
 
             data: Union[dict, str] = await JSONorText(res)
@@ -159,6 +163,16 @@ class HTTP:
     async def GetFriendFeed(self) -> Union[dict, str]:
         return await self.Send(
             Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")
+        )
+
+    async def SetFeedReaction(self, reaction: str, json: dict) -> Union[dict, str]:
+        return await self.Send(
+            Request(
+                "POST",
+                f"api/papi-client/userfeed/v1/reactions/set/{reaction}/en",
+                baseUrl=Request.myBaseUrl,
+                json=json,
+            )
         )
 
     async def GetMyIdentities(self) -> Union[dict, str]:

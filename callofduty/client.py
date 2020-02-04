@@ -1,7 +1,7 @@
 import logging
 from typing import List, Optional, Union
 
-from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
+from .enums import GameType, Language, Mode, Platform, Reaction, TimeFrame, Title
 from .feed import Blog, FeedItem, Video
 from .leaderboard import Leaderboard
 from .loadout import Loadout, LoadoutItem
@@ -15,6 +15,7 @@ from .utils import (
     VerifyLanguage,
     VerifyMode,
     VerifyPlatform,
+    VerifyReaction,
     VerifyTimeFrame,
     VerifyTitle,
 )
@@ -143,6 +144,94 @@ class Client:
             feed.append(FeedItem(self, _item))
 
         return feed
+
+    async def SetFeedReaction(
+        self,
+        reaction: Reaction,
+        platform: Platform,
+        username: str,
+        title: Title,
+        date: int,
+        category: str,
+    ) -> None:
+        """
+        Set a Reaction to a Call of Duty Friend Feed item.
+
+        Parameters
+        ----------
+        reaction : callofduty.Reaction
+            Reaction to add to the feed item.
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Title of the feed item.
+        date : int
+            Timstamp of the feed item.
+        category : str
+            Category of the feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        VerifyReaction(reaction)
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+
+        json: dict = {
+            "username": username,
+            "platform": platform.value,
+            "title": title.value,
+            "date": date,
+            "category": category,
+        }
+
+        return await self.http.SetFeedReaction(reaction.value, json)
+
+    async def RemoveFeedReaction(
+        self,
+        platform: Platform,
+        username: str,
+        title: Title,
+        date: int,
+        category: str,
+    ) -> None:
+        """
+        Unset the Reaction to a Call of Duty Friend Feed item.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Title of the feed item.
+        date : int
+            Timstamp of the feed item.
+        category : str
+            Category of the feed item.
+
+        Returns
+        -------
+        None
+        """
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+
+        json: dict = {
+            "username": username,
+            "platform": platform.value,
+            "title": title.value,
+            "date": date,
+            "category": category,
+        }
+
+        return await self.http.SetFeedReaction(Reaction.Remove.value, json)
 
     async def GetMyIdentities(self) -> list:
         """

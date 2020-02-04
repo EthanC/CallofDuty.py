@@ -1,12 +1,13 @@
 import logging
 import re
 
-from .enums import GameType, Language, Mode, Platform, TimeFrame, Title
+from .enums import GameType, Language, Mode, Platform, Reaction, TimeFrame, Title
 from .errors import (
     InvalidGameType,
     InvalidLanguage,
     InvalidMode,
     InvalidPlatform,
+    InvalidReaction,
     InvalidTimeFrame,
     InvalidTitle,
 )
@@ -108,6 +109,21 @@ def VerifyGameType(value: GameType):
 
     if value not in GameType:
         raise InvalidGameType(f"{value.name} is not a valid game type")
+
+
+def VerifyReaction(value: Reaction):
+    """
+    Raise an InvalidReaction client exception if a value which is not
+    present in the Reaction enum is passed.
+
+    Parameters
+    ----------
+    value : callofduty.Reaction
+        Value to confirm is present in the Reaction enum.
+    """
+
+    if value not in Reaction:
+        raise InvalidReaction(f"{value.name} is not a valid reaction")
 
 
 def StripHTML(input: str) -> str:
