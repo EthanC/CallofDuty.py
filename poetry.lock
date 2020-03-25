@@ -148,7 +148,7 @@ description = "The next generation HTTP client."
 name = "httpx"
 optional = false
 python-versions = ">=3.6"
-version = "0.11.1"
+version = "0.12.1"
 
 [package.dependencies]
 certifi = "*"
@@ -405,7 +405,7 @@ python-versions = "*"
 version = "1.11.2"
 
 [metadata]
-content-hash = "a289ab29134f33d3d9935068972dcf268fc261446ad88b1e16f9f4098d48bcf9"
+content-hash = "e9d6389a09c358eda0c8e36fe2dfb9b2366aa97a00f038a40e134d928fa695c7"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -494,8 +494,8 @@ hstspreload = [
     {file = "hstspreload-2020.2.1.tar.gz", hash = "sha256:93c360debe16a74821ebd04eb9844597da904b99db1b7e6280c778f4df422eb1"},
 ]
 httpx = [
-    {file = "httpx-0.11.1-py2.py3-none-any.whl", hash = "sha256:1d3893d3e4244c569764a6bae5c5a9fbbc4a6ec3825450b5696602af7a275576"},
-    {file = "httpx-0.11.1.tar.gz", hash = "sha256:7d2bfb726eeed717953d15dddb22da9c2fcf48a4d70ba1456aa0a7faeda33cf7"},
+    {file = "httpx-0.12.1-py3-none-any.whl", hash = "sha256:ce51c8e8ed2834447fde5a94650299fd74017b7da69cc786b6421fefda09a393"},
+    {file = "httpx-0.12.1.tar.gz", hash = "sha256:405b4749f597b1f45cae5bffc17b23dc251cce30a0c4c8126f1007b9e728a615"},
 ]
 hyperframe = [
     {file = "hyperframe-5.2.0-py2.py3-none-any.whl", hash = "sha256:5187962cb16dcc078f23cb5a4b110098d546c3f41ff2d4038a9896893bbd0b40"},
