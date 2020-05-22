@@ -144,22 +144,33 @@ version = "2020.2.1"
 
 [[package]]
 category = "main"
+description = "A minimal low-level HTTP client."
+name = "httpcore"
+optional = false
+python-versions = ">=3.6"
+version = "0.9.0"
+
+[package.dependencies]
+h11 = ">=0.8,<0.10"
+h2 = ">=3.0.0,<4.0.0"
+sniffio = ">=1.0.0,<2.0.0"
+
+[[package]]
+category = "main"
 description = "The next generation HTTP client."
 name = "httpx"
 optional = false
 python-versions = ">=3.6"
-version = "0.11.1"
+version = "0.13.1"
 
 [package.dependencies]
 certifi = "*"
 chardet = ">=3.0.0,<4.0.0"
-h11 = ">=0.8,<0.10"
-h2 = ">=3.0.0,<4.0.0"
 hstspreload = "*"
+httpcore = ">=0.9.0,<0.10.0"
 idna = ">=2.0.0,<3.0.0"
 rfc3986 = ">=1.3,<2"
-sniffio = ">=1.0.0,<2.0.0"
-urllib3 = ">=1.0.0,<2.0.0"
+sniffio = "*"
 
 [[package]]
 category = "main"
@@ -376,19 +387,6 @@ python-versions = "*"
 version = "1.4.1"
 
 [[package]]
-category = "main"
-description = "HTTP library with thread-safe connection pooling, file post, and more."
-name = "urllib3"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
-version = "1.25.8"
-
-[package.extras]
-brotli = ["brotlipy (>=0.6.0)"]
-secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
-socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
-
-[[package]]
 category = "dev"
 description = "Measures number of Terminal column cells of wide-character codes"
 name = "wcwidth"
@@ -405,7 +403,7 @@ python-versions = "*"
 version = "1.11.2"
 
 [metadata]
-content-hash = "a289ab29134f33d3d9935068972dcf268fc261446ad88b1e16f9f4098d48bcf9"
+content-hash = "3355c86ab1d78d625b962b209a697d38ec12725e6c46062e447a935e13adbf3c"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -493,9 +491,13 @@ hpack = [
 hstspreload = [
     {file = "hstspreload-2020.2.1.tar.gz", hash = "sha256:93c360debe16a74821ebd04eb9844597da904b99db1b7e6280c778f4df422eb1"},
 ]
+httpcore = [
+    {file = "httpcore-0.9.0-py3-none-any.whl", hash = "sha256:d6187f7642b1745037253eb5798dee7f17f85c5534a65e2de4daa11627486a0a"},
+    {file = "httpcore-0.9.0.tar.gz", hash = "sha256:f77ea2e5fecd58d2b049a2efd706788b1808b73c2367479a0f4a49f6e391cba7"},
+]
 httpx = [
-    {file = "httpx-0.11.1-py2.py3-none-any.whl", hash = "sha256:1d3893d3e4244c569764a6bae5c5a9fbbc4a6ec3825450b5696602af7a275576"},
-    {file = "httpx-0.11.1.tar.gz", hash = "sha256:7d2bfb726eeed717953d15dddb22da9c2fcf48a4d70ba1456aa0a7faeda33cf7"},
+    {file = "httpx-0.13.1-py3-none-any.whl", hash = "sha256:b132a566677c66d436502484bc16376d1de5b32743d2a319f90bbbeda2acbd95"},
+    {file = "httpx-0.13.1.tar.gz", hash = "sha256:d90cc7930bb3be2522c398038a07010b7830a8d9a5d9b91cdcaedea79290e9b9"},
 ]
 hyperframe = [
     {file = "hyperframe-5.2.0-py2.py3-none-any.whl", hash = "sha256:5187962cb16dcc078f23cb5a4b110098d546c3f41ff2d4038a9896893bbd0b40"},
@@ -638,10 +640,6 @@ typed-ast = [
     {file = "typed_ast-1.4.1-cp38-cp38-win_amd64.whl", hash = "sha256:fc0fea399acb12edbf8a628ba8d2312f583bdbdb3335635db062fa98cf71fca4"},
     {file = "typed_ast-1.4.1-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:d43943ef777f9a1c42bf4e552ba23ac77a6351de620aa9acf64ad54933ad4d34"},
     {file = "typed_ast-1.4.1.tar.gz", hash = "sha256:8c8aaad94455178e3187ab22c8b01a3837f8ee50e09cf31f1ba129eb293ec30b"},
-]
-urllib3 = [
-    {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
-    {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
 ]
 wcwidth = [
     {file = "wcwidth-0.1.8-py2.py3-none-any.whl", hash = "sha256:8fd29383f539be45b20bd4df0dc29c20ba48654a41e661925e612311e9f3c603"},
