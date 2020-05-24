@@ -24,7 +24,7 @@ async def JSONorText(res: Response) -> Union[dict, str]:
         If media type is JSON data, return dict. Otheriwse return data as str.
     """
 
-    if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
+    if res.headers["Content-Type"].lower() == "application/json":
         return res.json()
     else:
         return res.text
