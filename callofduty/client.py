@@ -11,13 +11,13 @@ from .player import Player
 from .squad import Squad
 from .stamp import AuthenticityStamp
 from .utils import (
-    VerifyGameType,
-    VerifyLanguage,
-    VerifyMode,
-    VerifyPlatform,
-    VerifyReaction,
-    VerifyTimeFrame,
-    VerifyTitle,
+    #VerifyGameType,
+    #VerifyLanguage,
+    #VerifyMode,
+    #VerifyPlatform,
+    #VerifyReaction,
+    #VerifyTimeFrame,
+    #VerifyTitle,
 )
 
 log: logging.Logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ class Client:
             JSON data containing localized strings.
         """
 
-        VerifyLanguage(language)
+        #VerifyLanguage(language)
 
         web: dict = await self.http.GetWebLocalize(language.value)
         app: dict = await self.http.GetAppLocalize(language.value)
@@ -71,7 +71,7 @@ class Client:
             Array of Blog objects.
         """
 
-        VerifyLanguage(language)
+        #VerifyLanguage(language)
 
         data: dict = await self.http.GetNewsFeed(language.value)
 
@@ -104,7 +104,7 @@ class Client:
             Array of Video objects.
         """
 
-        VerifyLanguage(language)
+        #VerifyLanguage(language)
 
         data: dict = (await self.http.GetVideoFeed(language.value))["videos"]
 
@@ -177,9 +177,9 @@ class Client:
         None
         """
 
-        VerifyReaction(reaction)
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyReaction(reaction)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         json: dict = {
             "username": username,
@@ -220,8 +220,8 @@ class Client:
         None
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         json: dict = {
             "username": username,
@@ -262,8 +262,8 @@ class Client:
         None
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         json: dict = {
             "username": username,
@@ -304,8 +304,8 @@ class Client:
         None
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         json: dict = {
             "username": username,
@@ -521,7 +521,7 @@ class Client:
             Player object for the requested player.
         """
 
-        VerifyPlatform(platform)
+        #VerifyPlatform(platform)
 
         return Player(self, {"platform": platform.value, "username": username})
 
@@ -546,7 +546,7 @@ class Client:
             Array of Player objects matching the query.
         """
 
-        VerifyPlatform(platform)
+        #VerifyPlatform(platform)
 
         data: dict = (await self.http.SearchPlayer(platform.value, username))["data"]
 
@@ -601,9 +601,9 @@ class Client:
             title and mode.
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
-        VerifyMode(mode, title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
 
         return (
             await self.http.GetPlayerProfile(
@@ -630,8 +630,8 @@ class Client:
             Match object representing the specified details.
         """
 
-        VerifyTitle(title)
-        VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyPlatform(platform)
 
         return Match(
             self, {"id": matchId, "platform": platform.value, "title": title.value,},
@@ -668,9 +668,9 @@ class Client:
             Array of Match objects.
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
-        VerifyMode(mode, title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
 
         limit: int = kwargs.get("limit", 10)
         startTimestamp: int = kwargs.get("startTimestamp", 0)
@@ -766,9 +766,9 @@ class Client:
             JSON data containing recent matches summary.
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
-        VerifyMode(mode, title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
 
         limit: int = kwargs.get("limit", 10)
         startTimestamp: int = kwargs.get("startTimestamp", 0)
@@ -807,8 +807,8 @@ class Client:
             JSON data containing the full details of the requested Call of Duty match.
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         return (await self.http.GetMatch(title.value, platform.value, matchId))["data"]
 
@@ -835,8 +835,8 @@ class Client:
             players on the team.
         """
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         data: dict = (await self.http.GetMatch(title.value, platform.value, matchId))[
             "data"
@@ -898,10 +898,10 @@ class Client:
         timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
         page: int = kwargs.get("page", 1)
 
-        VerifyTitle(title)
-        VerifyPlatform(platform)
-        VerifyGameType(gameType)
-        VerifyTimeFrame(timeFrame)
+        #VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyGameType(gameType)
+        #VerifyTimeFrame(timeFrame)
 
         data: dict = (
             await self.http.GetLeaderboard(
@@ -951,10 +951,10 @@ class Client:
         gameMode: str = kwargs.get("gameMode", "career")
         timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
 
-        VerifyTitle(title)
-        VerifyPlatform(platform)
-        VerifyGameType(gameType)
-        VerifyTimeFrame(timeFrame)
+        #VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyGameType(gameType)
+        #VerifyTimeFrame(timeFrame)
 
         data: dict = (
             await self.http.GetPlayerLeaderboard(
@@ -1005,10 +1005,10 @@ class Client:
         timeFrame: TimeFrame = kwargs.get("timeFrame", TimeFrame.AllTime)
         page: int = kwargs.get("page", 1)
 
-        VerifyTitle(title)
-        VerifyPlatform(platform)
-        VerifyGameType(gameType)
-        VerifyTimeFrame(timeFrame)
+        #VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyGameType(gameType)
+        #VerifyTimeFrame(timeFrame)
 
         data: dict = (
             await self.http.GetLeaderboard(
@@ -1085,8 +1085,8 @@ class Client:
         platform = kwargs.get("platform", Platform.PlayStation)
         language = kwargs.get("language", Language.English)
 
-        VerifyPlatform(platform)
-        VerifyLanguage(language)
+        #VerifyPlatform(platform)
+        #VerifyLanguage(language)
 
         data: dict = (
             await self.http.GetLootSeason(
@@ -1128,9 +1128,9 @@ class Client:
 
         mode: Mode = kwargs.get("mode", Mode.Multiplayer)
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
-        VerifyMode(mode, title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
 
         data: dict = (
             await self.http.GetPlayerLoadouts(
@@ -1169,9 +1169,9 @@ class Client:
 
         mode: Mode = kwargs.get("mode", Mode.Multiplayer)
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
-        VerifyMode(mode, title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
 
         data: dict = (
             await self.http.GetPlayerLoadouts(
@@ -1210,8 +1210,8 @@ class Client:
 
         title: Title = kwargs.get("title", Title.BlackOps4)
 
-        VerifyPlatform(platform)
-        VerifyTitle(title)
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
 
         data: dict = (
             await self.http.GetAuthenticityStamp(
@@ -1394,7 +1394,7 @@ class Client:
             Squad object for the requested Squad.
         """
 
-        VerifyPlatform(platform)
+        #VerifyPlatform(platform)
 
         return Squad(
             self, (await self.http.GetPlayerSquad(platform.value, username))["data"]
