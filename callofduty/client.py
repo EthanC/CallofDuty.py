@@ -11,13 +11,13 @@ from .player import Player
 from .squad import Squad
 from .stamp import AuthenticityStamp
 from .utils import (
-    #VerifyGameType,
-    #VerifyLanguage,
-    #VerifyMode,
-    #VerifyPlatform,
-    #VerifyReaction,
-    #VerifyTimeFrame,
-    #VerifyTitle,
+    VerifyGameType,
+    VerifyLanguage,
+    VerifyMode,
+    VerifyPlatform,
+    VerifyReaction,
+    VerifyTimeFrame,
+    VerifyTitle,
 )
 
 log: logging.Logger = logging.getLogger(__name__)
