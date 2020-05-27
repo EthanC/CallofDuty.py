@@ -786,6 +786,59 @@ class Client:
             )
         )["data"]["summary"]
 
+    async def GetPlayerMatchesDetails(
+        self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
+    ) -> dict:
+        """
+        Get a Call of Duty player's JSON match data for the specified title and mode.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        username : str
+            Player's username for the designated platform.
+        title : callofduty.Title
+            Call of Duty title to get the player's matches from.
+        mode: callofduty.Mode
+            Call of Duty mode to get the player's matches from.
+        limit : int, optional
+            Number of matches which will be returned (default is 10.)
+        startTimestamp : int, optional
+            Unix timestamp representing the earliest time which a returned
+            match should've occured (default is None.)
+        endTimestamp : int, optional
+            Unix timestamp representing the latest time which a returned
+            match should've occured (default is None.)
+
+        Returns
+        -------
+        list
+            Array of Match objects.
+        """
+
+        #VerifyPlatform(platform)
+        #VerifyTitle(title)
+        #VerifyMode(mode, title)
+
+        limit: int = kwargs.get("limit", 10)
+        startTimestamp: int = kwargs.get("startTimestamp", 0)
+        endTimestamp: int = kwargs.get("endTimestamp", 0)
+
+        return (
+            await self.http.GetPlayerMatchesDetailed(
+                platform.value,
+                username,
+                title.value,
+                mode.value,
+                limit,
+                startTimestamp,
+                endTimestamp,
+            )
+        )["data"]["matches"]
+
+    
+
     async def GetMatchDetails(
         self, title: Title, platform: Platform, matchId: int
     ) -> dict:
