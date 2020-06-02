@@ -62,7 +62,7 @@ def VerifyMode(value: Mode, title: Title):
         raise InvalidMode(f"{value.name} is not a valid mode")
     elif (value == Mode.Zombies) and (title == Title.ModernWarfare):
         raise InvalidMode(f"{value.name} is not a valid mode for title {title.name}")
-    elif (value == Mode.Blackout) and (title != Title.BlackOps4):
+    elif (value == Mode.Warzone) and (title != Title.ModernWarfare):
         raise InvalidMode(f"{value.name} is not a valid mode for title {title.name}")
 
 

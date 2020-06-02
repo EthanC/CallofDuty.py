@@ -21,6 +21,7 @@ class Mode(Enum):
     Multiplayer = "mp"
     Zombies = "zm"
     Blackout = "wz"
+    Warzone = "wz"
 
 
 class Language(Enum):

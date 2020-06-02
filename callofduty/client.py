@@ -2,13 +2,14 @@ import logging
 from typing import List, Optional, Union
 
 from .enums import GameType, Language, Mode, Platform, Reaction, TimeFrame, Title
+from .errors import InvalidTitle
 from .feed import Blog, FeedItem, Video
 from .leaderboard import Leaderboard
 from .loadout import Loadout, LoadoutItem
 from .loot import Season
 from .match import Match
 from .player import Player
-from .squad import Squad
+from .squad import Squad, SquadsReward, SquadsTournament
 from .stamp import AuthenticityStamp
 from .utils import (
     VerifyGameType,
@@ -192,12 +193,7 @@ class Client:
         await self.http.SetFeedReaction(reaction.value, json)
 
     async def RemoveFeedReaction(
-        self,
-        platform: Platform,
-        username: str,
-        title: Title,
-        date: int,
-        category: str,
+        self, platform: Platform, username: str, title: Title, date: int, category: str,
     ) -> None:
         """
         Unset the Reaction to a Call of Duty Friend Feed item.
@@ -234,12 +230,7 @@ class Client:
         await self.http.SetFeedReaction(Reaction.Remove.value, json)
 
     async def SetFeedFavorite(
-        self,
-        platform: Platform,
-        username: str,
-        title: Title,
-        date: int,
-        category: str,
+        self, platform: Platform, username: str, title: Title, date: int, category: str,
     ) -> None:
         """
         Set a Call of Duty Friend Feed item as a favorite.
@@ -276,12 +267,7 @@ class Client:
         await self.http.SetFeedFavorite(1, json)
 
     async def RemoveFeedFavorite(
-        self,
-        platform: Platform,
-        username: str,
-        title: Title,
-        date: int,
-        category: str,
+        self, platform: Platform, username: str, title: Title, date: int, category: str,
     ) -> None:
         """
         Unset a Call of Duty Friend Feed item as a favorite.
@@ -1451,3 +1437,62 @@ class Client:
         """
 
         await self.http.ReportSquad(id)
+
+    async def GetSquadsTournament(self, title: Title, **kwargs) -> SquadsTournament:
+        """
+        Get the current Call of Duty Squads Tournament.
+
+        Parameters7
+        ----------
+        title : callofduty.Title
+            Title of the Squads Tournament.
+        language : callofduty.Language, optional
+            Language to use for localization data (default is English.)
+
+        Returns
+        -------
+        callofduty.SquadsTournament
+            SquadsTournament object for the specified parameters.
+        """
+
+        language: Language = kwargs.get("language", Language.English)
+
+        VerifyTitle(title)
+        VerifyLanguage(language)
+
+        if (title is not Title.BlackOps4) and (title is not Title.ModernWarfare):
+            raise InvalidTitle(
+                f"Squads Tournaments are not available for the {title.name} title"
+            )
+
+        data: dict = (await self.http.GetSquadsTournament())["data"]
+
+        _name: Optional[str] = None
+        for lang in data["challenge"]["localizedNames"]:
+            if lang["language"] == language.value:
+                _name: Optional[str] = lang["text"]
+
+        _description: Optional[str] = None
+        for desc in data["challenge"]["localizedDescriptions"]:
+            if desc["language"] == language.value:
+                _description: Optional[str] = desc["text"]
+
+        return SquadsTournament(
+            self,
+            {
+                "id": data["challenge"]["id"],
+                "name": _name,
+                "description": _description,
+                "category": data["challenge"][title.value + "ChallengeType"],
+                "title": title.value,
+                "start": data["challenge"]["startDate"],
+                "end": data["challenge"]["endDate"],
+                "phase": data["phase"],
+                "mode": data["challenge"][title.value + "ChallengeMode"],
+                "map": data["challenge"][title.value + "ChallengeMap"],
+                "progressCoefficient": data["challenge"][
+                    title.value + "ProgressCoefficient"
+                ],
+                "progressMin": data["challenge"][title.value + "MinProgress"],
+            },
+        )

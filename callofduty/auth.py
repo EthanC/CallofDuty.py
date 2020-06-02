@@ -1,6 +1,6 @@
 import logging
 import random
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 import httpx
 
@@ -87,9 +87,9 @@ class Auth:
                     f"Failed to register fake device (HTTP {res.status_code})"
                 )
 
-            data: dict = res.json()
+            data: Union[dict, list] = res.json()
 
-            self._accessToken: Optional[str] = data["data"]["authHeader"]
+            self._accessToken: Optional[str] = dict(data)["data"]["authHeader"]
 
     async def SubmitLogin(self):
         """

@@ -1,6 +1,8 @@
 import logging
+from datetime import datetime
 from typing import List, Optional
 
+from .enums import Title
 from .object import Object
 from .player import Player
 
@@ -84,3 +86,44 @@ class Squad(Object):
         """Report the Call of Duty Squad."""
 
         await self._client.ReportSquad(self.id)
+
+
+class SquadsTournament(Object):
+    """
+    Represents a Call of Duty Squads Tournament object.
+
+    Parameters
+    ----------
+    """
+
+    _type: str = "SquadsTournament"
+
+    def __init__(self, client, data: dict):
+        super().__init__(client)
+
+        self.id: int = data.pop("id")
+        self.name: Optional[str] = data.pop("name")
+        self.description: Optional[str] = data.pop("description")
+        self.category: str = data.pop("category")
+        self.title: Title = Title(data.pop("title"))
+        self.start: datetime = data.pop("start")
+        self.end: datetime = data.pop("end")
+        self.phase: str = data.pop("phase")
+        self.mode: str = data.pop("mode")
+        self.map: str = data.pop("map")
+        self.progressCoefficient: float = data.pop("progressCoefficient")
+        self.progressMin: float = data.pop("progressMin")
+
+
+class SquadsReward(Object):
+    """
+    Represents a Call of Duty Squads Tournament Reward object.
+
+    Parameters
+    ----------
+    """
+
+    _type: str = "SquadsChallenge"
+
+    def __init__(self, client, data: dict):
+        super().__init__(client)

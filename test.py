@@ -47,7 +47,7 @@ async def main():
     # print(f"{player.username} ({player.platform.name})")
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
-    # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Multiplayer, limit=20)
+    # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Warzone, limit=20)
     # print(summary)
 
     # news = await client.GetNewsFeed(limit=10)
@@ -254,6 +254,9 @@ async def main():
 
     # squad = await client.GetSquad("Hmmmm")
     # await squad.report()
+
+    # challenge = await client.GetSquadsTournament(Title.ModernWarfare)
+    # print(f"{challenge.title.name} Squads Tournament: {challenge.name} - {challenge.description}")
 
 
 asyncio.get_event_loop().run_until_complete(main())

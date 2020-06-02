@@ -97,20 +97,20 @@ class HTTPException(CallofDutyException):
         Response of the HTTP request.
     """
 
-    def __init__(self, statusCode: int, res: Union[dict, str]):
+    def __init__(self, statusCode: int, res: Union[dict, list, str]):
         if isinstance(res, dict):
             try:
-                message: Union[dict, str] = res["data"].get("message", res)
+                message: Union[dict, list, str] = res["data"].get("message", res)
             except AttributeError:
                 # This allows us to capture reasoning from the Squads
                 # endpoints which don't follow the usual response structure.
-                message: Union[dict, str] = res.get("data", res)
+                message: Union[dict, list, str] = res.get("data", res)
             except KeyError:
                 # This allows us to capture reasoning from the legacy
                 # endpoints which don't follow the usual response structure.
-                message: Union[dict, str] = res.get("message", res)
+                message: Union[dict, list, str] = res.get("message", res)
         else:
-            message: Union[dict, str] = res
+            message: Union[dict, list, str] = res
 
         super().__init__(f"HTTP {statusCode} - {message}")
 

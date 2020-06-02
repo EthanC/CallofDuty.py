@@ -1,6 +1,6 @@
 import logging
 import urllib.parse
-from typing import Dict, Optional, Union
+from typing import Dict, List, Optional, Union
 
 from httpx import AsyncClient, Response
 
@@ -9,22 +9,24 @@ from .errors import Forbidden, HTTPException, NotFound
 log: logging.Logger = logging.getLogger(__name__)
 
 
-async def JSONorText(res: Response) -> Union[dict, str]:
+async def JSONorText(res: Response) -> Union[dict, list, str]:
     """
-    Determine the media type of the provided response.
+    Determine the content type of the provided response.
 
     Parameters
     ----------
     res : httpx.Response
-        Response object to determine media type.
+        Response object to determine content type.
 
     Returns
     -------
     object
-        If media type is JSON data, return dict. Otheriwse return data as str.
+        If content type is JSON data, return dict. Otheriwse return data as str.
     """
 
-    if res.headers["Content-Type"].lower() == "application/json;charset=utf-8":
+    jsonTypes: List[str] = ["application/json;charset=utf-8", "application/json"]
+
+    if res.headers["Content-Type"].lower() in jsonTypes:
         return res.json()
     else:
         return res.text
@@ -79,7 +81,7 @@ class HTTP:
         self.auth = auth
         self.session: AsyncClient = auth.session
 
-    async def Send(self, req: Request) -> Union[dict, str]:
+    async def Send(self, req: Request) -> Union[dict, list, str]:
         """
         Perform an HTTP request.
 
@@ -102,7 +104,7 @@ class HTTP:
                 req.method, req.url, headers=req.headers, json=req.json
             )
 
-            data: Union[dict, str] = await JSONorText(res)
+            data: Union[dict, list, str] = await JSONorText(res)
             if isinstance(data, dict):
                 status: Optional[str] = data.get("status")
 
@@ -133,7 +135,7 @@ class HTTP:
             else:
                 raise HTTPException(res.status_code, data)
 
-    async def GetAppLocalize(self, language: str) -> Union[dict, str]:
+    async def GetAppLocalize(self, language: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -141,7 +143,7 @@ class HTTP:
             )
         )
 
-    async def GetWebLocalize(self, language: str) -> Union[dict, str]:
+    async def GetWebLocalize(self, language: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -149,10 +151,10 @@ class HTTP:
             )
         )
 
-    async def GetNewsFeed(self, language: str) -> Union[dict, str]:
+    async def GetNewsFeed(self, language: str) -> Union[dict, list, str]:
         return await self.Send(Request("GET", f"site/cod/franchiseFeed/{language}"))
 
-    async def GetVideoFeed(self, language: str) -> Union[dict, str]:
+    async def GetVideoFeed(self, language: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -160,12 +162,14 @@ class HTTP:
             )
         )
 
-    async def GetFriendFeed(self) -> Union[dict, str]:
+    async def GetFriendFeed(self) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", "api/papi-client/userfeed/v1/friendFeed/rendered/")
         )
 
-    async def SetFeedReaction(self, reaction: str, json: dict) -> Union[dict, str]:
+    async def SetFeedReaction(
+        self, reaction: str, json: dict
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "POST",
@@ -175,7 +179,7 @@ class HTTP:
             )
         )
 
-    async def SetFeedFavorite(self, set: int, json: dict) -> Union[dict, str]:
+    async def SetFeedFavorite(self, set: int, json: dict) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "POST",
@@ -185,21 +189,23 @@ class HTTP:
             )
         )
 
-    async def GetMyIdentities(self) -> Union[dict, str]:
+    async def GetMyIdentities(self) -> Union[dict, list, str]:
         return await self.Send(Request("GET", "api/papi-client/crm/cod/v2/identities/"))
 
-    async def GetMyAccounts(self) -> Union[dict, str]:
+    async def GetMyAccounts(self) -> Union[dict, list, str]:
         return await self.Send(Request("GET", "api/papi-client/crm/cod/v2/accounts/"))
 
-    async def GetMyFriends(self) -> Union[dict, str]:
+    async def GetMyFriends(self) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", "api/papi-client/codfriends/v1/compendium")
         )
 
-    async def GetMyFavorites(self) -> Union[dict, str]:
+    async def GetMyFavorites(self) -> Union[dict, list, str]:
         return await self.Send(Request("GET", "api/papi-client/relationships/v1/list/"))
 
-    async def SearchPlayer(self, platform: str, username: str) -> Union[dict, str]:
+    async def SearchPlayer(
+        self, platform: str, username: str
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -209,7 +215,7 @@ class HTTP:
 
     async def GetPlayerProfile(
         self, platform: str, username: str, title: str, mode: str
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -226,7 +232,7 @@ class HTTP:
         limit: int,
         startTimestamp: int,
         endTimeStamp: int,
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -243,7 +249,7 @@ class HTTP:
         limit: int,
         startTimestamp: int,
         endTimeStamp: int,
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -253,7 +259,7 @@ class HTTP:
 
     async def GetMatch(
         self, title: str, platform: str, matchId: int
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -269,7 +275,7 @@ class HTTP:
         gameMode: str,
         timeFrame: str,
         page: int,
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -285,7 +291,7 @@ class HTTP:
         gameType: str,
         gameMode: str,
         timeFrame: str,
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -295,7 +301,7 @@ class HTTP:
 
     async def GetAvailableMaps(
         self, title: str, platform: str, mode: str
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -305,7 +311,7 @@ class HTTP:
 
     async def GetLootSeason(
         self, title: str, season: int, platform: str, language: str
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -315,7 +321,7 @@ class HTTP:
 
     async def GetPlayerLoadouts(
         self, platform: str, username: str, title: str, mode: str
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -325,7 +331,7 @@ class HTTP:
 
     async def GetAuthenticityStamp(
         self, platform: str, username: str, phrase: str, title: str
-    ) -> Union[dict, str]:
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -333,17 +339,17 @@ class HTTP:
             )
         )
 
-    async def AddFriend(self, accountId: int) -> Union[dict, str]:
+    async def AddFriend(self, accountId: int) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", f"api/papi-client/codfriends/v1/invite/uno/id/{accountId}")
         )
 
-    async def RemoveFriend(self, accountId: int) -> Union[dict, str]:
+    async def RemoveFriend(self, accountId: int) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", f"api/papi-client/codfriends/v1/remove/uno/id/{accountId}")
         )
 
-    async def AddFavorite(self, platform: str, username: str) -> Union[dict, str]:
+    async def AddFavorite(self, platform: str, username: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -351,7 +357,9 @@ class HTTP:
             )
         )
 
-    async def RemoveFavorite(self, platform: str, username: str) -> Union[dict, str]:
+    async def RemoveFavorite(
+        self, platform: str, username: str
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -359,17 +367,17 @@ class HTTP:
             )
         )
 
-    async def BlockPlayer(self, accountId: int) -> Union[dict, str]:
+    async def BlockPlayer(self, accountId: int) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", f"api/papi-client/codfriends/v1/block/uno/id/{accountId}")
         )
 
-    async def UnblockPlayer(self, accountId: int) -> Union[dict, str]:
+    async def UnblockPlayer(self, accountId: int) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", f"api/papi-client/codfriends/v1/unblock/uno/id/{accountId}")
         )
 
-    async def GetSquad(self, name: str) -> Union[dict, str]:
+    async def GetSquad(self, name: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -378,7 +386,9 @@ class HTTP:
             )
         )
 
-    async def GetPlayerSquad(self, platform: str, username: str) -> Union[dict, str]:
+    async def GetPlayerSquad(
+        self, platform: str, username: str
+    ) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -387,12 +397,12 @@ class HTTP:
             )
         )
 
-    async def GetMySquad(self) -> Union[dict, str]:
+    async def GetMySquad(self) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", "api/v2/squad/lookup/mine/", baseUrl=Request.squadsBaseUrl)
         )
 
-    async def JoinSquad(self, name: str) -> Union[dict, str]:
+    async def JoinSquad(self, name: str) -> Union[dict, list, str]:
         return await self.Send(
             Request(
                 "GET",
@@ -401,13 +411,19 @@ class HTTP:
             )
         )
 
-    async def LeaveSquad(self) -> Union[dict, str]:
+    async def LeaveSquad(self) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", "api/v2/squad/leave/", baseUrl=Request.squadsBaseUrl)
         )
 
-    async def ReportSquad(self, id: str) -> Union[dict, str]:
+    async def ReportSquad(self, id: str) -> Union[dict, list, str]:
         return await self.Send(
             Request("GET", f"api/v2/squad/report/{id}", baseUrl=Request.squadsBaseUrl)
         )
 
+    async def GetSquadsTournament(self) -> Union[dict, list, str]:
+        return await self.Send(
+            Request(
+                "GET", "api/v2/challenge/lookup/current", baseUrl=Request.squadsBaseUrl
+            )
+        )

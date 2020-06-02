@@ -60,5 +60,7 @@ class AuthenticityStamp(Object):
             )
 
         for key in data:
-            if (isinstance(data[key], dict) is False) and (isinstance(data[key], list) is False):
+            if (isinstance(data[key], dict) is False) and (
+                isinstance(data[key], list) is False
+            ):
                 self.data[key] = data[key]

@@ -17,7 +17,7 @@ from .loadout import Loadout, LoadoutItem, LoadoutWeapon
 from .loot import LootItem, Season
 from .match import Match
 from .player import Player
-from .squad import Squad
+from .squad import Squad, SquadsReward, SquadsTournament
 from .stamp import AuthenticityStamp
 
 try:
