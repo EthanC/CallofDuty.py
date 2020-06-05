@@ -65,8 +65,6 @@ async def main():
     print(f"\n{me.username} ({me.platform.name})")
     print(f"Level: {level}, K/D Ratio: {kd}, W/L Ratio: {wl}")
 
-    await client.Logout()
-
 asyncio.get_event_loop().run_until_complete(main())
 ```
 
