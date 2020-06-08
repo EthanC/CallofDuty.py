@@ -271,7 +271,7 @@ description = "python code static checker"
 name = "pylint"
 optional = false
 python-versions = ">=3.5.*"
-version = "2.5.2"
+version = "2.5.3"
 
 [package.dependencies]
 astroid = ">=2.4.0,<=2.5"
@@ -404,7 +404,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "fa6806a99ff2246beab6b568645deb04a60f94f2faa84f892372011d645df9e3"
+content-hash = "88d997e58ce2bb83f6dfdb6e863c6c5db6d85ae039df832d5a42836bf9b5fa70"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -561,8 +561,8 @@ py = [
     {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
 ]
 pylint = [
-    {file = "pylint-2.5.2-py3-none-any.whl", hash = "sha256:dd506acce0427e9e08fb87274bcaa953d38b50a58207170dbf5b36cf3e16957b"},
-    {file = "pylint-2.5.2.tar.gz", hash = "sha256:b95e31850f3af163c2283ed40432f053acbc8fc6eba6a069cb518d9dbf71848c"},
+    {file = "pylint-2.5.3-py3-none-any.whl", hash = "sha256:d0ece7d223fe422088b0e8f13fa0a1e8eb745ebffcb8ed53d3e95394b6101a1c"},
+    {file = "pylint-2.5.3.tar.gz", hash = "sha256:7dd78437f2d8d019717dbf287772d0b2dbdfd13fc016aa7faa08d67bccc46adc"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
