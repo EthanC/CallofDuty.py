@@ -29,14 +29,14 @@ class Auth:
     _accessToken: Optional[str] = None
     _deviceId: Optional[str] = None
 
-    def __init__(self, email: str, password: str):
+    def __init__(self, email: str, password: str, read_timeout: int = 10):
         self.email: str = email
         self.password: str = password
 
         # Certain endpoints, such as the one used by GetPlayerLoadouts,
-        # take a bit longer to recieve data; Hence the increased read_timeout.
+        # take a bit longer to recieve data; hence optional param defaulted to 10.
         self.session: httpx.AsyncClient = httpx.AsyncClient(
-            timeout=httpx.Timeout(read_timeout=10)
+            timeout=httpx.Timeout(read_timeout=read_timeout)
         )
 
     @property
