@@ -45,7 +45,7 @@ httpx = "^0.13.3"
 pylint = "^2.5.2"
 black = "^19.10b0"
 pytest = "^5.4.2"
-pytest-cov = "^2.9.0"
+pytest-cov = "^2.10.0"
 python-dotenv = "^0.13.0"
 
 [build-system]
