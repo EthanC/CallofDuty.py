@@ -623,6 +623,37 @@ class Client:
             self, {"id": matchId, "platform": platform.value, "title": title.value,},
         )
 
+    async def GetFullMatch(
+        self, title: Title, platform: Platform, mode: Mode, matchId: int
+    ) -> dict:
+        """
+            Get a Call of Duty match using its title, platform, mode, and ID.
+
+            Parameters
+            ----------
+            title : callofduty.Title
+                Call of Duty title which the match occured on.
+            platform : callofduty.Platform
+                Platform to get the player from.
+            mode : str
+            matchId : int
+                Match ID.
+
+            Returns
+            -------
+            object
+                Match object representing the specified details.
+            """
+
+        VerifyTitle(title)
+        VerifyPlatform(platform)
+
+        return (
+            await self.http.GetFullMatch(
+                title.value, platform.value, mode.value, matchId
+            )
+        )["data"]
+
     async def GetPlayerMatches(
         self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
     ) -> List[Match]:

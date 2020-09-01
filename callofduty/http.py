@@ -267,6 +267,16 @@ class HTTP:
             )
         )
 
+    async def GetFullMatch(
+        self, title: str, platform: str, mode: str, matchId: int,
+    ) -> Union[dict, list, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/fullMatch/{mode}/{matchId}/en",
+            )
+        )
+
     async def GetLeaderboard(
         self,
         title: str,

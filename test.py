@@ -126,6 +126,13 @@ async def main():
     # details = await match.details()
     # print(details)
 
+    # player = await client.GetPlayer(Platform.Activision, "toomanytacos#5120625")
+    # match = (await player.matches(Title.ModernWarfare, Mode.Warzone, limit=3))[1]
+    # full_match = await client.GetFullMatch(
+    #     Title.ModernWarfare, Platform.Activision, Mode.Warzone, match.id
+    # )
+    # print(full_match)
+
     # results = await client.SearchPlayers(Platform.Activision, "Tustin")
     # for player in results:
     #     print(f"{player.username} ({player.platform.name})")
