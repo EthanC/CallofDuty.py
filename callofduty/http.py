@@ -50,7 +50,7 @@ class Request:
         JSON data to include in the body of the request (default is None.)
     """
 
-    defaultBaseUrl: str = "https://callofduty.com/"
+    defaultBaseUrl: str = "https://www.callofduty.com/"
     myBaseUrl: str = "https://my.callofduty.com/"
     squadsBaseUrl: str = "https://squads.callofduty.com/"
 
