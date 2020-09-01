@@ -134,3 +134,6 @@ dmypy.json
 # Incomplete
 tests/
 docs/
+
+# PyCharm/IntelliJ IDEA
+.idea
