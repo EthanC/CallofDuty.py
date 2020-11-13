@@ -263,7 +263,9 @@ class HTTP:
         return await self.Send(
             Request(
                 "GET",
-                f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
+                f"api/papi-client/crm/cod/v2/title/mw/platform/uno/fullMatch/wz/{matchId}/it"
+                # f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/fullMatch/wz/{matchId}/it"
+                #f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
             )
         )
 
