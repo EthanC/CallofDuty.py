@@ -719,7 +719,7 @@ class Client:
                     )
                 )
 
-        return matches
+        return matches, data
 
     async def GetPlayerMatchesSummary(
         self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
