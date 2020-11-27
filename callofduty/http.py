@@ -43,14 +43,14 @@ class Request:
     endpoint : str, optional
         Endpoint to execute the request on (default is None.)
     baseUrl : str, optional
-        Base URL to use for the request (default is https://callofduty.com/)
+        Base URL to use for the request (default is https://www.callofduty.com/)
     headers : dict, optional
         Headers to include in the request (default is None.)
     json : dict, optional
         JSON data to include in the body of the request (default is None.)
     """
 
-    defaultBaseUrl: str = "https://callofduty.com/"
+    defaultBaseUrl: str = "https://www.callofduty.com/"
     myBaseUrl: str = "https://my.callofduty.com/"
     squadsBaseUrl: str = "https://squads.callofduty.com/"
 
@@ -264,6 +264,16 @@ class HTTP:
             Request(
                 "GET",
                 f"api/papi-client/ce/v1/title/{title}/platform/{platform}/match/{matchId}/matchMapEvents",
+            )
+        )
+
+    async def GetFullMatch(
+        self, title: str, platform: str, mode: str, matchId: int, language: str
+    ) -> Union[dict, list, str]:
+        return await self.Send(
+            Request(
+                "GET",
+                f"api/papi-client/crm/cod/v2/title/{title}/platform/{platform}/fullMatch/{mode}/{matchId}/{language}",
             )
         )
 

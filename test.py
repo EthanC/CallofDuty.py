@@ -112,9 +112,9 @@ async def main():
     #     for mode in maps[mapName]:
     #         print(f" - {mode}")
 
-    # matches = await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Multiplayer, limit=3)
-    # for match in matches:
-    #     print(match.id)
+    # match = (await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Warzone, limit=3))[0]
+    # teams = await match.teams()
+    # print(teams)
 
     # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
@@ -125,6 +125,11 @@ async def main():
     #         print(player.username)
     # details = await match.details()
     # print(details)
+
+    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
+    # match = await client.GetFullMatch(Platform.Activision, Title.ModernWarfare, Mode.Multiplayer, match.id)
+    # print(match)
 
     # results = await client.SearchPlayers(Platform.Activision, "Tustin")
     # for player in results:

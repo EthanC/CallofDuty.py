@@ -9,7 +9,7 @@ from .loadout import Loadout, LoadoutItem
 from .loot import Season
 from .match import Match
 from .player import Player
-from .squad import Squad, SquadsReward, SquadsTournament
+from .squad import Squad, SquadsTournament
 from .stamp import AuthenticityStamp
 from .utils import (
     VerifyGameType,
@@ -623,6 +623,47 @@ class Client:
             self, {"id": matchId, "platform": platform.value, "title": title.value,},
         )
 
+    async def GetFullMatch(
+        self,
+        platform: Platform,
+        title: Title,
+        mode: Mode,
+        matchId: int,
+        language: Language = Language.English,
+    ) -> dict:
+        """
+        Get a Call of Duty full match using its platform, username, title, mode, matchId, and language.
+
+        Parameters
+        ----------
+        platform : callofduty.Platform
+            Platform to get the player from.
+        title : callofduty.Title
+            Call of Duty title which the match occured on.
+        mode: callofduty.Mode
+            Call of Duty mode to get the matches from.
+        matchId : int
+            Match ID.
+        language : callofduty.Language, optional
+            Language to use for localization data (default is English.)
+
+        Returns
+        -------
+        object
+            Match object representing the specified details.
+        """
+
+        VerifyPlatform(platform)
+        VerifyTitle(title)
+        VerifyMode(mode, title)
+        VerifyLanguage(language)
+
+        return (
+            await self.http.GetFullMatch(
+                title.value, platform.value, mode.value, matchId, language.value
+            )
+        )["data"]
+
     async def GetPlayerMatches(
         self, platform: Platform, username: str, title: Title, mode: Mode, **kwargs
     ) -> List[Match]:
@@ -816,7 +857,7 @@ class Client:
         Returns
         -------
         list
-            Array containing two child arrays, one for each team. Each
+            Array containing child arrays, one for each team. Each
             team's array contains Player objects which represent the
             players on the team.
         """
