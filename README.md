@@ -25,10 +25,14 @@ Construct a new Call of Duty client, then use the various services on the client
 
 ### Installation
 
-CallofDuty.py requires Python 3.8 or greater. Once this requirement is met, simply install CallofDuty.py using pip (or [Poetry](https://python-poetry.org/docs/cli/#add))!
+CallofDuty.py requires Python 3.9 or greater. Once this requirement is met, simply install CallofDuty.py!
 
 ```
 pip install callofduty.py
+
+# or
+
+poetry install callofduty.py
 ```
 
 ### Example
