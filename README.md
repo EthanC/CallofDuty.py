@@ -32,7 +32,7 @@ pip install callofduty.py
 
 # or
 
-poetry install callofduty.py
+poetry add callofduty.py
 ```
 
 ### Example
