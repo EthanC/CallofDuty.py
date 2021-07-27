@@ -33,7 +33,10 @@ class Auth:
         self.email: str = email
         self.password: str = password
         
-        self.session: httpx.AsyncClient = httpx.AsyncClient()
+        self.session: httpx.AsyncClient = httpx.AsyncClient(headers={
+            "x_cod_device_id": self.DeviceId,
+            "Authorization": f"Bearer {self.AccessToken}",
+        })
 
     @property
     def AccessToken(self) -> Optional[str]:
@@ -61,7 +64,7 @@ class Auth:
         """
 
         if self._deviceId is None:
-            raise LoginFailure("DeviceId is null, not authenticated")
+            self.RegisterDevice()
 
         return self._deviceId
 
@@ -129,7 +132,6 @@ async def Login(email: str, password: str) -> Client:
 
     auth: Auth = Auth(email, password)
 
-    await auth.RegisterDevice()
     await auth.SubmitLogin()
 
     return Client(HTTP(auth))

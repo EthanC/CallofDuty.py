@@ -96,9 +96,6 @@ class HTTP:
             Response of the HTTP request.
         """
 
-        req.SetHeader("Authorization", f"Bearer {self.auth.AccessToken}")
-        req.SetHeader("x_cod_device_id", self.auth.DeviceId)
-
         async with self.session as client:
             res: Response = await client.request(
                 req.method, req.url, headers=req.headers, json=req.json
