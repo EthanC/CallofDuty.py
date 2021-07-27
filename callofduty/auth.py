@@ -6,7 +6,7 @@ import httpx
 
 from .client import Client
 from .errors import LoginFailure
-from .http import HTTP
+from .http import HTTP, JSONorText
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -107,6 +107,13 @@ class Auth:
 
             if res.status_code != 200:
                 raise LoginFailure(f"Failed to login (HTTP {res.status_code})")
+
+            if isinstance(data := await JSONorText(res), dict):
+                success: Optional[bool] = data.get("success")
+
+                # The API tends to return HTTP 200 even when an error occurs
+                if not success:
+                    raise LoginFailure(f"Failed to login (error '{data.get('error')}')")
 
 
 async def Login(email: str, password: str) -> Client:
