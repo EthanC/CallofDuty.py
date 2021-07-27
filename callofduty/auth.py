@@ -112,6 +112,22 @@ class Auth:
                 raise LoginFailure(f"Failed to login (HTTP {res.status_code})")
 
 
+class CookieAuth:
+    """
+    Holds cookie authentication token in a httpx session.
+
+    Parameters
+    ----------
+    token : str
+        ACT_SSO_COOKIE value
+    """
+
+    def __init__(self, token: str):
+        self.session: httpx.AsyncClient = httpx.AsyncClient(cookies={
+            "ACT_SSO_COOKIE": token
+        })
+
+
 async def Login(email: str, password: str) -> Client:
     """
     Convenience function to make login with the Call of Duty authorization flow
@@ -133,5 +149,12 @@ async def Login(email: str, password: str) -> Client:
     auth: Auth = Auth(email, password)
 
     await auth.SubmitLogin()
+
+    return Client(HTTP(auth))
+
+
+async def Cookie(token: str) -> Client:
+
+    auth: CookieAuth = CookieAuth(token)
 
     return Client(HTTP(auth))

@@ -9,8 +9,12 @@ from callofduty import Mode, Platform, Reaction, Title
 
 async def main():
     load_dotenv()
-    client = await callofduty.Login(
-        os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
+    # client = await callofduty.Login(
+    #     os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
+    # )
+
+    client = await callofduty.Cookie(
+        os.environ["ATVI_ACT_SSO_COOKIE"]
     )
 
     # season = await client.GetLootSeason(Title.BlackOps4, 3)

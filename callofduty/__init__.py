@@ -7,7 +7,7 @@ GitHub: https://github.com/EthanC/CallofDuty.py
 
 import logging
 
-from .auth import Login
+from .auth import Login, Cookie
 from .client import Client
 from .enums import *
 from .errors import *

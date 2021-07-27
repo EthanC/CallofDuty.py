@@ -55,6 +55,9 @@ from callofduty import Mode, Platform, Title
 async def main():
     client = await callofduty.Login("YourEmail@email.com", "YourPassword")
 
+    # Or you can authenticate using your `ACT_SSO_COOKIE`, pulled from a browser session
+    # client = await callofduty.Cookie("ACT_SSO_COOKIE value")
+
     results = await client.SearchPlayers(Platform.Activision, "Captain Price", limit=3)
     for player in results:
         print(f"{player.username} ({player.platform.name})")
