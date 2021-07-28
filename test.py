@@ -9,9 +9,12 @@ from callofduty import Mode, Platform, Reaction, Title
 
 async def main():
     load_dotenv()
-    client = await callofduty.Login(
-        os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
-    )
+
+    # client = await callofduty.Login(
+    #     os.environ["ATVI_EMAIL"], os.environ["ATVI_PASSWORD"]
+    # )
+    # OR
+    # client = await callofduty.Login(sso=os.environ["ATVI_SSO"])
 
     # season = await client.GetLootSeason(Title.BlackOps4, 3)
     # print(f"{season.title.name}: {season.name}")
@@ -43,10 +46,10 @@ async def main():
     # for account in accounts:
     #     print(f"{account.username} ({account.platform.name})")
 
-    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # player = await client.GetPlayer(Platform.BattleNet, "Yeah#11207")
     # print(f"{player.username} ({player.platform.name})")
 
-    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # player = await client.GetPlayer(Platform.BattleNet, "Yeah#11207")
     # summary = await player.matchesSummary(Title.ModernWarfare, Mode.Warzone, limit=20)
     # print(summary)
 
@@ -65,13 +68,13 @@ async def main():
     #     print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
     # leaderboard = await client.GetPlayerLeaderboard(
-    #     Title.BlackOps4, Platform.BattleNet, "Mxtive#1930"
+    #     Title.BlackOps4, Platform.BattleNet, "Yeah#11207"
     # )
     # for entry in leaderboard.entries:
-    #     if entry.username == "Mxtive#1930":
+    #     if entry.username == "Yeah#11207":
     #         print(f"#{entry.rank}: {entry.username} ({entry.platform.name})")
 
-    # player = await client.GetPlayer(Platform.Steam, "RdJokr")
+    # player = await client.GetPlayer(Platform.Steam, "Mxtive")
     # leaderboard = await player.leaderboard(Title.WWII)
     # for entry in leaderboard.entries:
     #     if entry.username == player.username:
@@ -112,11 +115,11 @@ async def main():
     #     for mode in maps[mapName]:
     #         print(f" - {mode}")
 
-    # match = (await client.GetPlayerMatches(Platform.Activision, "Yeah#8649242", Title.ModernWarfare, Mode.Warzone, limit=3))[0]
+    # match = (await client.GetPlayerMatches(Platform.BattleNet, "Yeah#11207", Title.ModernWarfare, Mode.Warzone, limit=3))[0]
     # teams = await match.teams()
     # print(teams)
 
-    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # player = await client.GetPlayer(Platform.BattleNet, "Yeah#11207")
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
     # match = await client.GetMatch(Title.ModernWarfare, Platform.Activision, match.id)
     # teams = await match.teams()
@@ -126,7 +129,7 @@ async def main():
     # details = await match.details()
     # print(details)
 
-    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # player = await client.GetPlayer(Platform.BattleNet, "Yeah#11207")
     # match = (await player.matches(Title.ModernWarfare, Mode.Multiplayer, limit=3))[1]
     # match = await client.GetFullMatch(Platform.Activision, Title.ModernWarfare, Mode.Multiplayer, match.id)
     # print(match)
@@ -135,7 +138,7 @@ async def main():
     # for player in results:
     #     print(f"{player.username} ({player.platform.name})")
 
-    # player = await client.GetPlayer(Platform.BattleNet, "Mxtive#1930")
+    # player = await client.GetPlayer(Platform.BattleNet, "Yeah#11207")
     # profile = await player.profile(Title.ModernWarfare, Mode.Multiplayer)
     # print(profile)
 
@@ -233,7 +236,7 @@ async def main():
     #     if member.username != squad.owner.username:
     #         print(f"Member: {member.username} ({member.platform.name})")
 
-    # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#8649242")
+    # squad = await client.GetPlayerSquad(Platform.Activision, "Yeah#11207")
     # print(f"{squad.name} - {squad.description}")
     # print(f"Owner: {squad.owner.username} ({squad.owner.platform.name})")
     # for member in squad.members:

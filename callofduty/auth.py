@@ -6,7 +6,7 @@ import httpx
 
 from .client import Client
 from .errors import LoginFailure
-from .http import HTTP
+from .http import HTTP, JSONorText
 
 log: logging.Logger = logging.getLogger(__name__)
 
@@ -17,10 +17,12 @@ class Auth:
 
     Parameters
     ----------
-    email : str
+    email : str, optional
         Activision account email address.
-    password : str
+    password : str, optional
         Activision account password.
+    sso : str, optional
+        Activision single sign-on cookie value.
     """
 
     loginUrl: str = "https://profile.callofduty.com/cod/mapp/login"
@@ -29,11 +31,20 @@ class Auth:
     _accessToken: Optional[str] = None
     _deviceId: Optional[str] = None
 
-    def __init__(self, email: str, password: str):
-        self.email: str = email
-        self.password: str = password
-        
+    def __init__(
+        self,
+        email: Optional[str] = None,
+        password: Optional[str] = None,
+        sso: Optional[str] = None,
+    ):
+        self.email: Optional[str] = email
+        self.password: Optional[str] = password
+        self.sso: Optional[str] = sso
+
         self.session: httpx.AsyncClient = httpx.AsyncClient()
+
+        if self.sso is not None:
+            self.session.cookies.set("ACT_SSO_COOKIE", self.sso)
 
     @property
     def AccessToken(self) -> Optional[str]:
@@ -107,19 +118,32 @@ class Auth:
 
             if res.status_code != 200:
                 raise LoginFailure(f"Failed to login (HTTP {res.status_code})")
+            elif isinstance(data := await JSONorText(res), dict):
+                if data.get("success") is not True:
+                    # The API tends to return HTTP 200 even when an error occurs
+                    raise LoginFailure(
+                        f"Failed to login (HTTP {res.status_code}), "
+                        + data.get("token", data)
+                    )
 
 
-async def Login(email: str, password: str) -> Client:
+async def Login(
+    email: Optional[str] = None,
+    password: Optional[str] = None,
+    sso: Optional[str] = None,
+) -> Client:
     """
     Convenience function to make login with the Call of Duty authorization flow
-    as easy as possible.
+    as easy as possible. Requires one of email and password or sso cookie value.
 
     Parameters
     ----------
-    email : str
+    email : str, optional
         Activision account email address.
-    password : str
+    password : str, optional
         Activision account password.
+    sso: str, optional
+        Activision single sign-on cookie value.
 
     Returns
     -------
@@ -127,9 +151,16 @@ async def Login(email: str, password: str) -> Client:
         Authenticated Call of Duty client.
     """
 
-    auth: Auth = Auth(email, password)
+    auth: Auth = Auth(email, password, sso)
 
-    await auth.RegisterDevice()
-    await auth.SubmitLogin()
+    if (email is None) and (sso is None):
+        raise LoginFailure("Failed to login, insufficient credentials provided")
+    elif (email is not None) and (password is not None):
+        await auth.RegisterDevice()
+        await auth.SubmitLogin()
 
-    return Client(HTTP(auth))
+        return Client(HTTP(auth))
+    elif sso is not None:
+        await auth.RegisterDevice()
+
+        return Client(HTTP(auth))
