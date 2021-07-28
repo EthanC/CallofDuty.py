@@ -167,12 +167,12 @@ class Blog(Object):
         self.title: str = data.pop("title")
         self.subtitle: Optional[str] = data.pop("subTitle", None)
         self.html: Optional[str] = data.pop("html", None)
-        self.text: Optional[str] = StripHTML(
-            self.html
-        ) if self.html is not None else None
+        self.text: Optional[str] = (
+            StripHTML(self.html) if self.html is not None else None
+        )
         self.url: str = data.pop("url")
         self.thumbnail: str = data.pop("dimg")
-        self.category: str = data["metadata"].pop("contentItemType")
+        self.category: Optional[str] = data["metadata"].pop("contentItemType", None)
         self.published: datetime = datetime(
             data["publishedDate"].pop("year"),
             data["publishedDate"].pop("month"),
