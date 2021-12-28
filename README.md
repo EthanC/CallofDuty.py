@@ -25,7 +25,7 @@ Construct a new Call of Duty client, then use the various services on the client
 
 ### Installation
 
-CallofDuty.py requires Python 3.9 or greater. Once this requirement is met, simply install CallofDuty.py!
+CallofDuty.py requires Python 3.10 or greater. Once this requirement is met, simply install CallofDuty.py!
 
 ```
 pip install callofduty.py

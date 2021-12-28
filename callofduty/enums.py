@@ -10,6 +10,7 @@ class Platform(Enum):
 
 
 class Title(Enum):
+    Vanguard = "vg"
     BlackOpsColdWar = "cw"
     ModernWarfare = "mw"
     BlackOps4 = "bo4"
